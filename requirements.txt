@@ -1,0 +1,8 @@
+awscli
+dipy
+fury
+nibabel
+nilearn
+osfclient
+pybids
+sklearn
