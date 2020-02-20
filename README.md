@@ -80,6 +80,6 @@ To cite this lesson, please consult with [CITATION](CITATION)
 [episode04]: https://conp-pcno-training.github.io/SDC-BIDS-dMRI/04-open-mri-datasets/index.html
 [lesson-example]: https://carpentries.github.io/lesson-example
 [link_issues]: https://github.com/conp-pcno-training/SDC-BIDS-dMRI/issues
-[jason_kai]: https://github.com/kaijt
+[jason_kai]: https://github.com/kaitj
 [olivia_stanley]: https://github.com/ostanley
 [michael_joseph]: https://github.com/josephmje
