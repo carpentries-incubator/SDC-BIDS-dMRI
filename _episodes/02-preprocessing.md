@@ -39,5 +39,6 @@ The final step to our diffusion processing is registration to the T1w image. Thi
 Preprocessing notes:
 1. If we had more than one b0 image we could estimate and perform motion correction on our diffusion dataset.
 2. Non-linear T1 registration is the crudest method for undistorting data, you can also use a fieldmap or acquire the data using two opposite phase encode directions and estimate the distortions from that.
+3. The preprocessed image has been converted from type `float` to `int`. This reduces the memory requirements due to a smaller file size.
 
 {% include links.md %}
