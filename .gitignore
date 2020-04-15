@@ -11,3 +11,4 @@ _site
 .RData
 .vscode/
 data/
+.sdc-bids-dmri
