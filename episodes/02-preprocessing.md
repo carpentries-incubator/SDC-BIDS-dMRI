@@ -21,7 +21,7 @@ Here is an example preprocessing workflow from qsiprep:
 
 Like fMRI preprocessing, dMRI has some of the same challenges and some unique [ones](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3366862/).
 
-Our preprocesssing of this data will consist of two steps:
+Our preprocessing of this data will consist of two steps:
 1. Eddy current distortion correction
 2. Registration to T1.
 
