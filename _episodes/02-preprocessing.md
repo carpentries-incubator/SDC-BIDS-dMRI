@@ -12,7 +12,7 @@ keypoints:
 
 ## Diffusion Preprocessing
 
-Diffusion preprocessing typically comprises of a series of steps and is dependent on the data acquisition protocol. For the purposes of these lessons, the diffusion data has already been preprocessed and made available to use. Preprocessing is performed using a few well-known software packages (e.g. FSL, ANTS) and is chosen based on the acquisition protocol of the dataset <code>ds000030</code>.
+Diffusion preprocessing typically comprises a series of steps and is dependent on the data acquisition protocol. For the purposes of these lessons, the diffusion data has already been preprocessed and made available to use. Preprocessing is performed using a few well-known software packages (e.g. FSL, ANTS) and is chosen based on the acquisition protocol of the dataset <code>ds000030</code>.
 
 This dataset contains single shell data with one b0 image. This image is the volume of the diffusion series. There are 64 volumes with diffusion weighting.
 
@@ -21,7 +21,7 @@ Here is an example preprocessing workflow from qsiprep:
 
 Like fMRI preprocessing, dMRI has some of the same challenges and some unique [ones](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3366862/).
 
-Our preprocesssing of this data will consist of two steps:
+Our preprocessing of this data will consist of two steps:
 1. Eddy current distortion correction
 2. Registration to T1.
 
