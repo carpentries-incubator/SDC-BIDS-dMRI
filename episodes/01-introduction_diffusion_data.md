@@ -28,28 +28,68 @@ In addition to the acquired diffusion images, two files are collected as part of
 
 In addition to the acquired diffusion images, two files are collected as part of the diffusion dataset. These files correspond to the gradient amplitude (b-values) and directions (b-vectors) of the diffusion measurement and are named with the extensions <code>.bval and <code>.bvec</code> respectively. The b-value is the diffusion-sensitizing factor, and reflects the timing & strength of the gradients used to acquire the diffusion-weighted images. The b-vector corresponds to the direction of the diffusion sensitivity. Together these two files define the diffusion MRI measurement as a set of gradient directions and corresponding amplitudes.
 
-Below is a tree diagram showing the folder structure of a single MR session within ds000030. This was obtained by using the bash command <code>tree<code>.  
+Below is a tree diagram showing the folder structure of a single MR subject and session within ds000221. This was obtained by using the bash command <code>tree<code>.  
 
 ~~~
-tree '../data/ds000030'
+tree '../data/ds000221'
 ~~~
 {: .language-bash}
 
 ~~~
-../data/ds000030
+../data/ds000221
+├── .bidsignore
 ├── CHANGES
-├── code
 ├── dataset_description.json
+├── participants.tsv
 ├── README
-└── sub-10788/
-    ├── anat
-    │   ├── sub-10788_T1w.json
-    │   └── sub-10788_T1w.nii.gz
-    └── dwi
-        ├── sub-10788_dwi.bval
-        │── sub-10788_dwi.bvec
-        │── sub-10788_dwi.json
-        └── sub-10788_dwi.nii.gz
+├── derivatives/
+├── sub-010001/
+└── sub-010002/
+    ├── ses-01/
+    │    ├── anat
+    │    │    ├── sub-010002_ses-01_acq-lowres_FLAIR.json
+    │    │    ├── sub-010002_ses-01_acq-lowres_FLAIR.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-mp2rage_defacemask.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-mp2rage_T1map.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-mp2rage_T1w.nii.gz
+    │    │    ├── sub-010002_ses-01_inv-1_mp2rage.json
+    │    │    ├── sub-010002_ses-01_inv-1_mp2rage.nii.gz
+    │    │    ├── sub-010002_ses-01_inv-2_mp2rage.json
+    │    │    ├── sub-010002_ses-01_inv-2_mp2rage.nii.gz
+    │    │    ├── sub-010002_ses-01_T2w.json
+    │    │    └── sub-010002_ses-01_T2w.nii.gz
+    │    ├── dwi
+    │    │    ├── sub-010002_ses-01_dwi.bval
+    │    │    │── sub-010002_ses-01_dwi.bvec
+    │    │    │── sub-010002_ses-01_dwi.json
+    │    │    └── sub-010002_ses-01_dwi.nii.gz
+    │    ├── fmap
+    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_magnitude1.json
+    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_magnitude1.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_magnitude2.json
+    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_magnitude2.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_phasediff.json
+    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_phasediff.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.json
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.json
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.nii.gz  
+    │    │    ├── sub-010002_ses-01_acq-sefmapBOLDpre_dir-AP_epi.json
+    │    │    ├── sub-010002_ses-01_acq-sefmapBOLDpre_dir-AP_epi.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-sefmapBOLDpre_dir-PA_epi.json
+    │    │    ├── sub-010002_ses-01_acq-sefmapBOLDpre_dir-PA_epi.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.json
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.json
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.nii.gz  
+    │    │    ├── sub-010002_ses-01_acq-SEfmapDWI_dir-AP_epi.json
+    │    │    ├── sub-010002_ses-01_acq-SEfmapDWI_dir-AP_epi.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-SEfmapDWI_dir-PA_epi.json
+    │    │    └── sub-010002_ses-01_acq-SEfmapDWI_dir-PA_epi.nii.gz
+    │    └── fmap  
+    │    │    ├── sub-010002_ses-01_task-rest_acq-AP_run-01_bold.json
+    │    │    └── sub-010002_ses-01_task-rest_acq-AP_run-01_bold.nii.gz
+    └── ses-02/
 ~~~
 {: .output}
 
@@ -62,17 +102,35 @@ Lets first pull the metadata from its associated JSON file using the <code>get_m
 ~~~
 from bids.layout import BIDSLayout
 
-layout = BIDSLayout("../../data/ds000030", validate=False)
+layout = BIDSLayout("../../data/ds000221", validate=False)
 ~~~
 {: .language-python}
 
 Now that we have a layout object, we can work with a BIDS dataset! Lets extract the metadata. from the dataset.
 
 ~~~
-dwi = layout.get(subject='10788', suffix='dwi', extension='nii.gz', return_type='file')[0]
+dwi = layout.get(subject='010002', suffix='dwi', extension='nii.gz', return_type='file')[0]
 layout.get_metadata(dwi)
 ~~~
 {: .language-python}
+
+~~~
+{'EchoTime': 0.08,
+ 'EffectiveEchoSpacing': 0.000390001,
+ 'FlipAngle': 90,
+ 'ImageType': ['ORIGINAL', 'PRIMARY', 'DIFFUSION', 'NON'],
+ 'MagneticFieldStrength': 3,
+ 'Manufacturer': 'Siemens',
+ 'ManufacturersModelName': 'Verio',
+ 'MultibandAccelerationFactor': 2,
+ 'ParallelAcquisitionTechnique': 'GRAPPA',
+ 'ParallelReductionFactorInPlane': 2,
+ 'PartialFourier': '7/8',
+ 'PhaseEncodingDirection': 'j-',
+ 'RepetitionTime': 7,
+ 'TotalReadoutTime': 0.04914}
+~~~
+{: .output}
 
 ## Diffusion Imaging in Python ([dipy](https://dipy.org))
 
@@ -96,9 +154,9 @@ We can install it by entering the following in a terminal <code>pip install dipy
 <code>Dipy</code> has a built-in function that allows us to read in <code>bval</code> and <code>bvec</code> files named <code>read_bvals_bvecs</code> under the <code>dipy.io.gradients</code> module. Let's first grab the path to our gradient directions and amplitude files and load them into memory.
 
 ~~~
-dwi = layout.get(subject='10788', suffix='dwi', extension='.nii.gz', return_type='file')[0]
-bvec = layout.get(subject='10788', suffix='dwi', extension='bvec', return_type='file')[0]
-bval = layout.get(subject='10788', suffix='dwi', extension='bval', return_type='file')[0]
+dwi = layout.get(subject='010002', suffix='dwi', extension='.nii.gz', return_type='file')[0]
+bvec = layout.get(subject='010002', suffix='dwi', extension='bvec', return_type='file')[0]
+bval = layout.get(subject='010002', suffix='dwi', extension='bval', return_type='file')[0]
 ~~~
 {: .language-python}
 
@@ -117,7 +175,7 @@ data.shape
 {: .language-python}
 
 ~~~
-(96, 96, 60, 65)
+(128, 128, 88, 67)
 ~~~
 {: .output}
 
@@ -172,70 +230,66 @@ gtab.bvecs[~gtab.b0s_mask]
 {: .language-python}
 
 ~~~
-array([[-9.99984e-01,  4.03613e-03,  4.03613e-03],
-       [-9.92980e-04, -9.99987e-01,  4.98886e-03],
-       [-2.48897e-02,  6.53243e-01, -7.56739e-01],
-       [-5.89518e-01,  7.69236e-01,  2.46462e-01],
-       [ 2.35626e-01,  5.28739e-01,  8.15423e-01],
-       [ 8.93067e-01,  2.63666e-01,  3.64570e-01],
-       [ 7.97398e-01,  1.33552e-01, -5.88489e-01],
-       [ 2.32919e-01,  9.31812e-01, -2.78344e-01],
-       [ 9.36380e-01,  1.44036e-01, -3.20072e-01],
-       [-5.04032e-01,  8.46814e-01, -1.69873e-01],
-       [-3.44841e-01,  8.50410e-01, -3.97351e-01],
-       [-4.55850e-01,  6.35469e-01, -6.23202e-01],
-       [ 4.87386e-01,  3.93024e-01,  7.79735e-01],
-       [-6.16792e-01,  6.76545e-01, -4.02310e-01],
-       [ 5.77851e-01,  1.09487e-01, -8.08765e-01],
-       [ 8.25555e-01,  5.24662e-01,  2.07818e-01],
-       [ 8.94898e-01, -4.48150e-02,  4.44016e-01],
-       [-2.89332e-01,  5.45724e-01, -7.86430e-01],
-       [-1.15014e-01,  9.64050e-01, -2.39541e-01],
-       [ 8.00058e-01, -4.08056e-01, -4.39770e-01],
-       [ 5.11970e-01,  8.42290e-01, -1.68625e-01],
-       [ 7.89764e-01, -1.57178e-01, -5.92932e-01],
-       [ 9.49115e-01, -2.37601e-01, -2.06705e-01],
-       [ 2.32032e-01,  7.86655e-01, -5.72132e-01],
-       [ 1.96515e-02,  1.91844e-01, -9.81229e-01],
-       [-2.15961e-01,  9.57087e-01,  1.93247e-01],
-       [ 7.72435e-01, -6.07408e-01, -1.85471e-01],
-       [-1.59879e-01,  3.59797e-01, -9.19231e-01],
-       [-1.46103e-01,  7.34950e-01,  6.62195e-01],
-       [ 8.87180e-01,  4.21444e-01, -1.87872e-01],
-       [-5.62338e-01,  2.36544e-01,  7.92353e-01],
-       [-3.80669e-01,  1.46788e-01, -9.12987e-01],
-       [ 3.05803e-01,  2.02751e-01, -9.30256e-01],
-       [ 3.32094e-01,  1.33876e-01,  9.33697e-01],
-       [ 9.62206e-01,  2.69443e-01,  3.95029e-02],
-       [ 9.59295e-01, -2.09888e-01,  1.88943e-01],
-       [-4.50964e-01,  8.90337e-01,  6.27015e-02],
-       [ 7.71192e-01, -6.31175e-01,  8.29533e-02],
-       [-7.09223e-01, -4.12894e-01,  5.71421e-01],
-       [-6.94205e-01,  2.78961e-02, -7.19236e-01],
-       [ 6.81181e-01,  5.33350e-01,  5.01528e-01],
-       [-1.40978e-01, -7.29050e-01, -6.69784e-01],
-       [ 7.40351e-01, -3.93222e-01,  5.45212e-01],
-       [-1.01944e-01,  8.25404e-01, -5.55261e-01],
-       [ 5.83509e-01, -6.00385e-01, -5.46859e-01],
-       [ 8.66669e-02,  3.39104e-01,  9.36748e-01],
-       [ 5.50506e-01,  7.95484e-01,  2.53276e-01],
-       [ 8.37371e-01, -4.62163e-01,  2.91916e-01],
-       [-3.62527e-01,  5.65304e-01,  7.40949e-01],
-       [-1.83461e-01,  3.96756e-01,  8.99404e-01],
-       [-7.18319e-01, -6.95701e-01, -4.24514e-03],
-       [ 4.31996e-01,  6.86464e-01,  5.84933e-01],
-       [ 5.00977e-01,  6.94308e-01, -5.16680e-01],
-       [ 1.69597e-01,  5.13550e-01, -8.41132e-01],
-       [ 4.63360e-01,  4.27481e-01, -7.76246e-01],
-       [ 3.84024e-01, -8.12297e-01, -4.38975e-01],
-       [ 7.13857e-01,  2.51359e-01,  6.53626e-01],
-       [ 2.58398e-01,  8.87277e-01,  3.82061e-01],
-       [-9.28270e-04,  8.02399e-02,  9.96775e-01],
-       [-3.63633e-02,  9.04616e-01,  4.24675e-01],
-       [-5.70681e-01,  3.07326e-01, -7.61495e-01],
-       [-2.82028e-01,  1.48741e-01,  9.47806e-01],
-       [ 7.19926e-01,  6.12166e-01, -3.27047e-01],
-       [ 2.65067e-01,  9.60908e-01,  7.99761e-02]])
+array([[ 0.0480948 , -0.518981  ,  0.853432  ],
+       [ 0.980937  , -0.0827268 , -0.175836  ],
+       [-0.24275   , -0.355443  , -0.902625  ],
+       [-0.292642  , -0.878897  ,  0.376696  ],
+       [ 0.085518  , -0.362038  , -0.928232  ],
+       [ 0.470646  , -0.695075  ,  0.543473  ],
+       [-0.865701  , -0.485398  ,  0.122274  ],
+       [ 0.226775  , -0.23832   ,  0.944339  ],
+       [ 0.334443  , -0.89435   , -0.29713   ],
+       [ 0.727534  ,  0.0823542 ,  0.681111  ],
+       [-0.625823  ,  0.126479  ,  0.769642  ],
+       [ 0.353667  , -0.886595  ,  0.298111  ],
+       [-0.853084  , -0.472587  , -0.221153  ],
+       [ 0.516586  , -0.856143  , -0.0125875 ],
+       [-0.766369  , -0.458916  ,  0.449527  ],
+       [-0.125754  , -0.637058  , -0.760489  ],
+       [-0.149251  , -0.743085  ,  0.652341  ],
+       [ 0.937341  , -0.348404  , -0.00268246],
+       [-0.124163  , -0.219376  ,  0.967708  ],
+       [-0.36458   , -0.906103  , -0.214613  ],
+       [ 0.579767  , -0.204866  ,  0.788606  ],
+       [ 0.445586  , -0.692181  , -0.567749  ],
+       [-0.905294  , -0.174158  , -0.387442  ],
+       [-0.282606  , -0.482101  ,  0.829284  ],
+       [-0.731609  , -0.431568  , -0.527729  ],
+       [ 0.676757  , -0.438047  , -0.591705  ],
+       [ 0.171374  , -0.758177  ,  0.629125  ],
+       [-0.59121   , -0.711294  , -0.380173  ],
+       [-0.46017   , -0.155292  ,  0.874144  ],
+       [ 0.845645  , -0.162694  ,  0.508345  ],
+       [-0.130717  , -0.98886   ,  0.0712005 ],
+       [ 0.975624  , -0.0906642 ,  0.199845  ],
+       [-0.288147  ,  0.100936  ,  0.952252  ],
+       [ 0.655193  , -0.70285   ,  0.276989  ],
+       [-0.442479  , -0.607006  , -0.660118  ],
+       [-0.471845  , -0.674107  ,  0.56828   ],
+       [ 0.638596  , -0.702848  , -0.313369  ],
+       [-0.642432  , -0.712214  ,  0.2829    ],
+       [ 0.850936  , -0.431779  ,  0.299125  ],
+       [-0.240808  , -0.830023  , -0.503063  ],
+       [-0.578162  , -0.401657  ,  0.710211  ],
+       [ 0.100487  , -0.838741  , -0.535178  ],
+       [-0.924592  , -0.196278  ,  0.326504  ],
+       [-0.0210952 , -0.967749  , -0.251032  ],
+       [-0.764669  , -0.142405  ,  0.628492  ],
+       [ 0.197294  , -0.980191  ,  0.0173175 ],
+       [ 0.405727  ,  0.0420623 ,  0.913026  ],
+       [ 0.859032  , -0.144763  , -0.491028  ],
+       [ 0.380277  , -0.486027  ,  0.786872  ],
+       [-0.6891    , -0.721525  , -0.0674049 ],
+       [ 0.430722  , -0.388461  , -0.814602  ],
+       [ 0.0366712 , -0.92944   ,  0.367147  ],
+       [-0.540564  , -0.318621  , -0.778634  ],
+       [ 0.775224  , -0.631369  , -0.0200052 ],
+       [ 0.0646129 ,  0.0600214 ,  0.996104  ],
+       [-0.978577  , -0.203636  , -0.0303294 ],
+       [ 0.199971  , -0.618334  , -0.760049  ],
+       [ 0.678143  , -0.446978  ,  0.583381  ],
+       [-0.448761  , -0.888954  ,  0.0915084 ],
+       [ 0.849148  , -0.426713  , -0.311228  ]])
 ~~~
 {: .output}
 
@@ -248,31 +302,31 @@ gtab.b0s_mask
 
 ~~~
 array([ True, False, False, False, False, False, False, False, False,
+       False, False,  True, False, False, False, False, False, False,
+       False, False, False, False,  True, False, False, False, False,
+       False, False, False, False, False, False,  True, False, False,
+       False, False, False, False, False, False, False, False,  True,
        False, False, False, False, False, False, False, False, False,
-       False, False, False, False, False, False, False, False, False,
-       False, False, False, False, False, False, False, False, False,
-       False, False, False, False, False, False, False, False, False,
-       False, False, False, False, False, False, False, False, False,
-       False, False, False, False, False, False, False, False, False,
-       False, False])
+       False,  True, False, False, False, False, False, False, False,
+       False, False, False,  True])
 ~~~
 {: .output}
 
-In the next few notebooks, we will talk more about preprocessing the diffusion weighted images and reconstructing the Tensor model
+In the next few notebooks, we will talk more about preprocessing the diffusion weighted images, reconstructing the diffusion tensor model, and reconstruction axonal trajectories via tractography.
 
 > ## Exercise 1
 > 1. Get a list of **all** diffusion data in Nifti file format
-> 2. Get the metadata for the diffusion associated with subject 10788
+> 2. Get the metadata for the diffusion associated with subject 010016.
 > > ## Solution
-> > ## *All the diffusion data*
+> > ## *All the diffusion data for subject 010016*
 > > ~~~
-> > dwi_data = layout.get('suffix=dwi', extension='nii.gz', return_type='file')
+> > dwi_data = layout.get(suffix=dwi', extension='nii.gz', return_type='file')
 > > ~~~
 > > {: .language-python}
 > >
-> > ## *Metadata for subject 10788*
+> > ## *Metadata for subject 010016*
 > > ~~~
-> > dwi = layout.get(subject='10788', suffix='dwi', extension='nii.gz', return_type='file')[0]
+> > dwi = layout.get(subject='010016', suffix='dwi', extension='nii.gz', return_type='file')[0]
 > > layout.get_metadata(dwi)
 > > ~~~
 > > {: .language-python}
