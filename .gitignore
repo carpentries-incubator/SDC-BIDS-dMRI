@@ -12,3 +12,8 @@ _site
 .vscode/
 data/
 .sdc-bids-dmri
+.bundle/
+.vendor/
+.docker-vendor/
+Gemfile.lock
+.*history
