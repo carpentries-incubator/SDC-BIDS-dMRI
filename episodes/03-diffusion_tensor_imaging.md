@@ -27,7 +27,11 @@ Where ![](../fig/3/inline_unitvector.png) is a unit vector in 3D space indicatin
 
 The diffusion matrix is a variance-covariance matrix of the diffusivity along the three spatial dimensions. Note that we can assume that the diffusivity has antipodal symmetry, so elements across the diagonal of the matrix are equal. For example: ![](../fig/3/inline_diagelements.png). This is why there are only 6 free parameters to estimate here.
 
+<<<<<<< HEAD
 Tensors are represented by ellipsoids characterized by calculated eigenvalues (![](../fig/3/inline_eigval.png)) and eigenvectors (![](../fig/3/inline_eigvec.png)) from the previously described matrix. The computed eigenvalues and eigenvectors are normally sorted in descending magnitude (i.e. ![](../fig/3/inline_sortedeigvec.png)).
+=======
+Tensors are represented by ellipsoids characterized by calculated eigenvalues (![](../fig/3/inline_eigval.png)) and eigenvectors (![](../fig/3/inline_eigvec.png)) from the previously described matrix. The computed eigenvalues and eigenvectors are normallyed sorted in descending magnitude (ie. ![](../fig/3/inline_sortedeigvec.png)). Eigenvalues are always strictly positive in the context of dMRI and are measured in mm^2/s. In the DTI model, the largest eigenvalue gives the principal direction of the diffusion tensor, and the other two eigenvectors span the orthogonal plane to the former direction.
+>>>>>>> DOC: Add additional explanations to DTI scalar measures
 
 ![Diffusion tensor](../fig/3/DiffusionTensor.png) {:class="img-responsive"}
 _Adapted from Jelison et al., 2004_
@@ -98,7 +102,7 @@ dti_fit = dti_model.fit(dwi_data, mask=dwi_mask)
 ~~~
 {: .language-python}
 
-The fit method creates a <code>TensorFit</code> object which contains the fitting parameters and other attributes of the model. A number of quantitative scalar metrics can be derived from the eigenvalues! In this tutorial, we will cover fractional anisotropy, mean diffusivity, axial diffusivity, and radial diffusivity. Each of these scalar metrics were calculated in the previous fitting step!
+The fit method creates a <code>TensorFit</code> object which contains the fitting parameters and other attributes of the model. A number of quantitative scalar metrics can be derived from the eigenvalues! In this tutorial, we will cover fractional anisotropy, mean diffusivity, axial diffusivity, and radial diffusivity. Each of these scalar, rotationally invariant metrics were calculated in the previous fitting step!
 
 
 ### Fractional anisotropy (FA)
@@ -109,7 +113,7 @@ Mathematically, FA is defined as the normalized variance of the eigenvalues of t
 
 ![FA Equation](../fig/3/fa_eqn.png) {:class="img-responsive"}
 
-Values of FA vary between 0 and 1. In the cases of perfect, isotropic diffusion, ![](../fig/3/fa_iso.png), the diffusion tensor is a sphere and FA = 0. As diffusion progressively becomes more anisotropic, eigenvalues become more unequal, causing the tensor to be elongated, with FA approaching 1. Note that FA should be interpreted carefully. It may be an indication of the density of packing fibers in a voxel and the amount of myelin wrapped around those axons, but it is not always a measure of "tissue integrity".
+Values of FA vary between 0 and 1 (unitless). In the cases of perfect, isotropic diffusion, ![](../fig/3/fa_iso.png), the diffusion tensor is a sphere and FA = 0.  If the first two eigenvalues are equal the tensor will be oblate or planar, whereas if the first eigenvalue is larger than the other two, it will have the mentioned ellipsoid shape: as diffusion progressively becomes more anisotropic, eigenvalues become more unequal, causing the tensor to be elongated, with FA approaching 1. Note that FA should be interpreted carefully. It may be an indication of the density of packing fibers in a voxel and the amount of myelin wrapped around those axons, but it is not always a measure of "tissue integrity".
 
 Let's take a look at what the FA map looks like! An FA map is a gray-scale image, where higher intensities reflect more anisotropic diffuse regions.
 
@@ -126,10 +130,13 @@ plot.plot_anat(fa_img)
 
 ![FA Plot](../fig/3/plot_fa.png) {:class="img-responsive"}
 
+Derived from partial volume effects in imaging voxels due to the presence of different tissues, noise in the measurements and numerical errors, the DTI model estimation may yield negative eigenvalues. Such *degenerate* case is not physically meaningful. These values are usually revealed as black or 0-valued pixels in FA maps.
+
+FA is a central value in dMRI: large FA values imply that the underlying fiber populations have a very coherent orientation, whereas lower FA values point to voxels containing multiple fiber crossings. Lowest FA values are indicative of non-white matter tissue in healthy brains (see, for example, Alexander et al.'s "Diffusion Tensor Imaging of the Brain". Neurotherapeutics 4, 316-329 (2007), and Jeurissen et al.'s "Investigating the Prevalence of Complex Fiber Configurations in White Matter Tissue with Diffusion Magnetic Resonance Imaging". Hum. Brain Mapp. 2012, 34(11) pp. 2747-2766).
 
 ### Mean diffusivity (MD)
 
-An often used complimentary measure to FA is mean diffusivity (MD). MD is a measure of the degree of diffusion, independent of direction. This is sometimes known as the apparent diffusion coefficient (ADC). Mathemtically, MD is computed as the mean eigenvalues of the tensor.
+An often used complimentary measure to FA is mean diffusivity (MD). MD is a measure of the degree of diffusion, independent of direction. This is sometimes known as the apparent diffusion coefficient (ADC). Mathematically, MD is computed as the mean eigenvalues of the tensor and is measured in mm^2/s.
 
 ![MD Eqn](../fig/3/md_eqn.png) {:class="img-responsive"}
 
@@ -146,7 +153,11 @@ plot.plot_anat(md_img)
 
 ### Axial and radial diffusivity (AD & RD)
 
+<<<<<<< HEAD
 The final two metrics we will discuss are axial diffusivity (AD) and radial diffusivity (RD). AD describes the diffusion rate along the primary axis of diffusion, along ![](../fig/3/primary_diffusion.png), or parallel to the axon. On the other hand, RD reflects the average diffusivity along the other two minor axes (![](../fig/3/minor_axes.png))
+=======
+The final two metrics we will discuss are axial diffusivity (AD) and radial diffusivity (RD). Two tensors with different shapes may yield the same FA values, and additional measures such as AD and RD are required to further characterize the tensor. AD describes the diffusion rate along the primary axis of diffusion, along ![](../fig/3/primary_diffusion.png), or parallel to the axon (and hence, some works refer to it as the *parallel diffusivity*). On the other hand, RD reflects the average diffusivity along the other two minor axes (and is *perpendicular diffusivity* in some works) (![](../fig/3/minor_axes.png)). Both are measured in mm^2/s.
+>>>>>>> DOC: Add additional explanations to DTI scalar measures
 
 ![Axial and Radial Diffusivities](../fig/3/ax_rad_diff.png) {:class="img-responsive"}
 
