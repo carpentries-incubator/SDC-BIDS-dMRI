@@ -27,11 +27,7 @@ Where ![](../fig/3/inline_unitvector.png) is a unit vector in 3D space indicatin
 
 The diffusion matrix is a variance-covariance matrix of the diffusivity along the three spatial dimensions. Note that we can assume that the diffusivity has antipodal symmetry, so elements across the diagonal of the matrix are equal. For example: ![](../fig/3/inline_diagelements.png). This is why there are only 6 free parameters to estimate here.
 
-<<<<<<< HEAD
-Tensors are represented by ellipsoids characterized by calculated eigenvalues (![](../fig/3/inline_eigval.png)) and eigenvectors (![](../fig/3/inline_eigvec.png)) from the previously described matrix. The computed eigenvalues and eigenvectors are normally sorted in descending magnitude (i.e. ![](../fig/3/inline_sortedeigvec.png)).
-=======
-Tensors are represented by ellipsoids characterized by calculated eigenvalues (![](../fig/3/inline_eigval.png)) and eigenvectors (![](../fig/3/inline_eigvec.png)) from the previously described matrix. The computed eigenvalues and eigenvectors are normallyed sorted in descending magnitude (ie. ![](../fig/3/inline_sortedeigvec.png)). Eigenvalues are always strictly positive in the context of dMRI and are measured in mm^2/s. In the DTI model, the largest eigenvalue gives the principal direction of the diffusion tensor, and the other two eigenvectors span the orthogonal plane to the former direction.
->>>>>>> DOC: Add additional explanations to DTI scalar measures
+Tensors are represented by ellipsoids characterized by calculated eigenvalues (![](../fig/3/inline_eigval.png)) and eigenvectors (![](../fig/3/inline_eigvec.png)) from the previously described matrix. The computed eigenvalues and eigenvectors are normally sorted in descending magnitude (i.e. ![](../fig/3/inline_sortedeigvec.png)). Eigenvalues are always strictly positive in the context of dMRI and are measured in mm^2/s. In the DTI model, the largest eigenvalue gives the principal direction of the diffusion tensor, and the other two eigenvectors span the orthogonal plane to the former direction.
 
 ![Diffusion tensor](../fig/3/DiffusionTensor.png) {:class="img-responsive"}
 _Adapted from Jelison et al., 2004_
@@ -153,11 +149,7 @@ plot.plot_anat(md_img)
 
 ### Axial and radial diffusivity (AD & RD)
 
-<<<<<<< HEAD
-The final two metrics we will discuss are axial diffusivity (AD) and radial diffusivity (RD). AD describes the diffusion rate along the primary axis of diffusion, along ![](../fig/3/primary_diffusion.png), or parallel to the axon. On the other hand, RD reflects the average diffusivity along the other two minor axes (![](../fig/3/minor_axes.png))
-=======
-The final two metrics we will discuss are axial diffusivity (AD) and radial diffusivity (RD). Two tensors with different shapes may yield the same FA values, and additional measures such as AD and RD are required to further characterize the tensor. AD describes the diffusion rate along the primary axis of diffusion, along ![](../fig/3/primary_diffusion.png), or parallel to the axon (and hence, some works refer to it as the *parallel diffusivity*). On the other hand, RD reflects the average diffusivity along the other two minor axes (and is *perpendicular diffusivity* in some works) (![](../fig/3/minor_axes.png)). Both are measured in mm^2/s.
->>>>>>> DOC: Add additional explanations to DTI scalar measures
+The final two metrics we will discuss are axial diffusivity (AD) and radial diffusivity (RD). Two tensors with different shapes may yield the same FA values, and additional measures such as AD and RD are required to further characterize the tensor. AD describes the diffusion rate along the primary axis of diffusion, along ![](../fig/3/primary_diffusion.png), or parallel to the axon (and hence, some works refer to it as the *parallel diffusivity*). On the other hand, RD reflects the average diffusivity along the other two minor axes (being named as *perpendicular diffusivity* in some works) (![](../fig/3/minor_axes.png)). Both are measured in mm^2/s.
 
 ![Axial and Radial Diffusivities](../fig/3/ax_rad_diff.png) {:class="img-responsive"}
 
