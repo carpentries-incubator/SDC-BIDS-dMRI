@@ -52,6 +52,7 @@ Current maintainers of this lesson are
 * [Jason Kai][jason_kai]
 * [Olivia Stanley][olivia_stanley]
 * [Michael Joseph][michael_joseph]
+* [Jon Haitz Legarreta Gorroño][jon_legarreta]
 
 ## Authors
 
@@ -83,3 +84,4 @@ To cite this lesson, please consult with [CITATION](CITATION)
 [jason_kai]: https://github.com/kaitj
 [olivia_stanley]: https://github.com/ostanley
 [michael_joseph]: https://github.com/josephmje
+[jon_legarreta]: https://github.com/jhlegarreta
