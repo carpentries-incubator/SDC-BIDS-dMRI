@@ -17,3 +17,6 @@ data/
 .docker-vendor/
 Gemfile.lock
 .*history
+
+# Editor temporary/working/backup files
+.idea/
