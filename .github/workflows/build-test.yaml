@@ -1,0 +1,43 @@
+name: Build, test
+
+on:
+  push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout GitHub repository
+      uses: actions/checkout@v2
+
+    # Use a cache for the pip install to avoid reinstalling every time this is run.
+    - name: Cache pip install
+      uses: actions/cache@v2
+      id: cache
+      with:
+        path: .cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    # Run with a Python version that we know works.
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7'
+
+    # Install all requirements to run these tests.
+    - name: Install requirements
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: |
+        python -m pip install --upgrade pip
+        pip3 install virtualenv
+        virtualenv ~/sdc_bids_dmri
+        pip install -r requirements.txt
+        pip install pytest nbval
+
+    # Run the actual tests of all the Python Notebooks.
+    - name: Test Notebooks
+      run: |
+        source ~/sdc_bids_dmri/bin/activate
+        pytest --nbval-lax -v *.ipynb
