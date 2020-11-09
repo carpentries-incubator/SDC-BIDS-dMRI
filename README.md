@@ -1,6 +1,6 @@
 # Introduction to MRI and BIDS
 
-![Build Status](https://github.com/carpentries-incubator/SDC-BIDS-dMRI/actions?query=workflow%3A"Build%2C+test")
+[![Build Status](https://github.com/carpentries-incubator/SDC-BIDS-dMRI/workflows/Build,%20test/badge.svg)](https://github.com/carpentries-incubator/SDC-BIDS-dMRI/actions?query=workflow%3A"Build%2C+test")
 [![Create a Slack Account with us][create_slack_svg]][slack_heroku_invite]
 [![Slack Status][slack_channel_status]][slack_channel_url]
 [![Binder][binder_svg]][binder_url]
