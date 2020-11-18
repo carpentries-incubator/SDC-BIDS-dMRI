@@ -35,7 +35,7 @@ nbconvert==5.5.0
 nbformat==4.4.0
 nibabel==3.0.2
 nilearn==0.5.2
-notebook==5.7.8
+notebook==6.1.5
 num2words==0.5.10
 numpy==1.17.4
 pandas==0.25.3
