@@ -16,7 +16,7 @@ keypoints:
 
 Diffusion preprocessing typically comprises of a series of steps, which may vary depending on how the data is acquired. Some consensus has been reached for certain preprocessing steps, while others are still up for debate. The lesson will primarily focus on the preprocessing steps where consensus has been reached. Preprocessing is performed using a few well-known software packages (e.g. FSL, ANTs). For the purposes of these lessons, preprocessing steps requiring these software packages has already been performed for the dataset <code>ds000221</code> and the commands required for each step will be provided. This dataset contains single shell diffusion data with 7 b=0 s/mm^2 volumes (non-diffusion weighted) and 60 b=1000 s/mm^2 volumes. In addition, field maps (found in the <code>fmap</code> directory are acquired with opposite phase-encoding directions).
 
-To illustrate what the preprocessing step may look like, here is an example preprocessing workflow from qsiprep:
+To illustrate what the preprocessing step may look like, here is an example preprocessing workflow from QSIPrep (Cieslak _et al_, 2020):
 ![preprocess](../fig/2/preprocess_steps.jpg)
 
 dMRI has some similar challenges to fMRI preprocessing, as well as some unique [ones](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3366862/).
@@ -267,5 +267,9 @@ Following the transformation of the T1w volume, we can see that anatomical and d
 3. Depending on how the data is acquired, certain steps may not be possible. For example, if the data is not acquired in two directions, <code>topup</code> may not be possible (in this situation, distortion correction may be better handled by registering with a T1w anatomical image directly.
 
 4. There are also a number of tools available for preprocessing. In this lesson, we demonstrate some of the more commonly used tools alongside <code>dipy</code>.
+
+### References
+
+.. [Cieslak2020] M. Cieslak, PA. Cook, X. He, F-C. Yeh, T. Dhollander, _et al_, "QSIPrep: An integrative platform for preprocessing and reconstructing diffusion MRI", https://doi.org/10.1101/2020.09.04.282269 
 
 {% include links.md %}
