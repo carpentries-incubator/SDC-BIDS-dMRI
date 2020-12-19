@@ -41,6 +41,11 @@ jobs:
         pip install -r requirements.txt
         pip install pytest nbval
 
+    # Download the necessary data
+    - name: Download data
+      run: |
+        osf -p cmq8a clone ./data
+
     # Run the actual tests of all the Python Notebooks.
     - name: Test Notebooks
       run: |
