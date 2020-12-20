@@ -40,6 +40,42 @@ jobs:
         pip install -r requirements.txt
         pip install pytest nbval
 
+    # Install additional dependencies
+    - name: Install additional dependencies
+      run: |
+
+        # Install CMake to be able to build ANTs
+        cd /
+        wget https://github.com/Kitware/CMake/releases/tag/v3.19.2
+        tar -xvzf cmake-3.19.2.tar.gz
+        rm -rf cmake-3.19.2.tar.gz
+        cd cmake-3.19.2
+        ./bootstrap -- -DBUILD_TESTING=OFF
+        make -j 8
+        make install
+
+        # Install FSL
+        cd /
+        wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py || echo "Failed to download FSL installer";
+        if [[ -f fslinstaller.py ]]; then
+          sudo python fslinstaller.py -d /usr/local/fsl --quiet || echo "Failed to install FSL";
+        fi
+
+        # Remove unnecessary FSL data
+        rm -rf /usr/local/fsl/*/data/atlases
+
+        # Instal ANTs
+        cd /
+        mkdir ants_build
+        git clone https://github.com/ANTsX/ANTs.git
+        cd ANTs
+        git fetch --tags
+        git checkout tags/v2.3.5 -b v2.3.5
+        cd ../ants_build
+        cmake ../ANTs -DBUILD_TESTING=OFF
+        make -j 8
+        cp ../ANTs/Scripts/*.sh bin/
+
     # Download the necessary data
     - name: Download data
       run: |
