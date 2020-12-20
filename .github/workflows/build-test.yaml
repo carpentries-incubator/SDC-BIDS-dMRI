@@ -41,6 +41,14 @@ jobs:
         pip install -r requirements.txt
         pip install pytest nbval
 
+    # Install additional dependencies
+    - name: Install additional dependencies
+      run: |
+        wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py || echo "Failed to download FSL installer";
+        if [[ -f fslinstaller.py ]]; then
+          sudo python fslinstaller.py -d /usr/local/fsl --quiet || echo "Failed to install FSL";
+        fi
+
     # Download the necessary data
     - name: Download data
       run: |
