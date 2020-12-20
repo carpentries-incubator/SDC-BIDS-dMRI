@@ -15,7 +15,7 @@ jobs:
     - name: Checkout GitHub repository
       uses: actions/checkout@v2
 
-    # Run with a Python versions 3.7, 3.8 and 3.9.
+    # Run with multiple Python versions.
     - name: Setup Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
