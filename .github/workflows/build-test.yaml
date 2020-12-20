@@ -4,12 +4,22 @@ on:
   push
 
 jobs:
-  test:
+  build:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
 
     steps:
     - name: Checkout GitHub repository
       uses: actions/checkout@v2
+
+    # Run with multiple Python versions.
+    - name: Setup Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
 
     # Use a cache for the pip install to avoid reinstalling every time this is run.
     - name: Cache pip install
@@ -20,11 +30,6 @@ jobs:
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
-    # Run with a Python version that we know works.
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.7'
 
     # Install all requirements to run these tests.
     - name: Install requirements
@@ -36,8 +41,13 @@ jobs:
         pip install -r requirements.txt
         pip install pytest nbval
 
+    # Download the necessary data
+    - name: Download data
+      run: |
+        osf -p cmq8a clone ./data
+
     # Run the actual tests of all the Python Notebooks.
     - name: Test Notebooks
       run: |
         source ~/sdc_bids_dmri/bin/activate
-        pytest --nbval-lax -v *.ipynb
+        pytest --nbval-lax -v code/*/*.ipynb
