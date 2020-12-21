@@ -4,8 +4,6 @@ title: "Instructor Notes"
 ---
 {% include base_path.html %}
 
-relative path root: {{ relative_root_path }}
-
 ## Instructor notes
 
 ## Lesson motivation and learning objectives
@@ -29,7 +27,7 @@ neither does it focus on the importance of visualization for that purpose.
 
 ## Lesson design
 
-#### [Introduction to Diffusion]({{ relative_root_path }}/{% link _episodes/01-intro-diffusion-and-dataset.md %})
+#### [Introduction to Diffusion]({{ relative_root_path }}/{% link _episodes/01-introduction_diffusion_data.md %})
 
 * If your workshop includes the [Introduction to MRI and BIDS](https://carpentries-incubator.github.io/SDC-BIDS-IntroMRI/) lesson,
 learners will have the necessary knowledge to better understand how diffusion
@@ -43,7 +41,7 @@ sensitive to, and how diffusion is able to capture it.
 [`MRtrix`](https://www.mrtrix.org/), or [`TrackVis`](https://www.mrtrix.org/),
 to analyze or visualize diffusion MRI data.
 
-#### [Preprocessing dMRI data]({{ relative_root_path }}/{% link _episodes/02-diffusion-preprocessing.md %})
+#### [Preprocessing dMRI data]({{ relative_root_path }}/{% link _episodes/02-diffusion_preprocessing.md %})
 
 * Pre-processing in dMRI depends on the available data (acquisition) and the
 quality of the data, so learners should be encouraged to look at their data to
@@ -55,7 +53,7 @@ the pre-processing step.
 `ANTs`) that are used as command-line tools, so learners should be encouraged
 to check their documentation, and adjust the arguments as necessary.
 
-#### [Diffusion Tensor Imaging (DTI)]({{ relative_root_path }}/{% link _episodes/03-diffusion-tensor-imaging.md %})
+#### [Diffusion Tensor Imaging (DTI)]({{ relative_root_path }}/{% link _episodes/03-diffusion_tensor_imaging.md %})
 
 * Learners should be able to understand the use, relevance and limitations of
 the DTI model, both from the a clinical point of view, and a research setting.
