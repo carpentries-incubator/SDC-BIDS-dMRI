@@ -88,6 +88,15 @@ the voxels with FA higher than a given threshold.
 from dipy.reconst.csdeconv import auto_response
 
 response, ratio = auto_response(gtab, data, roi_radius=10, fa_thr=0.7)
+
+# Create the directory to save the results
+out_dir = '../../data/ds000221/derivatives/dwi/reconstruction/sub-%s/ses-01/dwi/' % subj
+
+if not os.path.exists(out_dir):
+    os.makedirs(out_dir)
+
+# Save the FRF
+np.savetxt(os.path.join(out_dir, 'frf.txt'), np.hstack([response[0], response[1]]))
 ~~~
 {: .language-python}
 
@@ -138,16 +147,23 @@ scene = window.Scene()
 evals = response[0]
 evecs = np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]]).T
 
-
 response_odf = single_tensor_odf(default_sphere.vertices, evals, evecs)
 # transform our data from 1D to 4D
 response_odf = response_odf[None, None, None, :]
 response_actor = actor.odf_slicer(response_odf, sphere=default_sphere,
                                   colormap='plasma')
 scene.add(response_actor)
-window.record(scene, out_path='frf.png', size=(200, 200))
+response_scene_arr = window.snapshot(
+    scene, fname=os.path.join(out_dir, 'frf.png'), size=(200, 200),
+    offscreen=True)
 
-window.show(scene)
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+fig, axes = plt.subplots()
+axes.imshow(response_scene_arr, cmap="plasma", origin="lower")
+axes.axis("off")
+plt.show()
 ~~~
 {: .language-python}
 
@@ -222,9 +238,14 @@ fodf_spheres = actor.odf_slicer(csd_odf, sphere=default_sphere, scale=0.9,
                                 norm=False, colormap='plasma')
 
 scene.add(fodf_spheres)
-window.record(scene, out_path='csd_odfs.png', size=(600, 600))
+fodf_scene_arr = window.snapshot(
+    scene, fname=os.path.join(out_dir, 'csd_odfs.png'), size=(600, 600),
+    offscreen=True)
 
-window.show(scene)
+fig, axes = plt.subplots()
+axes.imshow(fodf_scene_arr, cmap="plasma", origin="lower")
+axes.axis("off")
+plt.show()
 ~~~
 {: .language-python}
 
@@ -248,9 +269,14 @@ csd_peaks = peaks_from_model(model=csd_model,
 window.clear(scene)
 fodf_peaks = actor.peak_slicer(csd_peaks.peak_dirs, csd_peaks.peak_values)
 scene.add(fodf_peaks)
-window.record(scene, out_path='csd_peaks.png', size=(600, 600))
+peaks_scene_arr = window.snapshot(
+    scene, fname=os.path.join(out_dir, 'csd_peaks.png'), size=(600, 600),
+    offscreen=True)
 
-window.show(scene)
+fig, axes = plt.subplots()
+axes.imshow(peaks_scene_arr, origin="lower")
+axes.axis("off")
+plt.show()
 ~~~
 {: .language-python}
 
@@ -263,9 +289,14 @@ We can finally visualize both the fODFs and peaks in the same space.
 fodf_spheres.GetProperty().SetOpacity(0.4)
 
 scene.add(fodf_spheres)
-window.record(scene, out_path='csd_peaks_fodfs.png', size=(600, 600))
+csd_peaks_fodfs_arr = window.snapshot(
+    scene, fname=os.path.join(out_dir, 'csd_peaks_fodfs.png'), size=(600, 600),
+    offscreen=True)
 
-window.show(scene)
+fig, axes = plt.subplots()
+axes.imshow(csd_peaks_fodfs_arr, cmap="plasma", origin="lower")
+axes.axis("off")
+plt.show()
 ~~~
 {: .language-python}
 
