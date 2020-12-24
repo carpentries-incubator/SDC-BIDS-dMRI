@@ -1,8 +1,10 @@
 name: Build, test
 
 on:
-  schedule:
-    - cron: "0 2 * * 1,3,5"  # 02:00 UTC every Mon,Wed,Fri
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   build:
