@@ -1,8 +1,7 @@
 name: Build, test
 
 on:
-  schedule:
-    - cron: "0 2 * * 1,3,5"  # 02:00 UTC every Mon,Wed,Fri
+  [push, pull_request]
 
 jobs:
   build:
