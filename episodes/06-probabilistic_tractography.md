@@ -1,5 +1,5 @@
 ---
-title: "Tractography - Probabilistic"
+title: "Probabilistic tractography"
 teaching: 30
 exercises: 5
 questions:
