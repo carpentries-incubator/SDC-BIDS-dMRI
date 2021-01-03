@@ -27,7 +27,7 @@ neither does it focus on the importance of visualization for that purpose.
 
 ## Lesson design
 
-#### [Introduction to Diffusion]({{ relative_root_path }}/{% link _episodes/01-introduction_diffusion_data.md %})
+#### [Introduction to Diffusion MRI data]({{ relative_root_path }}/{% link _episodes/01-introduction_diffusion_data.md %})
 
 * If your workshop includes the [Introduction to MRI and BIDS](https://carpentries-incubator.github.io/SDC-BIDS-IntroMRI/) lesson,
 learners will have the necessary knowledge to better understand how diffusion
