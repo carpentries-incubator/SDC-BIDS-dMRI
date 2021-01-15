@@ -9,6 +9,7 @@ objectives:
 keypoints:
 - "Provides an estimation of the long range underlying fiber arrangement"
 - "Tractography is central to estimate and provide measures of the white matter neuroanatomy"
+start: true
 ---
 
 ## Tractography

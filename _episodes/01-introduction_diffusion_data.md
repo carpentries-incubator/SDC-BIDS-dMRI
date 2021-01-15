@@ -11,6 +11,7 @@ objectives:
 keypoints:
 - "dMRI data is represented as a 4-dimensional image (x,y,z,diffusion directional sensitivity)"
 - "dMRI data is sensitive to a particular direction of diffusion motion. Due to this sensitivity, each volume of the 4D image is sensitive to a particular direction"
+start: true
 ---
 
 ## Diffusion Weighted Imaging (DWI)
@@ -28,7 +29,7 @@ In addition to the acquired diffusion images, two files are collected as part of
 
 In addition to the acquired diffusion images, two files are collected as part of the diffusion dataset. These files correspond to the gradient amplitude (b-values) and directions (b-vectors) of the diffusion measurement and are named with the extensions <code>.bval and <code>.bvec</code> respectively. The b-value is the diffusion-sensitizing factor, and reflects the timing & strength of the gradients used to acquire the diffusion-weighted images. The b-vector corresponds to the direction of the diffusion sensitivity. Together these two files define the diffusion MRI measurement as a set of gradient directions and corresponding amplitudes.
 
-Below is a tree diagram showing the folder structure of a single MR subject and session within ds000221. This was obtained by using the bash command <code>tree<code>.  
+Below is a tree diagram showing the folder structure of a single MR subject and session within ds000221. This was obtained by using the bash command <code>tree<code>.
 
 ~~~
 tree '../data/ds000221'
@@ -73,7 +74,7 @@ tree '../data/ds000221'
     │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.json
     │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.nii.gz
     │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.json
-    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.nii.gz  
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.nii.gz
     │    │    ├── sub-010002_ses-01_acq-sefmapBOLDpre_dir-AP_epi.json
     │    │    ├── sub-010002_ses-01_acq-sefmapBOLDpre_dir-AP_epi.nii.gz
     │    │    ├── sub-010002_ses-01_acq-sefmapBOLDpre_dir-PA_epi.json
@@ -81,12 +82,12 @@ tree '../data/ds000221'
     │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.json
     │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.nii.gz
     │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.json
-    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.nii.gz  
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.nii.gz
     │    │    ├── sub-010002_ses-01_acq-SEfmapDWI_dir-AP_epi.json
     │    │    ├── sub-010002_ses-01_acq-SEfmapDWI_dir-AP_epi.nii.gz
     │    │    ├── sub-010002_ses-01_acq-SEfmapDWI_dir-PA_epi.json
     │    │    └── sub-010002_ses-01_acq-SEfmapDWI_dir-PA_epi.nii.gz
-    │    └── fmap  
+    │    └── fmap
     │    │    ├── sub-010002_ses-01_task-rest_acq-AP_run-01_bold.json
     │    │    └── sub-010002_ses-01_task-rest_acq-AP_run-01_bold.nii.gz
     └── ses-02/

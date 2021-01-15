@@ -9,6 +9,7 @@ objectives:
 keypoints:
 - "Provides an estimation of the local (voxel-wise) underlying fiber orientation"
 - "Local fiber orientation reconstruction is the primer to all dMRI derivatives"
+start: true
 ---
 
 ## Orientation reconstruction
