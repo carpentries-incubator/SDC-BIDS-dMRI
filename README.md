@@ -1,4 +1,4 @@
-# Introduction to MRI and BIDS
+# Introduction to dMRI
 
 [![Build Status](https://github.com/carpentries-incubator/SDC-BIDS-dMRI/workflows/Build,%20test/badge.svg)](https://github.com/carpentries-incubator/SDC-BIDS-dMRI/actions?query=workflow%3A"Build%2C+test")
 [![Create a Slack Account with us][create_slack_svg]][slack_heroku_invite]
@@ -16,20 +16,25 @@ Another advantage of Python is that it is maintained by a large user-base. Anyon
 ## About the Lesson
 
 This lesson teaches:
-- a (re?) introduction to MR nomenclature - with BIDS
-- "converting" your data to BIDS
-- BIDS apps
-- queueing up neuroimaging pipelines
-- how neuroimaging data is stored
+- What Diffusion Magnetic Resonsance Imaging (dMRI) is
+- How dMRI data is organized within the BIDS framework
+- What the standard preprocessing steps in dMRI are
+- How local fiber orientation can be reconstructed using dMRI data
+- How dMRI can provide insight into structural white matter connectivity
 
 ## Episodes
 
 | # |  Episode | Time | Question(s) |
 |--:|:---------|:----:|:------------|
-| 1 | [Introduction to Diffusion and the Dataset][episode01] | 30 | How can I do the same operations on many different values? |
-| 2 | [Diffusion Preprocessing][episode02] | 30 | How is MRI data organized |
-| 3 | [Diffusion Tensor Imaging][episode03] | 30 | How can I do the same operations on many different files? |
-| 4 | [Tractography][episode04] | 30 | How can I store many values together? |
+| 1 | [Introduction to Diffusion MRI data][episode01] | 30 | How is dMRI data represented?<br />What is diffusion weighting? |
+| 2 | [Preprocessing dMRI data][episode02] | 30 | What are the standard preprocessing steps?<br />How do we register with an anatomical image? |
+| 3 | [Local fiber orientation reconstruction][episode03] | 30 | What information can dMRI provide at the voxel level? |
+| 3.1 | [Diffusion Tensor Imaging (DTI)][episode04] | 30 | What is diffusion tensor imaging?<br />What metrics can be derived from DTI? |
+| 3.2 | [Constrained Spherical Deconvolution (CSD)][episode05] | 30 | What is Constrained Spherical Deconvolution (CSD)?<br />What does CSD offer compared to DTI? |
+| 4 | [Tractography][episode06] | 30 | What information can dMRI provide at the long range level? |
+| 4.1 | [Local tractography][episode07] | 30 |  |
+| 4.1.1 | [Deterministic tractography][episode08] | 30 |  |
+| 4.1.2 | [Probabilistic tractography][episode09] | 30 | Why do we need tractography algorithms beyond the deterministic ones?<br />How is probabilistic tractography different from deterministic tractography? |
 
 ## Contributing
 
@@ -76,10 +81,15 @@ To cite this lesson, please consult with [CITATION](CITATION)
 [slack_channel_url]: https://swcarpentry.slack.com/messages/CCJBHKCHZ
 [binder_svg]: https://mybinder.org/badge_logo.svg
 [binder_url]: https://mybinder.org/v2/gh/josephmje/SDC-BIDS-dMRI/gh-pages
-[episode01]: https://conp-pcno-training.github.io/SDC-BIDS-dMRI/01-neuroimaging-fundamentals/index.html
-[episode02]: https://conp-pcno-training.github.io/SDC-BIDS-dMRI/02-anatomy-of-nifti/index.html
-[episode03]: https://conp-pcno-training.github.io/SDC-BIDS-dMRI/03-brain-imaging-data-structure/index.html
-[episode04]: https://conp-pcno-training.github.io/SDC-BIDS-dMRI/04-open-mri-datasets/index.html
+[episode01]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/01-introduction_diffusion_data/index.html
+[episode02]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/02-diffusion_preprocessing/index.html
+[episode03]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/03-local_orientation_reconstruction/index.html
+[episode04]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/04-diffusion_tensor_imaging/index.html
+[episode05]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/05-constrained_spherical_deconvolution/index.html
+[episode06]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/06-tractography/index.html
+[episode07]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/07-local_tractography/index.html
+[episode08]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/08-deterministic_tractography/index.html
+[episode09]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/09-probabilistic_tractography/index.html
 [lesson-example]: https://carpentries.github.io/lesson-example
 [link_issues]: https://github.com/conp-pcno-training/SDC-BIDS-dMRI/issues
 [jason_kai]: https://github.com/kaitj
