@@ -10,7 +10,7 @@
 carpentry: "incubator"
 
 # Overall title for pages.
-title: "Lesson Title"
+title: "Introduction to dMRI"
 
 # Life cycle stage of the lesson
 # possible values: "pre-alpha", "alpha", "beta", "stable"
@@ -45,8 +45,8 @@ swc_pages: "https://swcarpentry.github.io"
 swc_site: "https://software-carpentry.org"
 template_repo: "https://github.com/carpentries/styles"
 training_site: "https://carpentries.github.io/instructor-training"
-workshop_repo: "https://github.com/carpentries/workshop-template"
-workshop_site: "https://carpentries.github.io/workshop-template"
+workshop_repo: "https://github.com/carpentries-incubator/SDC-BIDS-dMRI"
+workshop_site: "https://carpentries-incubator.github.io/SDC-BIDS-dMRI/"
 cc_by_human: "https://creativecommons.org/licenses/by/4.0/"
 
 # Surveys.
