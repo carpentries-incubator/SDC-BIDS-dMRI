@@ -196,7 +196,8 @@ plt.show()
 {: .language-python}
 
 ![tractogram_probabilistic_dg_pmf](../fig/6/tractogram_probabilistic_dg_pmf.png){:class="img-responsive"} \
-Corpus Callosum using probabilistic direction getter from PMF
+Streamlines representing white matter using probabilistic direction getter from
+PMF
 
 One disadvantage of using a discrete PMF to represent possible tracking
 directions is that it tends to take up a lot of memory (RAM). The size of the
@@ -239,7 +240,8 @@ plt.show()
 
 
 ![tractogram_probabilistic_dg_sh](../fig/6/tractogram_probabilistic_dg_sh.png){:class="img-responsive"} \
-Corpus Callosum using probabilistic direction getter from SH
+Streamlines representing white matter using probabilistic direction getter from
+SH
 
 Not all model fits have the ``shm_coeff`` attribute because not all models use
 this basis to represent the data internally. However we can fit the ODF of any
@@ -282,7 +284,8 @@ plt.show()
 
 
 ![tractogram_probabilistic_dg_sh_pmf](../fig/6/tractogram_probabilistic_dg_sh_pmf.png){:class="img-responsive"} \
-Corpus Callosum using probabilistic direction getter from SH (peaks_from_model)
+Streamlines representing white matter using probabilistic direction getter from
+SH (peaks_from_model)
 
 
 > ## Tip: Making sure your tractogram is well aligned with the data
