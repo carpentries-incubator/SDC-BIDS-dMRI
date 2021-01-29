@@ -1,5 +1,5 @@
 ---
-title: "Local reconstruction - Constrained Spherical Deconvolution (CSD)"
+title: "Constrained Spherical Deconvolution (CSD)"
 teaching: 30
 exercises: 5
 questions:
