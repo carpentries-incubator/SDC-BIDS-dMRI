@@ -5,7 +5,8 @@
 [![Slack Status][slack_channel_status]][slack_channel_url]
 [![Binder][binder_svg]][binder_url]
 
-An introduction to magnetic resonance imaging analysis in Python.
+An introduction to diffusion Magnetic Resonance Imaging (dMRI) analysis in
+Python.
 
 ## Why Python?
 
@@ -16,7 +17,7 @@ Another advantage of Python is that it is maintained by a large user-base. Anyon
 ## About the Lesson
 
 This lesson teaches:
-- What Diffusion Magnetic Resonsance Imaging (dMRI) is
+- What diffusion Magnetic Resonance Imaging is
 - How dMRI data is organized within the BIDS framework
 - What the standard preprocessing steps in dMRI are
 - How local fiber orientation can be reconstructed using dMRI data
@@ -24,17 +25,17 @@ This lesson teaches:
 
 ## Episodes
 
-| # |  Episode | Time | Question(s) |
-|--:|:---------|:----:|:------------|
-| 1 | [Introduction to Diffusion MRI data][episode01] | 30 | How is dMRI data represented?<br />What is diffusion weighting? |
-| 2 | [Preprocessing dMRI data][episode02] | 30 | What are the standard preprocessing steps?<br />How do we register with an anatomical image? |
-| 3 | [Local fiber orientation reconstruction][episode03] | 30 | What information can dMRI provide at the voxel level? |
-| 3.1 | [Diffusion Tensor Imaging (DTI)][episode04] | 30 | What is diffusion tensor imaging?<br />What metrics can be derived from DTI? |
-| 3.2 | [Constrained Spherical Deconvolution (CSD)][episode05] | 30 | What is Constrained Spherical Deconvolution (CSD)?<br />What does CSD offer compared to DTI? |
-| 4 | [Tractography][episode06] | 30 | What information can dMRI provide at the long range level? |
-| 4.1 | [Local tractography][episode07] | 30 |  |
-| 4.1.1 | [Deterministic tractography][episode08] | 30 |  |
-| 4.1.2 | [Probabilistic tractography][episode09] | 30 | Why do we need tractography algorithms beyond the deterministic ones?<br />How is probabilistic tractography different from deterministic tractography? |
+|   Topic  | Time | Episode | Question(s) |
+|:---------|:----:|:--------|:------------|
+| **Introduction to Diffusion MRI data** | 30 | [1 Introduction to Diffusion MRI data][episode01] | How is dMRI data represented?<br />What is diffusion weighting? |
+| **Preprocessing dMRI data** | 30 | [2 Preprocessing dMRI data][episode02] | What are the standard preprocessing steps?<br />How do we register with an anatomical image? |
+| **Local fiber orientation reconstruction** | 30 | [3 Local fiber orientation reconstruction][episode03] | What information can dMRI provide at the voxel level? |
+| | 30 | [3.1 Diffusion Tensor Imaging (DTI)][episode04] | What is diffusion tensor imaging?<br />What metrics can be derived from DTI? |
+| | 30 | [3.2 Constrained Spherical Deconvolution (CSD)][episode05] | What is Constrained Spherical Deconvolution (CSD)?<br />What does CSD offer compared to DTI? |
+| **Tractography** | 30 | [4 Tractography][episode06] | What information can dMRI provide at the long range level? |
+| | 30 | [4.1 Local tractography][episode07] | FIXME |
+| | 30 | [4.1.1 Deterministic tractography][episode08] | FIXME |
+| | 30 | [4.1.2 Probabilistic tractography][episode09] | Why do we need tractography algorithms beyond the deterministic ones?<br />How is probabilistic tractography different from deterministic tractography? |
 
 ## Contributing
 
