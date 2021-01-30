@@ -4,8 +4,8 @@ layout: reference
 
 ## Glossary
 
-~~~
 {:auto_ids}
+
 AD
 :   Axial Diffusivity
 
@@ -74,7 +74,6 @@ SH
 
 SHORE
 :   Simple Harmonic Oscillator Based Reconstruction and Estimation
-~~~
-{: .source}
+
 
 {% include links.md %}
