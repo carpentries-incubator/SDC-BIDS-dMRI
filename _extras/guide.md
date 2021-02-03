@@ -36,10 +36,9 @@ they will be aware of the reasons that prompted the neuroimaging community to
 agree on a common storage convention for the data.
 * Be sure that learners understand the physical phenomenon diffusion MRI is
 sensitive to, and how diffusion is able to capture it.
-* Explain that there are other software and tools, such as [`3D Slicer`](https://www.slicer.org/),
-[`DSI Studio`](http://dsi-studio.labsolver.org/), [`ExploreDTI`](https://www.exploredti.com/),
-[`MRtrix`](https://www.mrtrix.org/), or [`TrackVis`](https://www.mrtrix.org/),
-to analyze or visualize diffusion MRI data.
+* Explain that there are other software and tools, such as [3D Slicer],
+[DSI Studio], [ExploreDTI], [MRtrix], or [TrackVis], to analyze or visualize
+diffusion MRI data.
 
 #### [Preprocessing dMRI data]({{ relative_root_path }}/{% link _episodes/02-diffusion_preprocessing.md %})
 
@@ -49,8 +48,8 @@ identify artefacts.
 * Similarly, learners should embrace the importance of exploring the output at
 each step in order to ensure that the quality of the data has improved after
 the pre-processing step.
-* Some pre-processing steps in this lesson make use of tools (such as `FSL` or
-`ANTs`) that are used as command-line tools, so learners should be encouraged
+* Some pre-processing steps in this lesson make use of tools (such as [FSL] or
+[ANTs]) that are used as command-line tools, so learners should be encouraged
 to check their documentation, and adjust the arguments as necessary.
 
 #### [Diffusion Tensor Imaging (DTI)]({{ relative_root_path }}/{% link _episodes/04-diffusion_tensor_imaging.md %})
@@ -98,7 +97,7 @@ limitations of current methods.
 
 ## Technical tips and tricks
 
-* Be clear about the purpose and convenience of using `Jupyter Notebooks` to
+* Be clear about the purpose and convenience of using [Jupyter Notebook] to
 teach the lesson. Allow some time at the beginning of the day to provide an
 overview of how using the learned tools would be translated to a more formal
 dMRI data analysis setting once a research aspect or analysis has been
