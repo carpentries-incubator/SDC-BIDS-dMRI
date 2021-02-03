@@ -1,7 +1,7 @@
 {% include base_path.html %}
 {% include gh_variables.html %}
 
-# Carpentries default links
+<!-- Carpentries default links -->
 [cc-by-human]: https://creativecommons.org/licenses/by/4.0/
 [cc-by-legal]: https://creativecommons.org/licenses/by/4.0/legalcode
 [ci]: http://communityin.org/
@@ -51,7 +51,7 @@
 [workshop-repo]: {{ site.workshop_repo }}
 [yaml]: http://yaml.org/
 
-# Workshop-specific links
+<!-- Workshop-specific links -->
 [3D Slicer]: https://www.slicer.org/
 [Anaconda]: https://www.anaconda.com/
 [ANTs]: http://stnava.github.io/ANTs/
