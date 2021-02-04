@@ -23,21 +23,21 @@ Instructors should allocate some time to have all components installed.
 [Binder] enables the user to open the collection of notebooks in this lesson in
 a web-based executable and interactive environment. No additional software needs
 to be installed locally in this case; it suffices to click on the
-</kbd>launch binder</kbd> badge in the repository.
+<kbd>launch binder</kbd> badge in the repository.
 
 ## Local
 
 If users choose to run the `Jupyter Notebooks` locally, the following
 dependencies will need to be installed:
 
-- [ANTs]: used to register different anatomical data.
-- [FSL]: used for different data preprocessing steps.
-- [DIPY]: used for diffusion MRI data processing.
-- [FURY]: used for anatomical data visualisation purposes.
-- [Matplotlib]: used for data visualisation purposes.
-- [Nilearn]: used for anatomical data visualisation purposes.
-- [osfclient]: used to download the necessary data.
-- [PyBIDS]: used to check the data structure [BIDS] compliance.
+- [ANTs] : used to register different anatomical data.
+- [FSL] : used for different data preprocessing steps.
+- [DIPY] : used for diffusion MRI data processing.
+- [FURY] : used for anatomical data visualisation purposes.
+- [Matplotlib] : used for data visualisation purposes.
+- [Nilearn] : used for anatomical data visualisation purposes.
+- [osfclient] : used to download the necessary data.
+- [PyBIDS] : used to check the data structure [BIDS] compliance.
 
 > ## Bash
 >
