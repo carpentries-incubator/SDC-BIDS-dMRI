@@ -41,28 +41,45 @@ so-called Spherical Harmonics (SH) which are a basis that allow to represent
 any function on the sphere (much like the Fourier analysis allows to represent
 a function in terms of in terms of trigonometric functions).
 
-In this lesson we will be using the Constrained Spherical Deconvolution (CSD)
+In this episode we will be using the Constrained Spherical Deconvolution (CSD)
 method proposed by Tournier *et al*. in 2007. In essence, CSD imposes a
 non-negativity constraint in the reconstructed fODF. For the sake of
-simplicity, single-shell data will be used in this lesson.
+simplicity, single-shell data will be used in this episode.
 
 Let's start by loading the necessary data. For simplicity, we will assume that
 the gradient table is the same across all voxels after the pre-processing.
 
 ~~~
+import os
+
 import nibabel as nib
 import numpy as np
 
+from bids.layout import BIDSLayout
+
 from dipy.core.gradients import gradient_table
-from dipy.data import get_fnames, default_sphere
+from dipy.data import default_sphere
 from dipy.io.gradients import read_bvals_bvecs
 from dipy.io.image import load_nifti
 
-hardi_fname, hardi_bval_fname, hardi_bvec_fname = get_fnames('stanford_hardi')
 
-data, affine = load_nifti(hardi_fname)
+dwi_layout = BIDSLayout('../../data/ds000221/derivatives/uncorrected_topup_eddy/', validate=False)
+t1_layout = BIDSLayout('../../data/ds000221/derivatives/uncorrected_topup_eddy_regT1/', validate=False)
+gradient_layout = BIDSLayout('../../data/ds000221/sub-010006/ses-01/dwi/', validate=False)
 
-bvals, bvecs = read_bvals_bvecs(hardi_bval_fname, hardi_bvec_fname)
+subj = '010006'
+
+# Get the diffusion files
+dwi_fname = dwi_layout.get(subject=subj, suffix='dwi', extension='nii.gz', return_type='file')[0]
+bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bval', return_type='file')[0]
+bvec_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bvec', return_type='file')[0]
+
+# Get the anatomical file
+t1w_fname = t1_layout.get(subject=subj, extension='nii.gz', return_type='file')[0]
+
+data, affine = load_nifti(dwi_fname)
+
+bvals, bvecs = read_bvals_bvecs(bval_fname, bvec_fname)
 gtab = gradient_table(bvals, bvecs)
 ~~~
 {: .language-python}
@@ -73,7 +90,7 @@ we can proceed with the two steps of CSD.
 
 ## Step 1. Estimation of the fiber response function.
 
-In this lesson the response function will be estimated from a local brain
+In this episode the response function will be estimated from a local brain
 region known to belong to the white matter and where it is known that there are
 single coherent fiber populations. This is determined by checking the
 Fractional Anisotropy (FA) derived from the DTI model.
@@ -301,6 +318,7 @@ plt.show()
 {: .language-python}
 
 ![csd_peaks_fodfs](../fig/5/csd_peaks_fodfs.png){:class="img-responsive"} \
+CSD Peaks and ODFs.
 
 
 
