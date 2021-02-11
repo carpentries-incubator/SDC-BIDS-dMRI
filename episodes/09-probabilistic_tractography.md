@@ -9,26 +9,17 @@ objectives:
 - "Understand the principles behind a probabilistic tractography algorithm"
 - "Understand the aspects involved when analyzing the tractogram computed using a probabilistic algorithm"
 keypoints:
-- "Probabilistic tractography incorporate uncertainty to the tracking process"
-- "Provides tractograms that explore more white matter axonal fibres"
+- "Probabilistic tractography incorporates uncertainty to the tracking process"
+- "Provides tractograms that explore more white matter axonal fibers"
 ---
 
-## Probabilistic Tractography
+## Probabilistic tractography
 
 Probabilistic fiber tracking is a way of reconstructing the white matter
 structural connectivity using diffusion MRI data. Much like deterministic fiber
 tracking, the probabilistic approach follows the trajectory of a possible
-pathway in a step-wise fashion and propagating streamlines based on the local
+pathway in a step-wise fashion and propagate streamlines based on the local
 orientations reconstructed at each voxel.
-
-Streamline propagation is, in essence, a numerical analysis integration
-problem. The problem lies in finding a curve that joins a set of discrete local
-directions. As such, it takes the form of a differential equation problem of
-the form:
-![streamline_propagation_diff_equation](../fig/6/streamline_propagation_diff_equation.png){:class="img-responsive"} \
-Streamline propagation differential equation
-
-where the curve $r(s)$ needs to be solved for.
 
 In probabilistic tracking, however, the tracking direction at each point along
 the path is chosen at random from a distribution of possible directions, and
@@ -41,12 +32,15 @@ points distributed on a sphere.
 Like their deterministic counterparts, probabilistic tracking methods start
 propagating streamlines from a *seed map*, which contains a number of
 coordinates per voxel to initiate the procedure. The higher the number of seeds
-per voxel (i.e. the see density), the larger the number of potentially
+per voxel (i.e. the seed density), the larger the number of potentially
 recovered long-range connections. However, this comes at the cost of a longer
 running time.
 
-This lesson builds on top of the results of the CSD local orientation
-reconstruction method presented in the previous lesson.
+This episode builds on top of the results of the CSD local orientation
+reconstruction method presented in a previous episode.
+
+We will first get the necessary diffusion data, and compute the local
+orientation information using the CSD method:
 
 ~~~
 import os
@@ -72,6 +66,8 @@ from dipy.viz import window, actor, colormap
 dwi_layout = BIDSLayout('../../data/ds000221/derivatives/uncorrected_topup_eddy/', validate=False)
 gradient_layout = BIDSLayout('../../data/ds000221/sub-010006/ses-01/dwi/', validate=False)
 
+subj = '010006'
+
 dwi_fname = dwi_layout.get(subject=subj, suffix='dwi', extension='nii.gz', return_type='file')[0]
 bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bval', return_type='file')[0]
 bvec_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bvec', return_type='file')[0]
@@ -81,25 +77,38 @@ affine = dwi_img.affine
 
 gt_bvals, gt_bvecs = read_bvals_bvecs(bval, bvec)
 gtab = gradient_table(gt_bvals, gt_bvecs)
+~~~
+{: .language-python}
 
+We will now create the seeding mask and the seeds using an estimate of the
+white matter tissue based on the FA values obtained from the diffusion tensor:
 
+~~~
 from dipy.reconst import dti
 from dipy.segment.mask import median_otsu
 from dipy.tracking import utils
 
 dwi_data = dwi_img.get_fdata()
-dwi_data, dwi_mask = median_otsu(dwi_data, vol_idx=[0], numpass=1) # Specify the volume index to the b0 volumes
+dwi_data, dwi_mask = median_otsu(dwi_data, vol_idx=[0], numpass=1)  # Specify the volume index to the b0 volumes
 
 dti_model = dti.TensorModel(gtab)
-dti_fit = dti_model.fit(dwi_data, mask=dwi_mask) # This step may take a while
+dti_fit = dti_model.fit(dwi_data, mask=dwi_mask)  # This step may take a while
 
+# Create the seeding mask
 fa_img = dti_fit.fa
 seed_mask = fa_img.copy()
 seed_mask[seed_mask>=0.2] = 1
 seed_mask[seed_mask<0.2] = 0
 
+# Create the seeds
 seeds = utils.seeds_from_mask(seed_mask, affine=affine, density=1)
+~~~
+{: .language-python}
 
+We will now estimate the FRF and set the CSD model to feed the local orientation
+information to the streamline propagation object:
+
+~~~
 response, ratio = auto_response(gtab, dwi_data, roi_radius=10, fa_thr=0.7)
 csd_model = ConstrainedSphericalDeconvModel(gtab, response, sh_order=6)
 csd_fit = csd_model.fit(dwi_data, mask=seed_mask)
@@ -268,8 +277,6 @@ save_tractogram(sft, "tractogram_probabilistic_dg_sh_pmf.trk")
 # Plot the tractogram
 scene = window.Scene()
 scene.add(actor.line(streamlines, colormap.line_colors(streamlines)))
-window.record(scene, out_path='tractogram_probabilistic_dg_sh_pmf.png',
-              size=(800, 800))
 prob_tractogram_dg_sh_pmf_scene_arr = window.snapshot(
     scene,
     fname=os.path.join(out_dir, 'tractogram_probabilistic_dg_sh_pmf.png'),
