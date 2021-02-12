@@ -309,10 +309,14 @@ SH (peaks_from_model)
 > `MRtrix`'s `mrinfo` command can be used to visualize the affine matrix of a
 > `NIfTI` file as:
 >
-> `mrinfo dwi.nii.gz`
+> ~~~
+> mrinfo dwi.nii.gz
+> ~~~
+> {: .language-bash}
 >
 > which would output something like:
 >
+> ~~~
 > ************************************************
 > Image:               "/data/dwi.nii.gz"
 > ************************************************
@@ -325,14 +329,20 @@ SH (peaks_from_model)
 >   Transform:                    1          -0           0      -178
 >                                -0           1           0      -214
 >                                -0          -0           1        -0
+> ~~~
+> {: .output}
 >
 > Similarly, for your tractograms, you may use the command `track_info` from
 > `TrackVis`' `Diffusion Toolkit` set of command-line tools:
 >
-> `trk_info tractogram.trk`
+> ~~~
+> trk_info tractogram.trk
+> ~~~
+> {: .language-bash}
 >
 > which would output something like:
 >
+> ~~~
 > ID string:           	TRACK
 > Version:             	2
 > Dimension:           	180 216 180
@@ -350,22 +360,30 @@ SH (peaks_from_model)
 > Number of scalars:	0
 > Number of properties:	0
 > Number of tracks:	200433
+> ~~~
+> {: .output}
 >
 > Note that, a `TRK` file contains orientational and positional information. If
 > you choose to store your tractograms using the `TCK` format, this information
 > will not be contained in the file. To see the file header information you may
 > use the `MRtrix` `tckinfo` command:
 >
-> `tckinfo tractogram.tck`
+> ~~~
+> tckinfo tractogram.tck
+> ~~~
+> {: .language-bash}
 >
 > which would output something like:
 >
+> ~~~
 > ***********************************
 >  Tracks file: "/data/tractogram.tck"
 >    count:                0000200433
 >    dimensions:           (180, 216, 180)
 >    voxel_order:          LPS
 >    voxel_sizes:          (1.0, 1.0, 1.0)
+> ~~~
+> {: .output}
 >
 {: .callout}
 
