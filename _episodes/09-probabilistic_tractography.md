@@ -336,7 +336,7 @@ SH (peaks_from_model)
 > `TrackVis`' `Diffusion Toolkit` set of command-line tools:
 >
 > ~~~
-> trk_info tractogram.trk
+> track_info tractogram.trk
 > ~~~
 > {: .language-bash}
 >
