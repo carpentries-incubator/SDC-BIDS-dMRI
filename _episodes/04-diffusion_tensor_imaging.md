@@ -69,12 +69,16 @@ from dipy.core.gradients import gradient_table
 from nilearn import image as img
 import nibabel as nib
 
-layout = BIDSLayout("../data/ds000030/derivatives", validate=False)
+deriv_layout = BIDSLayout("../data/ds000221/derivatives", validate=False)
+subj="010006"
 
-t1 = layout.get(subject='10788', suffix='T1w', extension='nii.gz', return_type='file')[0]
-dwi = layout.get(subject='10788', suffix='preproc', extension='nii.gz', return_type='file')[0]
-bval = layout.get(subject='10788', suffix='preproc', extension='bval', return_type='file')[0]
-bvec = layout.get(subject='10788', suffix='preproc', extension='bvec', return_type='file')[0]
+# Grab the transformed t1 file for reference
+t1 = deriv_layout.get(subject=subj, space="dwi", extension='nii.gz', return_type='file')[0]
+
+# Recall the preprocessed data is no longer in BIDS - we will directly grab these files
+dwi = "../data/ds000221/derivatives/uncorrected_topup_eddy/sub-%s/ses-01/dwi/dwi.nii.gz" % subj
+bval = "../data/ds000221/sub-%s/ses-01/dwi/sub-%s_ses-01_dwi.bval" % (subj, subj)
+bvec = "../data/ds000221/derivatives/uncorrected_topup_eddy/sub-%s/ses-01/dwi/dwi.eddy_rotated_bvecs" % subj
 
 t1_data = img.load_img(t1)
 dwi_data = img.load_img(dwi)
@@ -140,7 +144,8 @@ Similar to the previous FA image, let's take a look at what the MD map looks lik
 
 ~~~
 md_img = img.new_img_like(ref_niimg=t1_data, data=dti_fit.md)
-plot.plot_anat(md_img)
+# Arbitrarily set min and max of color bar
+plot.plot_anat(md_img, cut_coords=(0, -29, 20), vmin=0, vmax=0.01)
 ~~~
 {: .language-python}
 
@@ -162,7 +167,8 @@ There are several ways of visualizing tensors. One way is using an RGB map, whic
 * Green = Anterior / Posterior
 * Blue = Superior / Inferior
 
-_Note: The plotting functions in <code>nilearn</code> are unable to visualize these RGB maps. However, we can use the <code>matplotlib</code> library to view these images.
+_Note: The plotting functions in <code>nilearn</code> are unable to visualize these RGB maps. However, we can use the <code>matplotlib</code> library to view these images._
+
 
 ~~~
 from dipy.reconst.dti import color_fa
