@@ -212,12 +212,13 @@ Though other models are outside the scope of this lesson, we recommend looking i
 >> from nilearn import image as img
 >> import nibabel as nib
 >>
->> layout = BIDSLayout("../data/ds000030/derivatives", validate=False)
+>> deriv_layout = BIDSLayout("../data/ds000221/derivatives", validate=False)
+>> subj="010006"
 >>
->> t1 = layout.get(subject='10788', suffix='T1w', extension='nii.gz', return_type='file')[0]
->> dwi = layout.get(subject='10788', suffix='preproc', extension='nii.gz', return_type='file')[0]
->> bval = layout.get(subject='10788', suffix='preproc', extension='bval', return_type='file')[0]
->> bvec = layout.get(subject='10788', suffix='preproc', extension='bvec', return_type='file')[0]
+>> t1 = deriv_layout.get(subject=subj, space="dwi", extension='nii.gz', return_type='file')[0]
+>> dwi = "../data/ds000221/derivatives/uncorrected_topup_eddy/sub-%s/ses-01/dwi/dwi.nii.gz" % subj
+>> bval = "../data/ds000221/sub-%s/ses-01/dwi/sub-%s_ses-01_dwi.bval" % (subj, subj)
+>> bvec = "../data/ds000221/derivatives/uncorrected_topup_eddy/sub-%s/ses-01/dwi/dwi.eddy_rotated_bvecs" % subj
 >>
 >> t1_data = img.load_img(t1)
 >> dwi_data = img.load_img(dwi)
@@ -234,11 +235,11 @@ Though other models are outside the scope of this lesson, we recommend looking i
 >>
 >> # Plot axial diffusivity map
 >> ad_img = img.new_img_like(ref_niimg=t1_data, data=dti_fit.ad)
->> plot.plot_anat(ad_img)
+>> plot.plot_anat(ad_img, cut_coords=(0, -29, 20), vmin=0, vmax=0.01)
 >>
 >> # Plot radial diffusivity map
 >> rd_img = img.new_img_like(ref_niimg=t1_data, data=dti_fit.rd)
->> plot.plot_anat(rd_img)
+>> plot.plot_anat(rd_img, cut_coords=(0, -29, 20), vmin=0, vmax=0.01)
 >> ~~~
 >> {: .language-python}
 > {: .solution}
