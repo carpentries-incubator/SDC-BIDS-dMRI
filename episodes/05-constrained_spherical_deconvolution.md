@@ -71,8 +71,9 @@ subj = '010006'
 
 # Get the diffusion files
 dwi_fname = dwi_layout.get(subject=subj, suffix='dwi', extension='nii.gz', return_type='file')[0]
+bvec_fname = dwi_layout.get(subject=subj, extension='eddy_rotated_bvecs', return_type='file')[0]
 bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bval', return_type='file')[0]
-bvec_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bvec', return_type='file')[0]
+
 
 # Get the anatomical file
 t1w_fname = t1_layout.get(subject=subj, extension='nii.gz', return_type='file')[0]
