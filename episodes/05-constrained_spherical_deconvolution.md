@@ -225,14 +225,20 @@ the diffusion data:
 from dipy.reconst.csdeconv import ConstrainedSphericalDeconvModel
 
 sh_order = 8
-csd_model = ConstrainedSphericalDeconvModel(gtab, response, sh_order=sh_order)
+csd_model = ConstrainedSphericalDeconvModel(gtab, response, sh_order=sh_order, convergence=50)
 ~~~
 {: .language-python}
 
 For illustration purposes we will fit only a small portion of the data.
 
 ~~~
-csd_fit = csd_model.fit(data)
+data_small = data[20:50, 55:85, 35:65]
+csd_fit = csd_model.fit(data_small)
+
+sh_coeffs = csd_fit.shm_coeff
+
+# Save the SH coefficients
+nib.save(nib.Nifti1Image(sh_coeffs.astype(np.float32), affine), os.path.join(out_dir, 'sh_coeffs.nii.gz'))
 ~~~
 {: .language-python}
 
@@ -248,21 +254,46 @@ csd_odf = csd_fit.odf(default_sphere)
 ~~~
 {: .language-python}
 
-Here we visualize only a 30x30 region (i.e. the slice corresponding to the
-`[20:50, 55:85, 38:39]` volume data region that was used in the tutorial).
+Here we visualize only a 30x30x30 region (i.e. the slice corresponding to the
+`[20:50, 55:85, 35:65]` volume data region that was used in the tutorial).
 
 ~~~
-fodf_spheres = actor.odf_slicer(csd_odf, sphere=default_sphere, scale=0.9,
-                                norm=False, colormap='plasma')
+# Plot the fODFs
+fodf_spheres = actor.odf_slicer(csd_odf, sphere=default_sphere, scale=0.9, norm=False, colormap='plasma')
 
+# Axial superior
+scene = window.Scene()
+fodf_spheres.display(z=3)
 scene.add(fodf_spheres)
-fodf_scene_arr = window.snapshot(
-    scene, fname=os.path.join(out_dir, 'csd_odfs.png'), size=(600, 600),
-    offscreen=True)
+fodf_axial_scene = window.snapshot(scene, offscreen=True)
 
-fig, axes = plt.subplots()
-axes.imshow(fodf_scene_arr, cmap="plasma", origin="lower")
-axes.axis("off")
+# Sagittal right
+scene = window.Scene()
+fodf_spheres.display(x=15)
+fodf_spheres.RotateY(90)
+scene.add(fodf_spheres)
+fodf_sagittal_scene = window.snapshot(scene, offscreen=True)
+
+# Coronal anterior
+scene = window.Scene()
+fodf_spheres.RotateY(-90)
+fodf_spheres.display(y=13)
+fodf_spheres.RotateX(90)
+scene.add(fodf_spheres)
+fodf_coronal_scene = window.snapshot(scene, offscreen=True)
+
+# Plot different views
+fig, axes = plt.subplots(1,3, figsize=(20, 20))
+axes[0].imshow(fodf_axial_scene, cmap="plasma", origin="lower")
+axes[0].axis("off")
+axes[0].set_title("Axial")
+axes[1].imshow(fodf_sagittal_scene, cmap="plasma", origin="lower")
+axes[1].axis("off")
+axes[1].set_title("Sagittal")
+axes[2].imshow(fodf_coronal_scene, cmap="plasma", origin="lower")
+axes[2].axis("off")
+axes[2].set_title("Coronal")
+plt.savefig(os.path.join(out_dir, "csd_odfs.png"), dpi=300)
 plt.show()
 ~~~
 {: .language-python}
