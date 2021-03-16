@@ -259,28 +259,29 @@ Here we visualize only a 30x30x30 region (i.e. the slice corresponding to the
 
 ~~~
 # Plot the fODFs
+# Setup orientation scenes
 fodf_spheres = actor.odf_slicer(csd_odf, sphere=default_sphere, scale=0.9, norm=False, colormap='plasma')
 
 # Axial superior
-scene = window.Scene()
+scene_axial = window.Scene()
 fodf_spheres.display(z=3)
-scene.add(fodf_spheres)
-fodf_axial_scene = window.snapshot(scene, offscreen=True)
+scene_axial.add(fodf_spheres)
+fodf_axial_scene = window.snapshot(scene_axial, offscreen=True)
 
 # Sagittal right
-scene = window.Scene()
+scene_sagittal = window.Scene()
 fodf_spheres.display(x=15)
 fodf_spheres.RotateY(90)
-scene.add(fodf_spheres)
-fodf_sagittal_scene = window.snapshot(scene, offscreen=True)
+scene_sagittal.add(fodf_spheres)
+fodf_sagittal_scene = window.snapshot(scene_sagittal, offscreen=True)
 
 # Coronal anterior
-scene = window.Scene()
+scene_coronal = window.Scene()
 fodf_spheres.RotateY(-90)
 fodf_spheres.display(y=13)
 fodf_spheres.RotateX(90)
-scene.add(fodf_spheres)
-fodf_coronal_scene = window.snapshot(scene, offscreen=True)
+scene_coronal.add(fodf_spheres)
+fodf_coronal_scene = window.snapshot(scene_coronal, offscreen=True)
 
 # Plot different views
 fig, axes = plt.subplots(1,3, figsize=(20, 20))
@@ -293,7 +294,7 @@ axes[1].set_title("Sagittal")
 axes[2].imshow(fodf_coronal_scene, cmap="plasma", origin="lower")
 axes[2].axis("off")
 axes[2].set_title("Coronal")
-plt.savefig(os.path.join(out_dir, "csd_odfs.png"), dpi=300)
+plt.savefig(os.path.join(out_dir, "csd_odfs.png"), dpi=300, bbox_inches="tight")
 plt.show()
 ~~~
 {: .language-python}
