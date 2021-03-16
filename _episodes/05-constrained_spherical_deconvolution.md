@@ -266,14 +266,14 @@ fodf_spheres = actor.odf_slicer(csd_odf, sphere=default_sphere, scale=0.9, norm=
 scene_axial = window.Scene()
 fodf_spheres.display(z=3)
 scene_axial.add(fodf_spheres)
-fodf_axial_scene = window.snapshot(scene_axial, offscreen=True)
+fodf_axial_scene = window.snapshot(scene_axial, size=(200,200), offscreen=True)
 
 # Sagittal right
 scene_sagittal = window.Scene()
 fodf_spheres.display(x=15)
 fodf_spheres.RotateY(90)
 scene_sagittal.add(fodf_spheres)
-fodf_sagittal_scene = window.snapshot(scene_sagittal, offscreen=True)
+fodf_sagittal_scene = window.snapshot(scene_sagittal, size=(200,200), offscreen=True)
 
 # Coronal anterior
 scene_coronal = window.Scene()
@@ -281,7 +281,7 @@ fodf_spheres.RotateY(-90)
 fodf_spheres.display(y=13)
 fodf_spheres.RotateX(90)
 scene_coronal.add(fodf_spheres)
-fodf_coronal_scene = window.snapshot(scene_coronal, offscreen=True)
+fodf_coronal_scene = window.snapshot(scene_coronal, size=(200,200), offscreen=True)
 
 # Plot different views
 fig, axes = plt.subplots(1,3, figsize=(20, 20))
@@ -308,24 +308,60 @@ purpose, `DIPY` offers the `peaks_from_model` method.
 
 ~~~
 from dipy.direction import peaks_from_model
+from dipy.io.peaks import reshape_peaks_for_visualization
 
 csd_peaks = peaks_from_model(model=csd_model,
-                             data=data,
+                             data=data_small,
                              sphere=default_sphere,
                              relative_peak_threshold=.5,
                              min_separation_angle=25,
                              parallel=True)
 
-window.clear(scene)
-fodf_peaks = actor.peak_slicer(csd_peaks.peak_dirs, csd_peaks.peak_values)
-scene.add(fodf_peaks)
-peaks_scene_arr = window.snapshot(
-    scene, fname=os.path.join(out_dir, 'csd_peaks.png'), size=(600, 600),
-    offscreen=True)
+# Save the peaks
+nib.save(nib.Nifti1Image(reshape_peaks_for_visualization(csd_peaks),
+                         affine), os.path.join(out_dir, 'peaks.nii.gz'))
 
-fig, axes = plt.subplots()
-axes.imshow(peaks_scene_arr, origin="lower")
-axes.axis("off")
+peak_indices = csd_peaks.peak_indices
+nib.save(nib.Nifti1Image(peak_indices, affine), os.path.join(out_dir, 'peaks_indices.nii.gz'))
+
+# Plot the peaks
+scene_sagittal.clear()
+scene_coronal.clear()
+fodf_peaks = actor.peak_slicer(csd_peaks.peak_dirs, csd_peaks.peak_values)
+
+# Axial superior
+scene_axial.clear()
+fodf_peaks.display(z=3)
+scene_axial.add(fodf_peaks)
+peaks_axial_scene = window.snapshot(scene_axial, size=(200,200), offscreen=True)
+
+# Sagittal right
+scene_sagittal.clear()
+fodf_peaks.display(x=15)
+fodf_peaks.RotateY(90)
+scene_sagittal.add(fodf_peaks)
+peaks_sagittal_scene = window.snapshot(scene_sagittal, size=(200,200), offscreen=True)
+
+# Coronal anterior
+scene_coronal = window.Scene()
+fodf_peaks.RotateY(-90)
+fodf_peaks.display(y=13)
+fodf_peaks.RotateX(90)
+scene_coronal.add(fodf_peaks)
+peaks_coronal_scene = window.snapshot(scene_coronal, size=(200, 200), offscreen=True)
+
+# Plot different views
+fig, axes = plt.subplots(1,3, figsize=(20, 20))
+axes[0].imshow(peaks_axial_scene, cmap="plasma", origin="lower")
+axes[0].axis("off")
+axes[0].set_title("Axial")
+axes[1].imshow(peaks_sagittal_scene, cmap="plasma", origin="lower")
+axes[1].axis("off")
+axes[1].set_title("Sagittal")
+axes[2].imshow(peaks_coronal_scene, cmap="plasma", origin="lower")
+axes[2].axis("off")
+axes[2].set_title("Coronal")
+plt.savefig(os.path.join(out_dir, "csd_peaks.png"), dpi=300, bbox_inches="tight")
 plt.show()
 ~~~
 {: .language-python}
