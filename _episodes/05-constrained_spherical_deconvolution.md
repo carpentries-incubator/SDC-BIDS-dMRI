@@ -258,7 +258,6 @@ Here we visualize only a 30x30x30 region (i.e. the slice corresponding to the
 `[20:50, 55:85, 35:65]` volume data region that was used in the tutorial).
 
 ~~~
-# Plot the fODFs
 # Setup orientation scenes
 fodf_spheres = actor.odf_slicer(csd_odf, sphere=default_sphere, scale=0.9, norm=False, colormap='plasma')
 
@@ -266,14 +265,14 @@ fodf_spheres = actor.odf_slicer(csd_odf, sphere=default_sphere, scale=0.9, norm=
 scene_axial = window.Scene()
 fodf_spheres.display(z=3)
 scene_axial.add(fodf_spheres)
-fodf_axial_scene = window.snapshot(scene_axial, size=(200,200), offscreen=True)
+fodf_axial_scene = window.snapshot(scene_axial, size=(600,600), offscreen=True)
 
 # Sagittal right
 scene_sagittal = window.Scene()
 fodf_spheres.display(x=15)
 fodf_spheres.RotateY(90)
 scene_sagittal.add(fodf_spheres)
-fodf_sagittal_scene = window.snapshot(scene_sagittal, size=(200,200), offscreen=True)
+fodf_sagittal_scene = window.snapshot(scene_sagittal, size=(600,600), offscreen=True)
 
 # Coronal anterior
 scene_coronal = window.Scene()
@@ -281,7 +280,7 @@ fodf_spheres.RotateY(-90)
 fodf_spheres.display(y=13)
 fodf_spheres.RotateX(90)
 scene_coronal.add(fodf_spheres)
-fodf_coronal_scene = window.snapshot(scene_coronal, size=(200,200), offscreen=True)
+fodf_coronal_scene = window.snapshot(scene_coronal, size=(600,600), offscreen=True)
 
 # Plot different views
 fig, axes = plt.subplots(1,3, figsize=(20, 20))
@@ -326,29 +325,29 @@ nib.save(nib.Nifti1Image(peak_indices, affine), os.path.join(out_dir, 'peaks_ind
 
 # Plot the peaks
 scene_sagittal.clear()
-scene_coronal.clear()
 fodf_peaks = actor.peak_slicer(csd_peaks.peak_dirs, csd_peaks.peak_values)
 
 # Axial superior
 scene_axial.clear()
 fodf_peaks.display(z=3)
 scene_axial.add(fodf_peaks)
-peaks_axial_scene = window.snapshot(scene_axial, size=(200,200), offscreen=True)
+peaks_axial_scene = window.snapshot(scene_axial, size=(600,600), offscreen=True)
 
 # Sagittal right
 scene_sagittal.clear()
 fodf_peaks.display(x=15)
 fodf_peaks.RotateY(90)
 scene_sagittal.add(fodf_peaks)
-peaks_sagittal_scene = window.snapshot(scene_sagittal, size=(200,200), offscreen=True)
+peaks_sagittal_scene = window.snapshot(scene_sagittal, size=(600,600), offscreen=True)
 
 # Coronal anterior
+scene_coronal.clear()
 scene_coronal = window.Scene()
 fodf_peaks.RotateY(-90)
 fodf_peaks.display(y=13)
 fodf_peaks.RotateX(90)
 scene_coronal.add(fodf_peaks)
-peaks_coronal_scene = window.snapshot(scene_coronal, size=(200, 200), offscreen=True)
+peaks_coronal_scene = window.snapshot(scene_coronal, size=(600, 600), offscreen=True)
 
 # Plot different views
 fig, axes = plt.subplots(1,3, figsize=(20, 20))
@@ -374,14 +373,52 @@ We can finally visualize both the fODFs and peaks in the same space.
 ~~~
 fodf_spheres.GetProperty().SetOpacity(0.4)
 
-scene.add(fodf_spheres)
-csd_peaks_fodfs_arr = window.snapshot(
-    scene, fname=os.path.join(out_dir, 'csd_peaks_fodfs.png'), size=(600, 600),
-    offscreen=True)
+# Reorient to axial slices
+fodf_peaks.RotateX(-90)
+fodf_spheres.RotateX(-90)
 
-fig, axes = plt.subplots()
-axes.imshow(csd_peaks_fodfs_arr, cmap="plasma", origin="lower")
-axes.axis("off")
+# Axial superior
+scene_axial.clear()
+fodf_peaks.display(z=3)
+fodf_spheres.display(z=3)
+scene_axial.add(fodf_peaks)
+scene_axial.add(fodf_spheres)
+csd_peaks_fodf_axial_scene = window.snapshot(scene_axial, size=(600,600), offscreen=True)
+
+# # Sagittal right
+scene_sagittal.clear()
+fodf_peaks.RotateY(90)
+fodf_spheres.RotateY(90)
+fodf_peaks.display(x=15)
+fodf_spheres.display(x=15)
+scene_sagittal.add(fodf_peaks)
+scene_sagittal.add(fodf_spheres)
+csd_peaks_fodf_sagittal_scene = window.snapshot(scene_sagittal, size=(600,600), offscreen=True)
+
+# Coronal anterior
+scene_coronal.clear()
+fodf_peaks.RotateY(-90)
+fodf_spheres.RotateY(-90)
+fodf_peaks.display(y=13)
+fodf_spheres.display(y=13)
+fodf_peaks.RotateX(90)
+fodf_spheres.RotateX(90)
+scene_coronal.add(fodf_peaks)
+scene_coronal.add(fodf_spheres)
+csd_peaks_fodf_coronal_scene = window.snapshot(scene_coronal, size=(600, 600), offscreen=True)
+
+# Plot different views
+fig, axes = plt.subplots(1,3, figsize=(20, 20))
+axes[0].imshow(csd_peaks_fodf_axial_scene, cmap="plasma", origin="lower")
+axes[0].axis("off")
+axes[0].set_title("Axial")
+axes[1].imshow(csd_peaks_fodf_sagittal_scene, cmap="plasma", origin="lower")
+axes[1].axis("off")
+axes[1].set_title("Sagittal")
+axes[2].imshow(csd_peaks_fodf_coronal_scene, cmap="plasma", origin="lower")
+axes[2].axis("off")
+axes[2].set_title("Coronal")
+plt.savefig(os.path.join(out_dir, "csd_peaks_fodfs.png"), dpi=300, bbox_inches="tight")
 plt.show()
 ~~~
 {: .language-python}
