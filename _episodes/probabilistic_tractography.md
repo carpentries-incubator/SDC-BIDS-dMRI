@@ -204,7 +204,7 @@ plt.show()
 ~~~
 {: .language-python}
 
-![tractogram_probabilistic_dg_pmf](../fig/6/tractogram_probabilistic_dg_pmf.png){:class="img-responsive"} \
+![tractogram_probabilistic_dg_pmf](../fig/probabilistic_tractography/tractogram_probabilistic_dg_pmf.png){:class="img-responsive"} \
 Streamlines representing white matter using probabilistic direction getter from
 PMF
 
@@ -248,7 +248,7 @@ plt.show()
 {: .language-python}
 
 
-![tractogram_probabilistic_dg_sh](../fig/6/tractogram_probabilistic_dg_sh.png){:class="img-responsive"} \
+![tractogram_probabilistic_dg_sh](../fig/probabilistic_tractography/tractogram_probabilistic_dg_sh.png){:class="img-responsive"} \
 Streamlines representing white matter using probabilistic direction getter from
 SH
 
@@ -290,7 +290,7 @@ plt.show()
 {: .language-python}
 
 
-![tractogram_probabilistic_dg_sh_pmf](../fig/6/tractogram_probabilistic_dg_sh_pmf.png){:class="img-responsive"} \
+![tractogram_probabilistic_dg_sh_pmf](../fig/probabilistic_tractography/tractogram_probabilistic_dg_sh_pmf.png){:class="img-responsive"} \
 Streamlines representing white matter using probabilistic direction getter from
 SH (peaks_from_model)
 
