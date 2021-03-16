@@ -102,3 +102,15 @@ highlighter: rouge
 
 # Remote theme
 remote_theme: carpentries/carpentries-theme
+
+# Specify the episode order
+episode_order:
+  - introduction
+  - preprocessing
+  - local_orientation_reconstruction
+  - diffusion_tensor_imaging
+  - constrained_spherical_deconvolution
+  - tractography
+  - local_tractography
+  - deterministic_tractography
+  - probabilistic_tractography
