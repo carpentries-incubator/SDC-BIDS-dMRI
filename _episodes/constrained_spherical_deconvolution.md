@@ -229,10 +229,10 @@ csd_model = ConstrainedSphericalDeconvModel(gtab, response, sh_order=sh_order, c
 ~~~
 {: .language-python}
 
-For illustration purposes we will fit only a small portion of the data.
+For illustration purposes we will fit only a small portion of the data representing the splenium of the corpus callosum.
 
 ~~~
-data_small = data[20:50, 55:85, 35:65]
+data_small = data[40:80, 40:80, 45:55]
 csd_fit = csd_model.fit(data_small)
 
 sh_coeffs = csd_fit.shm_coeff
@@ -254,8 +254,8 @@ csd_odf = csd_fit.odf(default_sphere)
 ~~~
 {: .language-python}
 
-Here we visualize only a 30x30x30 region (i.e. the slice corresponding to the
-`[20:50, 55:85, 35:65]` volume data region that was used in the tutorial).
+Here we visualize only a 40x40x10 region (i.e. the slice corresponding to the
+`[40:80, 40:80, 45:55]` volume data region that was used in the tutorial).
 
 ~~~
 # Setup orientation scenes
