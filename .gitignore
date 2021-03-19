@@ -15,3 +15,13 @@ vendor/
 .docker-vendor/
 Gemfile.lock
 .*history
+
+# editor-specific folders
+.vscode/
+.idea/
+
+# data folder
+data/
+
+# Python virtual environment
+.sdc-bids-dmri

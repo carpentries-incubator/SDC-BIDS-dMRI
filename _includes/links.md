@@ -52,6 +52,7 @@
 [yaml]: http://yaml.org/
 
 <!-- Workshop-specific links -->
+[lesson-github]: https://github.com/carpentries-incubator/SDC-BIDS-dMRI
 [3D Slicer]: https://www.slicer.org/
 [Anaconda]: https://www.anaconda.com/
 [ANTs]: http://stnava.github.io/ANTs/
