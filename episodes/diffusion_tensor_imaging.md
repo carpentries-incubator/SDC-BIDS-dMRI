@@ -196,7 +196,7 @@ DTI is only one of many models and is one of the simplest models available for m
 
 ![DTI drawbacks](../fig/diffusion_tensor_imaging/FiberConfigurations.png) {:class="img-responsive"}
 
-_Sourced from Sotiropolous and Zalewsky (2017). Building connectomes using diffusion MRI: why, how, and but. NMR in Biomedicine. 4(32). e3752. doi:10.1002/nbm.3752._
+_Sourced from Sotiropoulos and Zalesky (2017). Building connectomes using diffusion MRI: why, how, and but. NMR in Biomedicine. 4(32). e3752. doi:10.1002/nbm.3752._
 
 Though other models are outside the scope of this lesson, we recommend looking into some of the pros and cons of each model (listed previously) to choose one best suited for your data!
 
