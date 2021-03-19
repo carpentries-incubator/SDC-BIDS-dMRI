@@ -71,8 +71,9 @@ subj = '010006'
 
 # Get the diffusion files
 dwi_fname = dwi_layout.get(subject=subj, suffix='dwi', extension='nii.gz', return_type='file')[0]
+bvec_fname = dwi_layout.get(subject=subj, extension='eddy_rotated_bvecs', return_type='file')[0]
 bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bval', return_type='file')[0]
-bvec_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bvec', return_type='file')[0]
+
 
 # Get the anatomical file
 t1w_fname = t1_layout.get(subject=subj, extension='nii.gz', return_type='file')[0]
@@ -131,7 +132,7 @@ print(response)
 {: .language-python}
 
 ~~~
-(array([0.00159258, 0.00033926, 0.00033926]), 201.48318)
+(array([0.00159258, 0.00033926, 0.00033926]), 209.55229)
 ~~~
 {: .output}
 
@@ -148,7 +149,7 @@ print(ratio)
 {: .language-python}
 
 ~~~
-0.21302577723299593
+0.21373311340767914
 ~~~
 {: .output}
 
@@ -224,14 +225,20 @@ the diffusion data:
 from dipy.reconst.csdeconv import ConstrainedSphericalDeconvModel
 
 sh_order = 8
-csd_model = ConstrainedSphericalDeconvModel(gtab, response, sh_order=sh_order)
+csd_model = ConstrainedSphericalDeconvModel(gtab, response, sh_order=sh_order, convergence=50)
 ~~~
 {: .language-python}
 
-For illustration purposes we will fit only a small portion of the data.
+For illustration purposes we will fit only a small portion of the data representing the splenium of the corpus callosum.
 
 ~~~
-csd_fit = csd_model.fit(data)
+data_small = data[40:80, 40:80, 45:55]
+csd_fit = csd_model.fit(data_small)
+
+sh_coeffs = csd_fit.shm_coeff
+
+# Save the SH coefficients
+nib.save(nib.Nifti1Image(sh_coeffs.astype(np.float32), affine), os.path.join(out_dir, 'sh_coeffs.nii.gz'))
 ~~~
 {: .language-python}
 
@@ -247,21 +254,43 @@ csd_odf = csd_fit.odf(default_sphere)
 ~~~
 {: .language-python}
 
-Here we visualize only a 30x30 region (i.e. the slice corresponding to the
-`[20:50, 55:85, 38:39]` volume data region that was used in the tutorial).
+Here we visualize only a 40x40x10 region (i.e. the slice corresponding to the
+`[40:80, 40:80, 45:55]` volume data region that was used in the tutorial).
 
 ~~~
-fodf_spheres = actor.odf_slicer(csd_odf, sphere=default_sphere, scale=0.9,
-                                norm=False, colormap='plasma')
+# Setup orientation scenes
+fodf_spheres = actor.odf_slicer(csd_odf, sphere=default_sphere, scale=0.9, norm=False, colormap='plasma')
 
+# Axial superior
+scene = window.Scene()
+fodf_spheres.display(z=data_small.shape[2] // 2)
 scene.add(fodf_spheres)
-fodf_scene_arr = window.snapshot(
-    scene, fname=os.path.join(out_dir, 'csd_odfs.png'), size=(600, 600),
-    offscreen=True)
+fodf_axial_scene = window.snapshot(scene, size=(600,600), offscreen=True)
 
-fig, axes = plt.subplots()
-axes.imshow(fodf_scene_arr, cmap="plasma", origin="lower")
-axes.axis("off")
+# Sagittal right
+fodf_spheres.display(x=data_small.shape[0] // 2)
+scene.yaw(-90), scene.roll(90)
+scene.reset_camera()
+fodf_sagittal_scene = window.snapshot(scene, size=(600,600), offscreen=True)
+
+# Coronal anterior
+fodf_spheres.display(y=data_small.shape[1] // 2)
+scene.roll(90), scene.pitch(90)
+scene.reset_camera()
+fodf_coronal_scene = window.snapshot(scene, size=(600,600), offscreen=True)
+
+# Plot different views
+fig, axes = plt.subplots(1,3, figsize=(20, 20))
+axes[0].imshow(fodf_axial_scene, cmap="plasma", origin="lower")
+axes[0].axis("off")
+axes[0].set_title("Axial")
+axes[1].imshow(fodf_sagittal_scene, cmap="plasma", origin="lower")
+axes[1].axis("off")
+axes[1].set_title("Sagittal")
+axes[2].imshow(fodf_coronal_scene, cmap="plasma", origin="lower")
+axes[2].axis("off")
+axes[2].set_title("Coronal")
+plt.savefig(os.path.join(out_dir, "csd_odfs.png"), dpi=300, bbox_inches="tight")
 plt.show()
 ~~~
 {: .language-python}
@@ -275,24 +304,55 @@ purpose, `DIPY` offers the `peaks_from_model` method.
 
 ~~~
 from dipy.direction import peaks_from_model
+from dipy.io.peaks import reshape_peaks_for_visualization
 
 csd_peaks = peaks_from_model(model=csd_model,
-                             data=data,
+                             data=data_small,
                              sphere=default_sphere,
                              relative_peak_threshold=.5,
                              min_separation_angle=25,
                              parallel=True)
 
-window.clear(scene)
+# Save the peaks
+nib.save(nib.Nifti1Image(reshape_peaks_for_visualization(csd_peaks),
+                         affine), os.path.join(out_dir, 'peaks.nii.gz'))
+
+peak_indices = csd_peaks.peak_indices
+nib.save(nib.Nifti1Image(peak_indices, affine), os.path.join(out_dir, 'peaks_indices.nii.gz'))
+
+# Plot the peaks
+scene = window.Scene()
 fodf_peaks = actor.peak_slicer(csd_peaks.peak_dirs, csd_peaks.peak_values)
 scene.add(fodf_peaks)
-peaks_scene_arr = window.snapshot(
-    scene, fname=os.path.join(out_dir, 'csd_peaks.png'), size=(600, 600),
-    offscreen=True)
 
-fig, axes = plt.subplots()
-axes.imshow(peaks_scene_arr, origin="lower")
-axes.axis("off")
+# Axial superior
+fodf_peaks.display(z=data_small.shape[2] // 2)
+peaks_axial_scene = window.snapshot(scene, size=(600,600), offscreen=True)
+
+# Sagittal right
+fodf_peaks.display(x=data_small.shape[0] // 2)
+scene.yaw(-90), scene.roll(90)
+scene.reset_camera()
+peaks_sagittal_scene = window.snapshot(scene, size=(600,600), offscreen=True)
+
+# Coronal anterior
+fodf_peaks.display(y=data_small.shape[1] // 2)
+scene.roll(90), scene.pitch(90)
+scene.reset_camera()
+peaks_coronal_scene = window.snapshot(scene, size=(600,600), offscreen=True)
+
+# Plot different views
+fig, axes = plt.subplots(1,3, figsize=(20, 20))
+axes[0].imshow(peaks_axial_scene, cmap="plasma", origin="lower")
+axes[0].axis("off")
+axes[0].set_title("Axial")
+axes[1].imshow(peaks_sagittal_scene, cmap="plasma", origin="lower")
+axes[1].axis("off")
+axes[1].set_title("Sagittal")
+axes[2].imshow(peaks_coronal_scene, cmap="plasma", origin="lower")
+axes[2].axis("off")
+axes[2].set_title("Coronal")
+plt.savefig(os.path.join(out_dir, "csd_peaks.png"), dpi=300, bbox_inches="tight")
 plt.show()
 ~~~
 {: .language-python}
@@ -305,14 +365,41 @@ We can finally visualize both the fODFs and peaks in the same space.
 ~~~
 fodf_spheres.GetProperty().SetOpacity(0.4)
 
-scene.add(fodf_spheres)
-csd_peaks_fodfs_arr = window.snapshot(
-    scene, fname=os.path.join(out_dir, 'csd_peaks_fodfs.png'), size=(600, 600),
-    offscreen=True)
+scene = window.Scene() 
 
-fig, axes = plt.subplots()
-axes.imshow(csd_peaks_fodfs_arr, cmap="plasma", origin="lower")
-axes.axis("off")
+# Axial superior
+fodf_peaks.display(z=data_small.shape[2] // 2)
+fodf_spheres.display(z=data_small.shape[2] // 2)
+scene.add(fodf_peaks)
+scene.add(fodf_spheres)
+csd_peaks_fodf_axial_scene = window.snapshot(scene, size=(600,600), offscreen=True)
+
+# Sagittal right
+fodf_peaks.display(x=data_small.shape[0] // 2)
+fodf_spheres.display(x=data_small.shape[0] // 2)
+scene.yaw(-90), scene.roll(90)
+scene.reset_camera()
+csd_peaks_fodf_sagittal_scene = window.snapshot(scene, size=(600,600), offscreen=True)
+
+# Coronal anterior
+fodf_peaks.display(y=data_small.shape[1] // 2)
+fodf_spheres.display(y=data_small.shape[1] // 2)
+scene.roll(90), scene.pitch(90)
+scene.reset_camera()
+csd_peaks_fodf_coronal_scene = window.snapshot(scene, size=(600,600), offscreen=True)
+
+# Plot different views
+fig, axes = plt.subplots(1,3, figsize=(20, 20))
+axes[0].imshow(csd_peaks_fodf_axial_scene, cmap="plasma", origin="lower")
+axes[0].axis("off")
+axes[0].set_title("Axial")
+axes[1].imshow(csd_peaks_fodf_sagittal_scene, cmap="plasma", origin="lower")
+axes[1].axis("off")
+axes[1].set_title("Sagittal")
+axes[2].imshow(csd_peaks_fodf_coronal_scene, cmap="plasma", origin="lower")
+axes[2].axis("off")
+axes[2].set_title("Coronal")
+plt.savefig(os.path.join(out_dir, "csd_peaks_fodfs.png"), dpi=300, bbox_inches="tight")
 plt.show()
 ~~~
 {: .language-python}
