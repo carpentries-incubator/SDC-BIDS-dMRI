@@ -18,7 +18,7 @@ start: true
 Diffusion preprocessing typically comprises of a series of steps, which may vary depending on how the data is acquired. Some consensus has been reached for certain preprocessing steps, while others are still up for debate. The lesson will primarily focus on the preprocessing steps where consensus has been reached. Preprocessing is performed using a few well-known software packages (e.g. FSL, ANTs). For the purposes of these lessons, preprocessing steps requiring these software packages has already been performed for the dataset <code>ds000221</code> and the commands required for each step will be provided. This dataset contains single shell diffusion data with 7 b=0 s/mm^2 volumes (non-diffusion weighted) and 60 b=1000 s/mm^2 volumes. In addition, field maps (found in the <code>fmap</code> directory are acquired with opposite phase-encoding directions).
 
 To illustrate what the preprocessing step may look like, here is an example preprocessing workflow from QSIPrep (Cieslak _et al_, 2020):
-![preprocess](../fig/preprocessing/preprocess_steps.jpg)
+![Preprocessing steps](../fig/preprocessing/preprocess_steps.jpg)
 
 dMRI has some similar challenges to fMRI preprocessing, as well as some unique [ones](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3366862/).
 
@@ -78,7 +78,7 @@ nib.save(img, os.path.join(out_dir, "sub-%s_ses-01_brainmask.nii.gz" % subj))
 ~~~
 {: .language-python}
 
-![b0_brainmask](../fig/preprocessing/dwi_brainmask.png)
+![b0 brain mask](../fig/preprocessing/dwi_brainmask.png)
 
 ### FSL [<code>topup</code>](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/topup)
 
@@ -134,7 +134,7 @@ applytopup --imain=../../data/ds000221/sub-010006/ses-01/dwi/sub-010006_ses-01_d
 ~~~
 {: .language-bash}
 
-![topup_image](../fig/preprocessing/dwi_topup.png)
+![Topup image](../fig/preprocessing/dwi_topup.png)
 
 ### FSL [`Eddy`](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/eddy)
 
@@ -184,7 +184,7 @@ mv ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006
 ~~~
 {: .language-bash}
 
-![T1w_brainmask](../fig/preprocessing/T1w_brainmask.png)
+![T1w brain mask](../fig/preprocessing/T1w_brainmask.png)
 
 Note, we use <code>bet</code> here, as well as the second inversion of the anatomical image, as it provides us with a better brainmask. The <code>bet</code> command above is called to output only the binary mask and the fractional intensity threshold is also increased slightly (to 0.6) provide a smaller outline of the brain initially, and then decreased (to 0.4) to provide a larger outline. The flag <code>-m</code> indicates to the tool to create a brainmask in addition to outputting the extracted brain volume. Both the mask and brain volume will be used in our registration step.
 
@@ -255,7 +255,7 @@ antsApplyTransforms -d 3 -i ../../data/ds000221/derivatives/uncorrected/sub-0100
 ~~~
 {: .language-bash}
 
-![transformed_volumes](../fig/preprocessing/transformed_volumes.png)
+![Transformed volumes](../fig/preprocessing/transformed_volumes.png)
 
 Following the transformation of the T1w volume, we can see that anatomical and diffusion weighted volumes are now aligned. It should be highlighted that as part of the transformation step, the T1w volume is resampled based on the voxel size of the ference volume (e.g. DWI).
 
