@@ -19,15 +19,15 @@ Diffusion tensor imaging or "DTI" refers to images describing diffusion with a t
 
 The tensor models the diffusion signal mathematically as:
 
-![Diffusion signal](../fig/diffusion_tensor_imaging/diffusion_eqn.png) {:class="img-responsive"}
+![Diffusion signal equation](../fig/diffusion_tensor_imaging/diffusion_eqn.png) {:class="img-responsive"}
 
-Where ![](../fig/diffusion_tensor_imaging/inline_unitvector.png) is a unit vector in 3D space indicating the direction of measurement and b are the parameters of the measurement, such as the strength and duration of diffusion-weighting gradient. ![](../fig/diffusion_tensor_imaging/inline_diffusionsignal.png) is the diffusion-weighted signal measured and ![](../fig/diffusion_tensor_imaging/inline_nondiffsignal.png) is the signal conducted in a measurement with no diffusion weighting. ![](../fig/diffusion_tensor_imaging/inline_diffusionmatrix.png) is a positive-definite quadratic form, which contains six free parameters to be fit. These six parameters are:
+Where ![Diffusion unit vector](../fig/diffusion_tensor_imaging/inline_unitvector.png) is a unit vector in 3D space indicating the direction of measurement and b are the parameters of the measurement, such as the strength and duration of diffusion-weighting gradient. ![Diffusion signal](../fig/diffusion_tensor_imaging/inline_diffusionsignal.png) is the diffusion-weighted signal measured and ![Non-weighted diffusion signal](../fig/diffusion_tensor_imaging/inline_nondiffsignal.png) is the signal conducted in a measurement with no diffusion weighting. ![Diffusivity](../fig/diffusion_tensor_imaging/inline_diffusionmatrix.png) is a positive-definite quadratic form, which contains six free parameters to be fit. These six parameters are:
 
-![Diffusion matrix](../fig/diffusion_tensor_imaging/diffusion_matrix.png) {:class="img-responsive"}
+![Diffusivity matrix](../fig/diffusion_tensor_imaging/diffusion_matrix.png) {:class="img-responsive"}
 
-The diffusion matrix is a variance-covariance matrix of the diffusivity along the three spatial dimensions. Note that we can assume that the diffusivity has antipodal symmetry, so elements across the diagonal of the matrix are equal. For example: ![](../fig/diffusion_tensor_imaging/inline_diagelements.png). This is why there are only 6 free parameters to estimate here.
+The diffusion matrix is a variance-covariance matrix of the diffusivity along the three spatial dimensions. Note that we can assume that the diffusivity has antipodal symmetry, so elements across the diagonal of the matrix are equal. For example: ![Symmetry in the diffusivity matrix](../fig/diffusion_tensor_imaging/inline_diagelements.png). This is why there are only 6 free parameters to estimate here.
 
-Tensors are represented by ellipsoids characterized by calculated eigenvalues (![](../fig/diffusion_tensor_imaging/inline_eigval.png)) and eigenvectors (![](../fig/diffusion_tensor_imaging/inline_eigvec.png)) from the previously described matrix. The computed eigenvalues and eigenvectors are normally sorted in descending magnitude (i.e. ![](../fig/diffusion_tensor_imaging/inline_sortedeigvec.png)). Eigenvalues are always strictly positive in the context of dMRI and are measured in mm^2/s. In the DTI model, the largest eigenvalue gives the principal direction of the diffusion tensor, and the other two eigenvectors span the orthogonal plane to the former direction.
+Tensors are represented by ellipsoids characterized by calculated eigenvalues (![Diffusivity matrix eigenvalues](../fig/diffusion_tensor_imaging/inline_eigval.png)) and eigenvectors (![Diffusivity matrix eigenvectors](../fig/diffusion_tensor_imaging/inline_eigvec.png)) from the previously described matrix. The computed eigenvalues and eigenvectors are normally sorted in descending magnitude (i.e. ![Diffusivity matrix eigenvalues magnitudes](../fig/diffusion_tensor_imaging/inline_sortedeigvec.png)). Eigenvalues are always strictly positive in the context of dMRI and are measured in mm^2/s. In the DTI model, the largest eigenvalue gives the principal direction of the diffusion tensor, and the other two eigenvectors span the orthogonal plane to the former direction.
 
 ![Diffusion tensor](../fig/diffusion_tensor_imaging/DiffusionTensor.png) {:class="img-responsive"}
 _Adapted from Jelison et al., 2004_
@@ -111,9 +111,9 @@ Fractional anisotropy (FA) characterizes the degree to which the distribution of
 
 Mathematically, FA is defined as the normalized variance of the eigenvalues of the tensor:
 
-![FA Equation](../fig/diffusion_tensor_imaging/fa_eqn.png) {:class="img-responsive"}
+![FA equation](../fig/diffusion_tensor_imaging/fa_eqn.png) {:class="img-responsive"}
 
-Values of FA vary between 0 and 1 (unitless). In the cases of perfect, isotropic diffusion, ![](../fig/diffusion_tensor_imaging/fa_iso.png), the diffusion tensor is a sphere and FA = 0.  If the first two eigenvalues are equal the tensor will be oblate or planar, whereas if the first eigenvalue is larger than the other two, it will have the mentioned ellipsoid shape: as diffusion progressively becomes more anisotropic, eigenvalues become more unequal, causing the tensor to be elongated, with FA approaching 1. Note that FA should be interpreted carefully. It may be an indication of the density of packing fibers in a voxel and the amount of myelin wrapped around those axons, but it is not always a measure of "tissue integrity".
+Values of FA vary between 0 and 1 (unitless). In the cases of perfect, isotropic diffusion, ![Isotropic diffusion eigenvalues](../fig/diffusion_tensor_imaging/fa_iso.png), the diffusion tensor is a sphere and FA = 0.  If the first two eigenvalues are equal the tensor will be oblate or planar, whereas if the first eigenvalue is larger than the other two, it will have the mentioned ellipsoid shape: as diffusion progressively becomes more anisotropic, eigenvalues become more unequal, causing the tensor to be elongated, with FA approaching 1. Note that FA should be interpreted carefully. It may be an indication of the density of packing fibers in a voxel and the amount of myelin wrapped around those axons, but it is not always a measure of "tissue integrity".
 
 Let's take a look at what the FA map looks like! An FA map is a gray-scale image, where higher intensities reflect more anisotropic diffuse regions.
 
@@ -128,7 +128,7 @@ plot.plot_anat(fa_img)
 ~~~
 {: .language-python}
 
-![FA Plot](../fig/diffusion_tensor_imaging/plot_fa.png) {:class="img-responsive"}
+![FA plot](../fig/diffusion_tensor_imaging/plot_fa.png) {:class="img-responsive"}
 
 Derived from partial volume effects in imaging voxels due to the presence of different tissues, noise in the measurements and numerical errors, the DTI model estimation may yield negative eigenvalues. Such *degenerate* case is not physically meaningful. These values are usually revealed as black or 0-valued pixels in FA maps.
 
@@ -138,7 +138,7 @@ FA is a central value in dMRI: large FA values imply that the underlying fiber p
 
 An often used complimentary measure to FA is mean diffusivity (MD). MD is a measure of the degree of diffusion, independent of direction. This is sometimes known as the apparent diffusion coefficient (ADC). Mathematically, MD is computed as the mean eigenvalues of the tensor and is measured in mm^2/s.
 
-![MD Eqn](../fig/diffusion_tensor_imaging/md_eqn.png) {:class="img-responsive"}
+![MD equation](../fig/diffusion_tensor_imaging/md_eqn.png) {:class="img-responsive"}
 
 Similar to the previous FA image, let's take a look at what the MD map looks like. Again, higher intensities reflect higher mean diffusivity!
 
@@ -149,14 +149,14 @@ plot.plot_anat(md_img, cut_coords=(0, -29, 20), vmin=0, vmax=0.01)
 ~~~
 {: .language-python}
 
-![MD Plot](../fig/diffusion_tensor_imaging/plot_md.png) {:class="img-responsive"}
+![MD plot](../fig/diffusion_tensor_imaging/plot_md.png) {:class="img-responsive"}
 
 
 ### Axial and radial diffusivity (AD & RD)
 
-The final two metrics we will discuss are axial diffusivity (AD) and radial diffusivity (RD). Two tensors with different shapes may yield the same FA values, and additional measures such as AD and RD are required to further characterize the tensor. AD describes the diffusion rate along the primary axis of diffusion, along ![](../fig/diffusion_tensor_imaging/primary_diffusion.png), or parallel to the axon (and hence, some works refer to it as the *parallel diffusivity*). On the other hand, RD reflects the average diffusivity along the other two minor axes (being named as *perpendicular diffusivity* in some works) (![](../fig/diffusion_tensor_imaging/minor_axes.png)). Both are measured in mm^2/s.
+The final two metrics we will discuss are axial diffusivity (AD) and radial diffusivity (RD). Two tensors with different shapes may yield the same FA values, and additional measures such as AD and RD are required to further characterize the tensor. AD describes the diffusion rate along the primary axis of diffusion, along ![Axial diffusivity eigenvalue](../fig/diffusion_tensor_imaging/primary_diffusion.png), or parallel to the axon (and hence, some works refer to it as the *parallel diffusivity*). On the other hand, RD reflects the average diffusivity along the other two minor axes (being named as *perpendicular diffusivity* in some works) (![Radial diffusivity eigenvalue](../fig/diffusion_tensor_imaging/minor_axes.png)). Both are measured in mm^2/s.
 
-![Axial and Radial Diffusivities](../fig/diffusion_tensor_imaging/ax_rad_diff.png) {:class="img-responsive"}
+![Axial and radial diffusivities](../fig/diffusion_tensor_imaging/ax_rad_diff.png) {:class="img-responsive"}
 
 
 ### Tensor visualizations
@@ -183,18 +183,18 @@ ax[2].imshow(ndimage.rotate(RGB_map[:, :, RGB_map.shape[2]//2, :], 90, reshape=F
 ~~~
 {: .language-python}
 
-![RGB FA Map](../fig/diffusion_tensor_imaging/plot_fa_rgb.png) {:class="img-responsive"}
+![RGB FA map](../fig/diffusion_tensor_imaging/plot_fa_rgb.png) {:class="img-responsive"}
 
 Another way of visualizing the tensors is to display the diffusion tensor in each imaging voxel with colour encoding (Please refer to the [<code>DIPY</code> documentation](https://dipy.org/tutorials/) for the necessary steps to perform this type of visualization, as it can be memory intensive). Below is an example of one such tensor visualization.
 
-![Tensor Visualization](../fig/diffusion_tensor_imaging/TensorViz.png) {:class="img-responsive"}
+![Tensor visualization](../fig/diffusion_tensor_imaging/TensorViz.png) {:class="img-responsive"}
 
 
 ### Some notes on DTI
 
 DTI is only one of many models and is one of the simplest models available for modelling diffusion. While it is used for many studies, there are also some drawbacks (e.g. ability to distinguish multiple fibre orientations in an imaging voxel). Examples of this can be seen below!
 
-![DTI Drawbacks](../fig/diffusion_tensor_imaging/FiberConfigurations.png) {:class="img-responsive"}
+![DTI drawbacks](../fig/diffusion_tensor_imaging/FiberConfigurations.png) {:class="img-responsive"}
 
 _Sourced from Sotiropolous and Zalewsky (2017). Building connectomes using diffusion MRI: why, how, and but. NMR in Biomedicine. 4(32). e3752. doi:10.1002/nbm.3752._
 
