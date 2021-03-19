@@ -70,7 +70,6 @@ collections:
 
 # Manual episode order
 episode_order:
-  - example_repo
   - introduction
   - preprocessing
   - local_orientation_reconstruction
