@@ -9,14 +9,9 @@ _site
 .Rproj.user
 .Rhistory
 .RData
-.vscode/
-data/
-.sdc-bids-dmri
 .bundle/
 .vendor/
+vendor/
 .docker-vendor/
 Gemfile.lock
 .*history
-
-# Editor temporary/working/backup files
-.idea/
