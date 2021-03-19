@@ -68,6 +68,19 @@ collections:
     output: true
     permalink: /:path/index.html
 
+# Manual episode order
+episode_order:
+  - example_repo
+  - introduction
+  - preprocessing
+  - local_orientation_reconstruction
+  - diffusion_tensor_imaging
+  - constrained_spherical_deconvolution
+  - tractography
+  - local_tractography
+  - deterministic_tractography
+  - probabilistic_tractography
+
 # Set the default layout for things in the episodes collection.
 defaults:
   - values:
