@@ -47,7 +47,7 @@ dependencies will need to be installed:
 
 > ## Git
 > In order to run the notebooks locally, users will need to retrieve the code
-> using [Git] or directly as a zipped file from the lesson's [workshop-repo].
+> using [Git] or directly as a zipped file from the lesson's [GitHub repository][lesson-github].
 {: .prereq}
 
 > ## Virtual environments
