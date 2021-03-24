@@ -28,7 +28,7 @@ recovered as a deconvolution problem by solving a system of linear equations.
 These methods can work on both single-shell and multi-shell data.
 
 The basic equations of an SD method can be summarized as
-![Spherical deconvolution equation](../fig/constrained_spherical_deconvolution/spherical_deconvolution_equation.png){:class="img-responsive"} \
+![Spherical deconvolution equation]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/spherical_deconvolution_equation.png){:class="img-responsive"} \
 Spherical deconvolution
 
 There are a number of variants to the general SD framework that differ, among
@@ -185,7 +185,7 @@ plt.show()
 ~~~
 {: .language-python}
 
-![Fiber Response Function (FRF)](../fig/constrained_spherical_deconvolution/frf.png){:class="img-responsive"} \
+![Fiber Response Function (FRF)]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/frf.png){:class="img-responsive"} \
 Estimated response function
 
 
@@ -295,8 +295,7 @@ plt.show()
 ~~~
 {: .language-python}
 
-
-![CSD ODFs](../fig/constrained_spherical_deconvolution/csd_odfs.png){:class="img-responsive"} \
+![CSD ODFs]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/csd_odfs.png){:class="img-responsive"} \
 CSD ODFs.
 
 The peak directions (maxima) of the fODFs can be found from the fODFs. For this
@@ -357,7 +356,7 @@ plt.show()
 ~~~
 {: .language-python}
 
-![CSD peaks](../fig/constrained_spherical_deconvolution/csd_peaks.png){:class="img-responsive"} \
+![CSD peaks]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/csd_peaks.png){:class="img-responsive"} \
 CSD Peaks.
 
 We can finally visualize both the fODFs and peaks in the same space.
@@ -404,7 +403,7 @@ plt.show()
 ~~~
 {: .language-python}
 
-![CSD peaks and fODFs](../fig/constrained_spherical_deconvolution/csd_peaks_fodfs.png){:class="img-responsive"} \
+![CSD peaks and fODFs]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/csd_peaks_fodfs.png){:class="img-responsive"} \
 CSD Peaks and ODFs.
 
 
