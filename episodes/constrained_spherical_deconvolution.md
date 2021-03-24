@@ -254,43 +254,102 @@ csd_odf = csd_fit.odf(default_sphere)
 ~~~
 {: .language-python}
 
-Here we visualize only a 40x40x10 region (i.e. the slice corresponding to the
-`[40:80, 40:80, 45:55]` volume data region that was used in the tutorial).
+We will now define a utility function that will allow us to generate three
+anatomical views (axial superior, sagittal right and coronal anterior) of the
+data.
 
 ~~~
-# Setup orientation scenes
-fodf_spheres = actor.odf_slicer(csd_odf, sphere=default_sphere, scale=0.9, norm=False, colormap='plasma')
+def generate_anatomical_views(slices, *actors, cmap="plasma",
+        viewsize=(600, 600), figsize=(20, 20)):
+    """Generate anatomical (axial superior, sagittal right and coronal
+    anterior) views of the actor(s) at the provided slices.
 
-# Axial superior
-scene = window.Scene()
-fodf_spheres.display(z=data_small.shape[2] // 2)
-scene.add(fodf_spheres)
-fodf_axial_scene = window.snapshot(scene, size=(600,600), offscreen=True)
+    Arguments
+    ---------
+    slices: Tuple (int, int, int)
+        Image data to be displayed.
+    actors : vtkActor
+        Actor(s) to be displayed.
+    cmap : str
+        Colormap to be applied to the overlay.
+    viewsize : Tuple (int, int)
+        Composite figure size.
+    figsize : Tuple (int, int)
+        Subfigure size.
 
-# Sagittal right
-fodf_spheres.display(x=data_small.shape[0] // 2)
-scene.yaw(-90), scene.roll(90)
-scene.reset_camera()
-fodf_sagittal_scene = window.snapshot(scene, size=(600,600), offscreen=True)
+    Returns
+    -------
+        A `Figure` instance containing the anatomical views of the actor(s).
+    """
 
-# Coronal anterior
-fodf_spheres.display(y=data_small.shape[1] // 2)
-scene.roll(90), scene.pitch(90)
-scene.reset_camera()
-fodf_coronal_scene = window.snapshot(scene, size=(600,600), offscreen=True)
+    origin = "lower"
+    offscreen = True
 
-# Plot different views
-fig, axes = plt.subplots(1,3, figsize=(20, 20))
-axes[0].imshow(fodf_axial_scene, cmap="plasma", origin="lower")
-axes[0].axis("off")
-axes[0].set_title("Axial")
-axes[1].imshow(fodf_sagittal_scene, cmap="plasma", origin="lower")
-axes[1].axis("off")
-axes[1].set_title("Sagittal")
-axes[2].imshow(fodf_coronal_scene, cmap="plasma", origin="lower")
-axes[2].axis("off")
-axes[2].set_title("Coronal")
-plt.savefig(os.path.join(out_dir, "csd_odfs.png"), dpi=300, bbox_inches="tight")
+    # Create the scence
+    scene = window.Scene()
+
+    # Add the each data volume to the scene
+    for actor in actors:
+        scene.add(actor)
+
+    # Axial superior
+    for actor in actors:
+        actor.display(z=slices[2])
+
+    axial_scene = window.snapshot(scene, size=viewsize, offscreen=offscreen)
+
+    # Sagittal right
+    for actor in actors:
+        actor.display(x=slices[0])
+
+    scene.yaw(-90)
+    scene.roll(90)
+    scene.reset_camera()
+    sagittal_scene = window.snapshot(scene, size=viewsize, offscreen=offscreen)
+
+    # Coronal anterior
+    for actor in actors:
+        actor.display(y=slices[1])
+
+    scene.roll(90)
+    scene.pitch(90)
+    scene.reset_camera()
+    coronal_scene = window.snapshot(scene, size=viewsize, offscreen=offscreen)
+
+    # Plot different views
+    fig, axes = plt.subplots(1,3, figsize=figsize)
+    axes[0].imshow(axial_scene, cmap=cmap, origin=origin)
+    axes[0].axis("off")
+    axes[0].set_title("Axial superior")
+    axes[1].imshow(sagittal_scene, cmap=cmap, origin=origin)
+    axes[1].axis("off")
+    axes[1].set_title("Sagittal right")
+    axes[2].imshow(coronal_scene, cmap=cmap, origin=origin)
+    axes[2].axis("off")
+    axes[2].set_title("Coronal anterior")
+
+    return fig
+~~~
+{: .language-python}
+
+Here we visualize only the central slices of the 40x40x10 region (i.e. the
+`[40:80, 40:80, 45:55]` volume data region) that has been used.
+
+~~~
+colormap = "plasma"
+
+# Build the representation of the data
+fodf_spheres = actor.odf_slicer(csd_odf, sphere=default_sphere, scale=0.9,
+                                norm=False, colormap=colormap)
+
+# Compute the slices to be shown
+slices = tuple(elem // 2 for elem in data_small.shape)
+
+# Generate the figure
+fig = generate_anatomical_views(slices, fodf_spheres, cmap=colormap)
+
+fig.savefig(os.path.join(out_dir, "csd_odfs.png"), dpi=300,
+            bbox_inches="tight")
 plt.show()
 ~~~
 {: .language-python}
@@ -317,41 +376,17 @@ nib.save(nib.Nifti1Image(reshape_peaks_for_visualization(csd_peaks),
                          affine), os.path.join(out_dir, 'peaks.nii.gz'))
 
 peak_indices = csd_peaks.peak_indices
-nib.save(nib.Nifti1Image(peak_indices, affine), os.path.join(out_dir, 'peaks_indices.nii.gz'))
+nib.save(nib.Nifti1Image(peak_indices, affine), os.path.join(out_dir,
+    'peaks_indices.nii.gz'))
 
-# Plot the peaks
-scene = window.Scene()
+# Build the representation of the data
 fodf_peaks = actor.peak_slicer(csd_peaks.peak_dirs, csd_peaks.peak_values)
-scene.add(fodf_peaks)
 
-# Axial superior
-fodf_peaks.display(z=data_small.shape[2] // 2)
-peaks_axial_scene = window.snapshot(scene, size=(600,600), offscreen=True)
+# Generate the figure
+fig = generate_anatomical_views(slices, fodf_peaks, cmap=colormap)
 
-# Sagittal right
-fodf_peaks.display(x=data_small.shape[0] // 2)
-scene.yaw(-90), scene.roll(90)
-scene.reset_camera()
-peaks_sagittal_scene = window.snapshot(scene, size=(600,600), offscreen=True)
-
-# Coronal anterior
-fodf_peaks.display(y=data_small.shape[1] // 2)
-scene.roll(90), scene.pitch(90)
-scene.reset_camera()
-peaks_coronal_scene = window.snapshot(scene, size=(600,600), offscreen=True)
-
-# Plot different views
-fig, axes = plt.subplots(1,3, figsize=(20, 20))
-axes[0].imshow(peaks_axial_scene, cmap="plasma", origin="lower")
-axes[0].axis("off")
-axes[0].set_title("Axial")
-axes[1].imshow(peaks_sagittal_scene, cmap="plasma", origin="lower")
-axes[1].axis("off")
-axes[1].set_title("Sagittal")
-axes[2].imshow(peaks_coronal_scene, cmap="plasma", origin="lower")
-axes[2].axis("off")
-axes[2].set_title("Coronal")
-plt.savefig(os.path.join(out_dir, "csd_peaks.png"), dpi=300, bbox_inches="tight")
+fig.savefig(os.path.join(out_dir, "csd_peaks.png"), dpi=300,
+    bbox_inches="tight")
 plt.show()
 ~~~
 {: .language-python}
@@ -364,41 +399,12 @@ We can finally visualize both the fODFs and peaks in the same space.
 ~~~
 fodf_spheres.GetProperty().SetOpacity(0.4)
 
-scene = window.Scene() 
+# Generate the figure
+fig = generate_anatomical_views(slices, fodf_peaks, fodf_spheres,
+                                cmap=colormap)
 
-# Axial superior
-fodf_peaks.display(z=data_small.shape[2] // 2)
-fodf_spheres.display(z=data_small.shape[2] // 2)
-scene.add(fodf_peaks)
-scene.add(fodf_spheres)
-csd_peaks_fodf_axial_scene = window.snapshot(scene, size=(600,600), offscreen=True)
-
-# Sagittal right
-fodf_peaks.display(x=data_small.shape[0] // 2)
-fodf_spheres.display(x=data_small.shape[0] // 2)
-scene.yaw(-90), scene.roll(90)
-scene.reset_camera()
-csd_peaks_fodf_sagittal_scene = window.snapshot(scene, size=(600,600), offscreen=True)
-
-# Coronal anterior
-fodf_peaks.display(y=data_small.shape[1] // 2)
-fodf_spheres.display(y=data_small.shape[1] // 2)
-scene.roll(90), scene.pitch(90)
-scene.reset_camera()
-csd_peaks_fodf_coronal_scene = window.snapshot(scene, size=(600,600), offscreen=True)
-
-# Plot different views
-fig, axes = plt.subplots(1,3, figsize=(20, 20))
-axes[0].imshow(csd_peaks_fodf_axial_scene, cmap="plasma", origin="lower")
-axes[0].axis("off")
-axes[0].set_title("Axial")
-axes[1].imshow(csd_peaks_fodf_sagittal_scene, cmap="plasma", origin="lower")
-axes[1].axis("off")
-axes[1].set_title("Sagittal")
-axes[2].imshow(csd_peaks_fodf_coronal_scene, cmap="plasma", origin="lower")
-axes[2].axis("off")
-axes[2].set_title("Coronal")
-plt.savefig(os.path.join(out_dir, "csd_peaks_fodfs.png"), dpi=300, bbox_inches="tight")
+fig.savefig(os.path.join(out_dir, "csd_peaks_fodfs.png"), dpi=300,
+            bbox_inches="tight")
 plt.show()
 ~~~
 {: .language-python}
