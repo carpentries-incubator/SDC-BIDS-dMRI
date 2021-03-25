@@ -201,47 +201,50 @@ _Sourced from Sotiropoulos and Zalesky (2017). Building connectomes using diffus
 Though other models are outside the scope of this lesson, we recommend looking into some of the pros and cons of each model (listed previously) to choose one best suited for your data!
 
 > ## Exercise 1
-> 1. Plot the axial and radial diffusivity maps of the example given. Start from fitting the preprocessed diffusion image.
->> ## Solution
->> ~~~
->> from bids.layout import BIDSLayout
->> from dipy.io.gradients import read_bvals_bvecs
->> from dipy.core.gradients import gradient_table
->> import dipy.reconst.dti as dti
->> from dipy.segment.mask import median_otsu
->> from nilearn import image as img
->> import nibabel as nib
->>
->> deriv_layout = BIDSLayout("../data/ds000221/derivatives", validate=False)
->> subj="010006"
->>
->> t1 = deriv_layout.get(subject=subj, space="dwi", extension='nii.gz', return_type='file')[0]
->> dwi = "../data/ds000221/derivatives/uncorrected_topup_eddy/sub-%s/ses-01/dwi/dwi.nii.gz" % subj
->> bval = "../data/ds000221/sub-%s/ses-01/dwi/sub-%s_ses-01_dwi.bval" % (subj, subj)
->> bvec = "../data/ds000221/derivatives/uncorrected_topup_eddy/sub-%s/ses-01/dwi/dwi.eddy_rotated_bvecs" % subj
->>
->> t1_data = img.load_img(t1)
->> dwi_data = img.load_img(dwi)
->>
->> gt_bvals, gt_bvecs = read_bvals_bvecs(bval, bvec)
->> gtab = gradient_table(gt_bvals, gt_bvecs)
->>
->> dwi_data = dwi_data.get_data()
->> dwi_data, dwi_mask = median_otsu(dwi_data, vol_idx=[0], numpass=1)
->>
->> # Fit dti model
->> dti_model = dti.TensorModel(gtab)
->> dti_fit = dti_model.fit(dwi_data, mask=dwi_mask) # This step may take a while
->>
->> # Plot axial diffusivity map
->> ad_img = img.new_img_like(ref_niimg=t1_data, data=dti_fit.ad)
->> plot.plot_anat(ad_img, cut_coords=(0, -29, 20), vmin=0, vmax=0.01)
->>
->> # Plot radial diffusivity map
->> rd_img = img.new_img_like(ref_niimg=t1_data, data=dti_fit.rd)
->> plot.plot_anat(rd_img, cut_coords=(0, -29, 20), vmin=0, vmax=0.01)
->> ~~~
->> {: .language-python}
+> 
+> Plot the axial and radial diffusivity maps of the example given. Start from fitting the preprocessed diffusion image.
+> 
+> > ## Solution
+> >
+> > ~~~
+> > from bids.layout import BIDSLayout
+> > from dipy.io.gradients import read_bvals_bvecs
+> > from dipy.core.gradients import gradient_table
+> > import dipy.reconst.dti as dti
+> > from dipy.segment.mask import median_otsu
+> > from nilearn import image as img
+> > import nibabel as nib
+> >
+> > deriv_layout = BIDSLayout("../data/ds000221/derivatives", validate=False)
+> > subj="010006"
+> >
+> > t1 = deriv_layout.get(subject=subj, space="dwi", extension='nii.gz', return_type='file')[0]
+> > dwi = "../data/ds000221/derivatives/uncorrected_topup_eddy/sub-%s/ses-01/dwi/dwi.nii.gz" % subj
+> > bval = "../data/ds000221/sub-%s/ses-01/dwi/sub-%s_ses-01_dwi.bval" % (subj, subj)
+> > bvec = "../data/ds000221/derivatives/uncorrected_topup_eddy/sub-%s/ses-01/dwi/dwi.eddy_rotated_bvecs" % subj
+> >
+> > t1_data = img.load_img(t1)
+> > dwi_data = img.load_img(dwi)
+> >
+> > gt_bvals, gt_bvecs = read_bvals_bvecs(bval, bvec)
+> > gtab = gradient_table(gt_bvals, gt_bvecs)
+> >
+> > dwi_data = dwi_data.get_data()
+> > dwi_data, dwi_mask = median_otsu(dwi_data, vol_idx=[0], numpass=1)
+> >
+> > # Fit dti model
+> > dti_model = dti.TensorModel(gtab)
+> > dti_fit = dti_model.fit(dwi_data, mask=dwi_mask) # This step may take a while
+> >
+> > # Plot axial diffusivity map
+> > ad_img = img.new_img_like(ref_niimg=t1_data, data=dti_fit.ad)
+> > plot.plot_anat(ad_img, cut_coords=(0, -29, 20), vmin=0, vmax=0.01)
+> >
+> > # Plot radial diffusivity map
+> > rd_img = img.new_img_like(ref_niimg=t1_data, data=dti_fit.rd)
+> > plot.plot_anat(rd_img, cut_coords=(0, -29, 20), vmin=0, vmax=0.01)
+> > ~~~
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
