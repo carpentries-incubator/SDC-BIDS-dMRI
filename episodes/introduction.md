@@ -316,16 +316,21 @@ array([ True, False, False, False, False, False, False, False, False,
 In the next few notebooks, we will talk more about preprocessing the diffusion weighted images, reconstructing the diffusion tensor model, and reconstruction axonal trajectories via tractography.
 
 > ## Exercise 1
-> 1. Get a list of **all** diffusion data in Nifti file format
-> 2. Get the metadata for the diffusion associated with subject 010016.
+> 
+> Get a list of **all** diffusion data in NIfTI file format
+>
 > > ## Solution
-> > ## *All the diffusion data for subject 010016*
+> >
 > > ~~~
 > > dwi_data = layout.get(suffix=dwi', extension='nii.gz', return_type='file')
 > > ~~~
 > > {: .language-python}
+> {: .solution}
+>
+> Get the metadata for the diffusion associated with subject 010016.
+> 
+> > ## Solution
 > >
-> > ## *Metadata for subject 010016*
 > > ~~~
 > > dwi = layout.get(subject='010016', suffix='dwi', extension='nii.gz', return_type='file')[0]
 > > layout.get_metadata(dwi)
