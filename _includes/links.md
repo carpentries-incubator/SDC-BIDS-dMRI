@@ -52,7 +52,6 @@
 [yaml]: http://yaml.org/
 
 <!-- Workshop-specific links -->
-[lesson-github]: https://github.com/carpentries-incubator/SDC-BIDS-dMRI
 [3D Slicer]: https://www.slicer.org/
 [Anaconda]: https://www.anaconda.com/
 [ANTs]: http://stnava.github.io/ANTs/
@@ -68,6 +67,7 @@
 [IPython]: https://ipython.org/index.html
 [Jupyter]: https://jupyter.org/
 [Jupyter Notebook]: https://jupyter-notebook.readthedocs.io/en/stable/
+[lesson-github]: https://github.com/carpentries-incubator/SDC-BIDS-dMRI
 [Matplotlib]: https://matplotlib.org/
 [MRtrix]: https://www.mrtrix.org/
 [Nilearn]:  https://nilearn.github.io/
