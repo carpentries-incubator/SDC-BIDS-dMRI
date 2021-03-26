@@ -72,7 +72,7 @@ subj = '010006'
 
 dwi_fname = dwi_layout.get(subject=subj, suffix='dwi', extension='nii.gz', return_type='file')[0]
 bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bval', return_type='file')[0]
-bvec_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bvec', return_type='file')[0]
+bvec_fname = dwi_layout.get(subject=subj, extension='eddy_rotated_bvecs', return_type='file')[0]
 
 dwi_img = nib.load(dwi)
 affine = dwi_img.affine
