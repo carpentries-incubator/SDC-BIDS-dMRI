@@ -2,6 +2,8 @@
 title: Discussion
 ---
 
+{% include base_path.html %}
+
 ## Setting up the camera viewpoint
 
 The [Constrained Spherical Deconvolution] episode defines an utility function
