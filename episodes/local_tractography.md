@@ -13,6 +13,8 @@ keypoints:
 - "Tractography requires seeds to begin tracking and a stopping criterion for termination"
 ---
 
+{% include base_path.html %}
+
 ## Local tractography
 
 Local tractography algorithms follow 2 general principles:
@@ -23,7 +25,7 @@ Streamline propagation is, in essence, a numerical analysis integration
 problem. The problem lies in finding a curve that joins a set of discrete local
 directions. As such, it takes the form of a differential equation problem of
 the form:
-![Streamline propagation equation](../fig/local_tractography/streamline_propagation_diff_equation.png){:class="img-responsive"} \
+![Streamline propagation equation]({{ relative_root_path }}/fig/local_tractography/streamline_propagation_diff_equation.png){:class="img-responsive"} \
 Streamline propagation differential equation
 
 where the curve $r(s)$ needs to be solved for.
