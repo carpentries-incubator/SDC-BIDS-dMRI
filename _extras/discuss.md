@@ -20,6 +20,11 @@ the coronal plane.
 - **yaw** (vertical axis): an axis running bottom to top, allowing rotations in
 the axial plane.
 
+![Camera Orientations]({{ relative_root_path }}/fig/discuss/camera_viewpoint_concepts_anatomy.png){:class="img-responsive"} \
+Camera axis orientations
+
+We can visualize the different axis with reference to neuroanatomy and the rotations around them.
+
 The mentioned concepts are common across different 3D visualization packages.
 The mentioned episode uses the [FURY] package to generate the visualization
 scenes.
