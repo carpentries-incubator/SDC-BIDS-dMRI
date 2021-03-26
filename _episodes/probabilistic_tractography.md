@@ -13,6 +13,8 @@ keypoints:
 - "Provides tractograms that explore more white matter axonal fibers"
 ---
 
+{% include base_path.html %}
+
 ## Probabilistic tractography
 
 Probabilistic fiber tracking is a way of reconstructing the white matter
@@ -204,7 +206,7 @@ plt.show()
 ~~~
 {: .language-python}
 
-![PMF direction getter-derived probabilistic tractogram](../fig/probabilistic_tractography/tractogram_probabilistic_dg_pmf.png){:class="img-responsive"} \
+![PMF direction getter-derived probabilistic tractogram]({{ relative_root_path }}/fig/probabilistic_tractography/tractogram_probabilistic_dg_pmf.png){:class="img-responsive"} \
 Streamlines representing white matter using probabilistic direction getter from
 PMF
 
@@ -248,7 +250,7 @@ plt.show()
 {: .language-python}
 
 
-![SH direction getter-derived probabilistic tractogram](../fig/probabilistic_tractography/tractogram_probabilistic_dg_sh.png){:class="img-responsive"} \
+![SH direction getter-derived probabilistic tractogram]({{ relative_root_path }}/fig/probabilistic_tractography/tractogram_probabilistic_dg_sh.png){:class="img-responsive"} \
 Streamlines representing white matter using probabilistic direction getter from
 SH
 
@@ -290,7 +292,7 @@ plt.show()
 {: .language-python}
 
 
-![PMF SH direction getter-derived probabilistic tractogram](../fig/probabilistic_tractography/tractogram_probabilistic_dg_sh_pmf.png){:class="img-responsive"} \
+![PMF SH direction getter-derived probabilistic tractogram]({{ relative_root_path }}/fig/probabilistic_tractography/tractogram_probabilistic_dg_sh_pmf.png){:class="img-responsive"} \
 Streamlines representing white matter using probabilistic direction getter from
 SH (peaks_from_model)
 
