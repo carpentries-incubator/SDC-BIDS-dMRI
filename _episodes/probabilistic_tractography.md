@@ -13,6 +13,8 @@ keypoints:
 - "Provides tractograms that explore more white matter axonal fibers"
 ---
 
+{% include base_path.html %}
+
 ## Probabilistic tractography
 
 Probabilistic fiber tracking is a way of reconstructing the white matter

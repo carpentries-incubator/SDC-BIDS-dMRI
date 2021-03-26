@@ -13,6 +13,8 @@ keypoints:
 - "Provides information to infer characteristics of axonal fibres"
 ---
 
+{% include base_path.html %}
+
 ## Diffusion Tensor Imaging (DTI)
 
 Diffusion tensor imaging or "DTI" refers to images describing diffusion with a tensor model. DTI is derived from preprocessed diffusion weighted imaging (DWI) data. First proposed by Basser and colleagues ([Basser, 1994](https://www.ncbi.nlm.nih.gov/pubmed/8130344)), the diffusion tensor model describes diffusion characteristics within an imaging voxel. This model has been very influential in demonstrating the utility of the diffusion MRI in characterizing the microstructure of white matter and the biophysical properties (inferred from local diffusion properties). The DTI model is still a commonly used model to investigate white matter.
@@ -201,9 +203,9 @@ _Sourced from Sotiropoulos and Zalesky (2017). Building connectomes using diffus
 Though other models are outside the scope of this lesson, we recommend looking into some of the pros and cons of each model (listed previously) to choose one best suited for your data!
 
 > ## Exercise 1
-> 
+>
 > Plot the axial and radial diffusivity maps of the example given. Start from fitting the preprocessed diffusion image.
-> 
+>
 > > ## Solution
 > >
 > > ~~~
