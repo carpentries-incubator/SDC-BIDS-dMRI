@@ -13,6 +13,8 @@ keypoints:
 - "It allows to resolve complex fiber configurations, such as crossings"
 ---
 
+{% include base_path.html %}
+
 ## Constrained Spherical Deconvolution (CSD)
 
 Spherical Deconvolution (SD) is a set of methods to reconstruct the local fiber

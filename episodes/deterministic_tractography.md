@@ -12,6 +12,8 @@ keypoints:
 - "Deterministic tractography methods perform tracking in a predictable way"
 ---
 
+{% include base_path.html %}
+
 ## Deterministic tractography
 
 Deterministic tractography algorithms perform tracking of streamlines by
