@@ -14,6 +14,8 @@ keypoints:
 start: true
 ---
 
+{% include base_path.html %}
+
 ## Diffusion Weighted Imaging (DWI)
 
 Diffusion imaging probes the random, microscopic motion of water protons by employing MRI sequences which are sensitive to the geometry and environmental organization surrounding the water protons. This is a popular technique for studying the white matter of the brain. The diffusion within biological structures, such as the brain, are often restricted due to barriers (eg. cell membranes), resulting in a preferred direction of diffusion (anisotropy). A typical diffusion MRI scan will acquire multiple volumes that are sensitive to a particular diffusion direction and result in diffusion-weighted images (DWI). Diffusion that exhibits directionality in the same direction result in an attenuated signal. With further processing (to be discussed later in the lesson), the acquired images can provide measurements which are related to the microscopic changes and estimate white matter trajectories. Images with no diffusion weighting are also acquired as part of the acquisition protocol.
@@ -316,7 +318,7 @@ array([ True, False, False, False, False, False, False, False, False,
 In the next few notebooks, we will talk more about preprocessing the diffusion weighted images, reconstructing the diffusion tensor model, and reconstruction axonal trajectories via tractography.
 
 > ## Exercise 1
-> 
+>
 > Get a list of **all** diffusion data in NIfTI file format
 >
 > > ## Solution
@@ -328,7 +330,7 @@ In the next few notebooks, we will talk more about preprocessing the diffusion w
 > {: .solution}
 >
 > Get the metadata for the diffusion associated with subject 010016.
-> 
+>
 > > ## Solution
 > >
 > > ~~~

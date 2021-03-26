@@ -13,6 +13,8 @@ keypoints:
 - "Tractography requires seeds to begin tracking and a stopping criterion for termination"
 ---
 
+{% include base_path.html %}
+
 ## Local tractography
 
 Local tractography algorithms follow 2 general principles:
