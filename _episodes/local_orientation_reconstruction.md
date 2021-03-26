@@ -12,6 +12,8 @@ keypoints:
 start: true
 ---
 
+{% include base_path.html %}
+
 ## Orientation reconstruction
 
 Diffusion MRI is sensitive to the underlying white matter fiber orientation

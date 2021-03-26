@@ -12,6 +12,8 @@ keypoints:
 start: true
 ---
 
+{% include base_path.html %}
+
 ## Tractography
 
 The local fiber orientation reconstruction can be used to map the voxel-wise
