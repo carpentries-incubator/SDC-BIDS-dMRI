@@ -345,23 +345,23 @@ SH (peaks_from_model)
 > which would output something like:
 >
 > ~~~
-> ID string:           	TRACK
-> Version:             	2
-> Dimension:           	180 216 180
-> Voxel size:          	1 1 1
-> Voxel order:         	LPS
-> Voxel order original:	LPS
+> ID string:            TRACK
+> Version:              2
+> Dimension:            180 216 180
+> Voxel size:           1 1 1
+> Voxel order:          LPS
+> Voxel order original: LPS
 > Voxel to RAS matrix:
-> 	   -1.0000     0.0000     0.0000     0.5000
-> 	    0.0000    -1.0000     0.0000     0.5000
-> 	    0.0000     0.0000     1.0000    -0.5000
-> 	    0.0000     0.0000     0.0000     1.0000
+>      -1.0000     0.0000     0.0000     0.5000
+>       0.0000    -1.0000     0.0000     0.5000
+>       0.0000     0.0000     1.0000    -0.5000
+>       0.0000     0.0000     0.0000     1.0000
 >
-> Image Orientation:	1.0000/0.0000/0.0000/0.0000/1.0000/0.0000
-> Orientation patches: 	none
-> Number of scalars:	0
-> Number of properties:	0
-> Number of tracks:	200433
+> Image Orientation:  1.0000/0.0000/0.0000/0.0000/1.0000/0.0000
+> Orientation patches:  none
+> Number of scalars:  0
+> Number of properties: 0
+> Number of tracks: 200433
 > ~~~
 > {: .output}
 >
