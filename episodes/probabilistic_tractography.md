@@ -143,14 +143,28 @@ nib.save(gfa_img, os.path.join(out_dir, 'gfa.nii.gz'))
 
 # Plot the GFA
 import matplotlib.pyplot as plt
+
+from scipy import ndimage  # To rotate image for visualization purposes
+
 %matplotlib inline
 
-fig, axes = plt.subplots()
-axes.imshow(gfa[:,:,gfa.shape[-1]//2], cmap="gray", origin="lower")
-axes.axis("off")
+fig, ax = plt.subplots(1, 3, figsize=(10, 10))
+ax[0].imshow(ndimage.rotate(gfa[:, gfa.shape[1]//2, :], 90, reshape=False))
+ax[1].imshow(ndimage.rotate(gfa[gfa.shape[0]//2, :, :], 90, reshape=False))
+ax[2].imshow(ndimage.rotate(gfa[:, :, gfa.shape[-1]//2], 90, reshape=False))
+fig.savefig(os.path.join(out_dir, "gfa.png"), dpi=300, bbox_inches="tight")
 plt.show()
 ~~~
 {: .language-python}
+
+The GFA threshold stopping criterion value must be adjusted to the data in
+order to avoid creating a mask that will exclude white matter areas (which
+would result in streamlines being unable to propagate to other white matter
+areas). Visually inspecting the GFA map might provide with a sufficient
+guarantee about the goodness of the value.
+
+![GFA]({{ relative_root_path }}/fig/probabilistic_tractography/gfa.png){:class="img-responsive"} \
+GFA
 
 The Fiber Orientation Distribution (FOD) of the CSD model estimates the
 distribution of small fiber bundles within each voxel. We can use this
