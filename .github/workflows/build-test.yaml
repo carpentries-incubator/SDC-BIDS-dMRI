@@ -1,7 +1,8 @@
 name: Build, test
 
 on:
-  push
+  schedule:
+    - cron: "0 2 * * sun"  # 02:00 UTC every Sunday
 
 jobs:
   build:
