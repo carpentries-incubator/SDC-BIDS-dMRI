@@ -44,7 +44,9 @@ jobs:
     # Download the necessary data
     - name: Download data
       run: |
-        osf -p cmq8a clone ./data
+        osf -p cmq8a clone ${{ github.workspace }}/data
+        mv ${{ github.workspace }}/data/osfstorage/* ${{ github.workspace }}/data
+        rm -rf ${{ github.workspace }}/data/osfstorage
 
     # Run the actual tests of all the Python Notebooks.
     - name: Test Notebooks
