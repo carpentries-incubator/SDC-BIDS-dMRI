@@ -1,7 +1,8 @@
 name: Build, test
 
 on:
-  push
+  schedule:
+    - cron: "0 2 * * sun"  # 02:00 UTC every Sunday
 
 jobs:
   build:
@@ -27,9 +28,10 @@ jobs:
       id: cache
       with:
         path: .cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
-          ${{ runner.os }}-pip-
+            ${{ runner.os }}-pip-${{ matrix.python-version }}-
+            ${{ runner.os }}-pip-
 
     # Install all requirements to run these tests.
     - name: Install requirements
@@ -44,10 +46,16 @@ jobs:
     # Download the necessary data
     - name: Download data
       run: |
-        osf -p cmq8a clone ./data
+        osf -p cmq8a clone ${{ github.workspace }}/data
+        mv ${{ github.workspace }}/data/osfstorage/* ${{ github.workspace }}/data
+        rm -rf ${{ github.workspace }}/data/osfstorage
 
     # Run the actual tests of all the Python Notebooks.
     - name: Test Notebooks
       run: |
         source ~/sdc_bids_dmri/bin/activate
-        pytest --nbval-lax -v code/*/*.ipynb
+        pytest --nbval-lax -v code/introduction/solutions/introduction_solutions.ipynb
+        pytest --nbval-lax -v code/diffusion_tensor_imaging/solutions/diffusion_tensor_imaging_solutions.ipynb
+        pytest --nbval-lax -v code/constrained_spherical_deconvolution/constrained_spherical_deconvolution.ipynb
+        pytest --nbval-lax -v code/deterministic_tractography/deterministic_tractography.ipynb
+        pytest --nbval-lax -v code/probabilistic_tractography/probabilistic_tractography.ipynb
