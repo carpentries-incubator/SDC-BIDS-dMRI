@@ -55,7 +55,6 @@ from bids.layout import BIDSLayout
 from dipy.core.gradients import gradient_table
 from dipy.data import get_fnames
 from dipy.io.gradients import read_bvals_bvecs
-from dipy.io.image import load_nifti, load_nifti_data
 from dipy.reconst.csdeconv import (ConstrainedSphericalDeconvModel,
                                    auto_response)
 from dipy.tracking import utils
@@ -99,8 +98,8 @@ dti_fit = dti_model.fit(dwi_data, mask=dwi_mask)  # This step may take a while
 # Create the seeding mask
 fa_img = dti_fit.fa
 seed_mask = fa_img.copy()
-seed_mask[seed_mask>=0.2] = 1
-seed_mask[seed_mask<0.2] = 0
+seed_mask[seed_mask >= 0.2] = 1
+seed_mask[seed_mask < 0.2] = 0
 
 # Create the seeds
 seeds = utils.seeds_from_mask(seed_mask, affine=affine, density=1)
