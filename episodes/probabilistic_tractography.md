@@ -111,7 +111,8 @@ information to the streamline propagation object:
 
 ~~~
 response, ratio = auto_response(gtab, dwi_data, roi_radius=10, fa_thr=0.7)
-csd_model = ConstrainedSphericalDeconvModel(gtab, response, sh_order=2)
+sh_order = 2
+csd_model = ConstrainedSphericalDeconvModel(gtab, response, sh_order=sh_order)
 csd_fit = csd_model.fit(dwi_data, mask=seed_mask)
 ~~~
 {: .language-python}
@@ -126,7 +127,7 @@ tissue type.
 ~~~
 from dipy.reconst.shm import CsaOdfModel
 
-csa_model = CsaOdfModel(gtab, sh_order=2)
+csa_model = CsaOdfModel(gtab, sh_order=sh_order)
 gfa = csa_model.fit(dwi_data, mask=seed_mask).gfa
 stopping_criterion = ThresholdStoppingCriterion(gfa, .2)
 
