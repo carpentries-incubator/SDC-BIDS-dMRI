@@ -345,7 +345,7 @@ fodf_spheres = actor.odf_slicer(csd_odf, sphere=default_sphere, scale=0.9,
                                 norm=False, colormap=colormap)
 
 # Compute the slices to be shown
-slices = tuple(elem // 2 for elem in data_small.shape)
+slices = tuple(elem // 2 for elem in data_small.shape[:-1])
 
 # Generate the figure
 fig = generate_anatomical_views(slices, fodf_spheres, cmap=colormap)
