@@ -65,13 +65,13 @@ from dipy.viz import window, actor, colormap
 
 
 dwi_layout = BIDSLayout('../../data/ds000221/derivatives/uncorrected_topup_eddy/', validate=False)
-gradient_layout = BIDSLayout('../../data/ds000221/sub-010006/ses-01/dwi/', validate=False)
+gradient_layout = BIDSLayout('../../data/ds000221/', validate=False)
 
 subj = '010006'
 
 dwi_fname = dwi_layout.get(subject=subj, suffix='dwi', extension='nii.gz', return_type='file')[0]
-bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bval', return_type='file')[0]
 bvec_fname = dwi_layout.get(subject=subj, extension='eddy_rotated_bvecs', return_type='file')[0]
+bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bval', return_type='file')[0]
 
 dwi_img = nib.load(dwi)
 affine = dwi_img.affine
@@ -111,7 +111,7 @@ information to the streamline propagation object:
 
 ~~~
 response, ratio = auto_response(gtab, dwi_data, roi_radius=10, fa_thr=0.7)
-csd_model = ConstrainedSphericalDeconvModel(gtab, response, sh_order=6)
+csd_model = ConstrainedSphericalDeconvModel(gtab, response, sh_order=2)
 csd_fit = csd_model.fit(dwi_data, mask=seed_mask)
 ~~~
 {: .language-python}
@@ -126,9 +126,9 @@ tissue type.
 ~~~
 from dipy.reconst.shm import CsaOdfModel
 
-csa_model = CsaOdfModel(gtab, sh_order=6)
+csa_model = CsaOdfModel(gtab, sh_order=2)
 gfa = csa_model.fit(dwi_data, mask=seed_mask).gfa
-stopping_criterion = ThresholdStoppingCriterion(gfa, .25)
+stopping_criterion = ThresholdStoppingCriterion(gfa, .2)
 
 # Create the directory to save the results
 out_dir = '../../data/ds000221/derivatives/dwi/tractography/sub-%s/ses-01/dwi/' % subj
