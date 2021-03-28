@@ -20,32 +20,40 @@ Deterministic tractography algorithms perform tracking of streamlines by
 following a predictable path, such as following the primary diffusion direction
 ($\lambda_1$).
 
-In order to demonstrate how to perform deterministic tracking on a diffusion MRI
-dataset, we will quickly repeat the steps from the previous notebook and compute
-the diffusion tensor. We will additionally extract the `affine` data from the
-diffusion image, which we will need later on!
+In order to demonstrate how to perform deterministic tracking on a diffusion MRI dataset, we will 
+build from the preprocessing presented in a previous episode and compute the diffusion tensor.
 
 ~~~
+import os 
+
+import nibabel as nib
+import numpy as np
+
 from bids.layout import BIDSLayout
+
 from dipy.io.gradients import read_bvals_bvecs
 from dipy.core.gradients import gradient_table
-from nilearn import image as img
-import nibabel as nib
 
-layout = BIDSLayout("../data/ds000221/derivatives", validate=False)
+dwi_layout = BIDSLayout("../../data/ds000221/derivatives/uncorrected_topup_eddy", validate=False)
+gradient_layout = BIDSLayout("../../data/ds000221/", validate=False)
 
 subj = '010006'
 
-dwi = layout.get(subject='010006', suffix='preproc', extension='nii.gz', return_type='file')[0]
-bval = layout.get(subject='010006', suffix='preproc', extension='bval', return_type='file')[0]
-bvec = layout.get(subject='010006', suffix='preproc', extension='bvec', return_type='file')[0]
+dwi_fname = dwi_layout.get(subject=subj, suffix='dwi', extension='nii.gz', return_type='file')[0]
+bvec_fname = dwi_layout.get(subject=subj, extension='eddy_rotated_bvecs', return_type='file')[0]
+bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bval', return_type='file')[0]
 
-dwi_img = img.load_img(dwi)
+dwi_img = nib.load(dwi_fname)
 affine = dwi_img.affine
 
-gt_bvals, gt_bvecs = read_bvals_bvecs(bval, bvec)
-gtab = gradient_table(gt_bvals, gt_bvecs)
+bvals, bvecs = read_bvals_bvecs(bval_fname, bvec_fname)
+gtab = gradient_table(bvals, bvecs)
+~~~
+{: .language-python}
 
+We will now create a mask and constrain the fitting within the mask.
+
+~~~
 import dipy.reconst.dti as dti
 from dipy.segment.mask import median_otsu
 
@@ -57,30 +65,49 @@ dti_fit = dti_model.fit(dwi_data, mask=dwi_mask)  # This step may take a while
 ~~~
 {: .language-python}
 
-We will perform tracking using a deterministic algorithm on tensor fields via
-`EuDX` [(Garyfallidis _et al._, 2012)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3518823/).
-`EuDX` makes use of the primary direction of the diffusion tensor to propagate
-streamlines from voxel to voxel and a stopping criteria from the fractional
-anisotropy (FA). We will get the FA map and eigenvectors from our tensor
-fitting.
+We will perform tracking using a deterministic algorithm on tensor fields via 
+`EuDX` [(Garyfallidis _et al._, 2012)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3518823/). 
+`EuDX` makes use of the primary direction of the diffusion tensor to propagate streamlines from 
+voxel to voxel and a stopping criteria from the fractional anisotropy (FA). 
+
+We will first get the FA map and eigenvectors from our tensor fitting. In the background of the 
+FA map, the fitting may not be accurate as all of the measured signal is primarily noise and it is 
+possible that values of NaNs (not a number) may be found in the FA map. We can remove these 
+using `numpy` to find and set these voxels to 0.
 
 ~~~
+# Create the directory to save the results
+
+out_dir = "../../data/ds000221/derivatives/dwi/tractography/sub-%s/ses-01/dwi/" % subj
+
+if not os.path.exists(out_dir):
+    os.makedirs(out_dir)
+
 fa_img = dti_fit.fa
 evecs_img = dti_fit.evecs
-~~~
-{: .language-python}
-
-In the background of the image, the fitting may not be accurate as all of the
-measured signal is primarily noise and it is possible that values of NaNs (not
-a number) may be found in the FA map. We can remove these using `numpy` to
-find and set these voxels to 0.
-
-~~~
-import numpy as np
 
 fa_img[np.isnan(fa_img)] = 0
+
+# Save the FA
+fa_nii = nib.Nifti1Image(fa_img.astype(np.float32), affine)
+nib.save(fa_nii, os.path.join(out_dir, 'fa.nii.gz'))
+
+# Plot the FA
+import matplotlib.pyplot as plt
+from scipy import ndimage  # To rotate image for visualization purposes
+
+%matplotlib inline
+
+fig, ax = plt.subplots(1, 3, figsize=(10, 10))
+ax[0].imshow(ndimage.rotate(fa_img[:, fa_img.shape[1]//2, :], 90, reshape=False))
+ax[1].imshow(ndimage.rotate(fa_img[fa_img.shape[0]//2, :, :], 90, reshape=False))
+ax[2].imshow(ndimage.rotate(fa_img[:, :, fa_img.shape[-1]//2], 90, reshape=False))
+fig.savefig(os.path.join(out_dir, "fa.png"), dpi=300, bbox_inches="tight")
+plt.show()
 ~~~
 {: .language-python}
+
+![FA]({{ relative_root_path }}/fig/deterministic_tractography/fa.png){:class="img-responsive"}
 
 One of the inputs of `EuDX` is the discretized voxel directions on a unit
 sphere. Therefore, it is necessary to discretize the eigenvectors before
@@ -158,57 +185,32 @@ streamlines = Streamlines(streamlines_generator)
 ~~~
 {: .language-python}
 
-We just created a deterministic set of streamlines using the `EuDX` algorithm
-mapping the human connectome (tractography). We can save the streamlines as a
-[TrackVis] file so it can be loaded into other software for visualization or
-further analysis. To do so, we need to save the tractogram state using
-`StatefulTractogram` and `save_trk` to save the file. Note that we will have to
-specify the space to save the tractogram in.
-
-~~~
-from dipy.io.stateful_tractogram import Space, StatefulTractogram
-from dipy.io.streamline import save_trk
-
-sft = StatefulTractogram(streamlines, dwi_img, Space.RASMM)
-save_trk(sft, "tractogram_EuDX.trk")
-~~~
-{: .language-python}
+We just created a deterministic set of streamlines using the `EuDX` algorithm mapping the 
+human connectome (tractography). We can save the streamlines as a Trackvis file so it can be 
+loaded into other software for visualization or further analysis. To do so, we need to save the 
+tractogram state using `StatefulTractogram` and `save_tractogram` to save the file. 
+Note that we will have to specify the space to save the tractogram in.
 
 We can then generate the streamlines 3D scene using the `fury` python package,
 and visualize the scene's contents with `matplotlib`.
 
 ~~~
-from dipy.io.streamline import load_trk
-from dipy.viz import window, actor, colormap
+from dipy.io.stateful_tractogram import Space, StatefulTractogram
+from dipy.io.streamline import save_tractogram
 
-sft = load_trk('tractogram_EuDX.trk', 'same')
-sft.to_vox()
-streamlines = sft.streamlines
+sft = StatefulTractogram(streamlines, dwi_img, Space.RASMM)
 
-from dipy.viz import window, actor, colormap
+# Save the tractogram
+save_tractogram(sft, os.path.join(out_dir, "tractogram_deterministic_EuDX.trk"))
 
-# Prepare display objects
-# streamlines_actor = actor.line(streamlines, colormap.line_colors(streamlines))
-streamlines_actor = actor.line(streamlines)
-
-# Create the directory to save the results
-out_dir = '../../data/ds000221/derivatives/dwi/tractography/sub-%s/ses-01/dwi/' % subj
-
-if not os.path.exists(out_dir):
-    os.makedirs(out_dir)
-
-# Create 3D display
+# Plot the tractogram
 scene = window.Scene()
-
+scene.add(actor.line(streamlines, colormap.line_colors(streamlines)))
 det_tractogram_eudx_scene_arr = window.snapshot(
     scene,
-    fname=os.path.join(out_dir, 'tractogram_EuDX.png'),
+    fname=os.path.join(out_dir, 'tractogram_deterministic_EuDX.png'),
     size=(800, 800), offscreen=True)
 
-import matplotlib.pyplot as plt
-%matplotlib inline
-
-# Show the image
 fig, axes = plt.subplots()
 axes.imshow(det_tractogram_eudx_scene_arr, origin="lower")
 axes.axis("off")
@@ -216,5 +218,6 @@ plt.show()
 ~~~
 {: .language-python}
 
+![EuDX Determinsitic Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_EuDX.png){:class="img-responsive"}
 
 {% include links.md %}
