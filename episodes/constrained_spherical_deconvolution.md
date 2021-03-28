@@ -41,7 +41,7 @@ In order to perform the deconvolution over the sphere, the spherical
 representation of the diffusion data has to be obtained. This is done using the
 so-called Spherical Harmonics (SH) which are a basis that allow to represent
 any function on the sphere (much like the Fourier analysis allows to represent
-a function in terms of in terms of trigonometric functions).
+a function in terms cartesian coordinates).
 
 In this episode we will be using the Constrained Spherical Deconvolution (CSD)
 method proposed by Tournier *et al*. in 2007. In essence, CSD imposes a
@@ -209,7 +209,8 @@ and hence it must be computed on a case basis.
 After estimating a response function, the fODF is reconstructed through the
 deconvolution operation. In order to obtain the spherical representation of the
 diffusion signal, the order of the Spherical Harmonics expansion must be
-specified. The series is infinite, but must be truncated to a maximum order in
+specified. The order, $l$, corresponds to an angular frequency of the basis function. 
+While, the series is infinite, it must be truncated to a maximum order in
 practice to be able to represent the diffusion signal. The maximum order will
 determine the number of SH coefficients used. The number of diffusion encoding
 gradient directions must be at least as large as the number of coefficients.
@@ -218,7 +219,7 @@ where $R$ is the number of coefficients. For example, an order $l_{max} = {4, 6,
 series has $R = {15, 28, 45}$ coefficients, respectively. Note the use of even
 orders: even order SH functions allow to reconstruct symmetric spherical
 functions. Traditionally, even orders have been used motivated by the fact that
-the diffusion process is symmetric around the origin.
+the diffusion process is symmetric around the origin. 
 
 The CSD is performed in `DIPY` by calling the `fit` method of the CSD model on
 the diffusion data:
