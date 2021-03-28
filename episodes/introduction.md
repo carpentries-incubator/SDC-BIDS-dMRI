@@ -29,8 +29,6 @@ In addition to the acquired diffusion images, two files are collected as part of
 
 ## Dataset
 
-In addition to the acquired diffusion images, two files are collected as part of the diffusion dataset. These files correspond to the gradient amplitude (b-values) and directions (b-vectors) of the diffusion measurement and are named with the extensions <code>.bval</code> and <code>.bvec</code> respectively. The b-value is the diffusion-sensitizing factor, and reflects the timing & strength of the gradients used to acquire the diffusion-weighted images. The b-vector corresponds to the direction of the diffusion sensitivity. Together these two files define the diffusion MRI measurement as a set of gradient directions and corresponding amplitudes.
-
 Below is a tree diagram showing the folder structure of a single MR subject and session within ds000221. This was obtained by using the bash command <code>tree<code>.
 
 ~~~
@@ -105,14 +103,14 @@ Lets first pull the metadata from its associated JSON file using the <code>get_m
 ~~~
 from bids.layout import BIDSLayout
 
-layout = BIDSLayout("../../data/ds000221", validate=False)
+layout = BIDSLayout("../data/ds000221", validate=False)
 ~~~
 {: .language-python}
 
 Now that we have a layout object, we can work with a BIDS dataset! Lets extract the metadata. from the dataset.
 
 ~~~
-dwi = layout.get(subject='010002', suffix='dwi', extension='nii.gz', return_type='file')[0]
+dwi = layout.get(subject='010006', suffix='dwi', extension='nii.gz', return_type='file')[0]
 layout.get_metadata(dwi)
 ~~~
 {: .language-python}
@@ -157,9 +155,8 @@ We can install it by entering the following in a terminal <code>pip install dipy
 <code>Dipy</code> has a built-in function that allows us to read in <code>bval</code> and <code>bvec</code> files named <code>read_bvals_bvecs</code> under the <code>dipy.io.gradients</code> module. Let's first grab the path to our gradient directions and amplitude files and load them into memory.
 
 ~~~
-dwi = layout.get(subject='010002', suffix='dwi', extension='.nii.gz', return_type='file')[0]
-bvec = layout.get(subject='010002', suffix='dwi', extension='bvec', return_type='file')[0]
-bval = layout.get(subject='010002', suffix='dwi', extension='bval', return_type='file')[0]
+bvec = layout.get_bvec(dwi)
+bval = layout.get_bval(dwi)
 ~~~
 {: .language-python}
 
