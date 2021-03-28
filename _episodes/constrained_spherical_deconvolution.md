@@ -219,7 +219,7 @@ where $R$ is the number of coefficients. For example, an order $l_{max} = {4, 6,
 series has $R = {15, 28, 45}$ coefficients, respectively. Note the use of even
 orders: even order SH functions allow to reconstruct symmetric spherical
 functions. Traditionally, even orders have been used motivated by the fact that
-the diffusion process is symmetric around the origin.s
+the diffusion process is symmetric around the origin.
 
 The CSD is performed in `DIPY` by calling the `fit` method of the CSD model on
 the diffusion data:
