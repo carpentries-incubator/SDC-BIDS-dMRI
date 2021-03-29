@@ -277,6 +277,40 @@ from dipy.direction import peaks_from_model
 
 peaks = peaks_from_model(csd_model, dwi_data, default_sphere, .5, 25,
                          mask=seed_mask, return_sh=True, parallel=True)
+~~~
+{: .language-python}
+
+
+It is always good practice to (save and) visualize the peaks as a check towards
+ensuring that the orientation information conforms to what is expected as input
+to the tracking process.
+
+~~~
+# Save the peaks
+nib.save(nib.Nifti1Image(reshape_peaks_for_visualization(csd_peaks),
+                         affine), os.path.join(out_dir, 'peaks.nii.gz'))
+
+# Visualize the peaks
+scene = window.Scene()
+fodf_peaks = actor.peak_slicer(peaks.peak_dirs, csd_peaks.peak_values)
+scene.add(fodf_peaks)
+peaks_scene_arr = window.snapshot(
+    scene, fname=os.path.join(out_dir, 'peaks.png'), size=(600, 600),
+    offscreen=True)
+fig, axes = plt.subplots()
+axes.imshow(peaks_scene_arr, origin="lower")
+axes.axis("off")
+plt.show()
+~~~
+{: .language-python}
+
+![CSD model peaks for tracking]({{ relative_root_path }}/fig/probabilistic_tractography/peaks.png){:class="img-responsive"} \
+Peaks obtained from the CSD model for tracking purposes
+
+We will now perform the tracking process using the local orientation
+information provided by the peaks:
+
+~~~
 fod_coeff = peaks.shm_coeff
 
 prob_dg = ProbabilisticDirectionGetter.from_shcoeff(fod_coeff, max_angle=30.,
