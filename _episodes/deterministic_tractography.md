@@ -34,6 +34,11 @@ from bids.layout import BIDSLayout
 from dipy.io.gradients import read_bvals_bvecs
 from dipy.core.gradients import gradient_table
 
+from fury import actor, colormap
+
+from utils.visualization_utils import generate_anatomical_volume_figure
+
+
 dwi_layout = BIDSLayout("../../data/ds000221/derivatives/uncorrected_topup_eddy", validate=False)
 gradient_layout = BIDSLayout("../../data/ds000221/", validate=False)
 
@@ -204,16 +209,15 @@ sft = StatefulTractogram(streamlines, dwi_img, Space.RASMM)
 save_tractogram(sft, os.path.join(out_dir, "tractogram_deterministic_EuDX.trk"))
 
 # Plot the tractogram
-scene = window.Scene()
-scene.add(actor.line(streamlines, colormap.line_colors(streamlines)))
-det_tractogram_eudx_scene_arr = window.snapshot(
-    scene,
-    fname=os.path.join(out_dir, 'tractogram_deterministic_EuDX.png'),
-    size=(800, 800), offscreen=True)
 
-fig, axes = plt.subplots()
-axes.imshow(det_tractogram_eudx_scene_arr, origin="lower")
-axes.axis("off")
+# Build the representation of the data
+streamlines_actor = actor.line(streamlines, colormap.line_colors(streamlines))
+
+# Generate the figure
+fig = generate_anatomical_volume_figure(streamlines_actor)
+
+fig.savefig(os.path.join(out_dir, "tractogram_deterministic_EuDX.png"),
+            dpi=300, bbox_inches="tight")
 plt.show()
 ~~~
 {: .language-python}
