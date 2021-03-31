@@ -257,99 +257,27 @@ csd_odf = csd_fit.odf(default_sphere)
 ~~~
 {: .language-python}
 
-We will now define a utility function that will allow us to generate three
-anatomical views (axial superior, sagittal right and coronal anterior) of the
-data.
-
-~~~
-def generate_anatomical_views(slices, *actors, cmap="plasma",
-        viewsize=(600, 600), figsize=(20, 20)):
-    """Generate anatomical (axial superior, sagittal right and coronal
-    anterior) views of the actor(s) at the provided slices.
-
-    Arguments
-    ---------
-    slices: Tuple (int, int, int)
-        Image data to be displayed.
-    actors : vtkActor
-        Actor(s) to be displayed.
-    cmap : str
-        Colormap to be applied to the overlay.
-    viewsize : Tuple (int, int)
-        Composite figure size.
-    figsize : Tuple (int, int)
-        Subfigure size.
-
-    Returns
-    -------
-        A `Figure` instance containing the anatomical views of the actor(s).
-    """
-
-    origin = "lower"
-    offscreen = True
-
-    # Create the scence
-    scene = window.Scene()
-
-    # Add the each data volume to the scene
-    for actor in actors:
-        scene.add(actor)
-
-    # Axial superior
-    for actor in actors:
-        actor.display(z=slices[2])
-
-    axial_scene = window.snapshot(scene, size=viewsize, offscreen=offscreen)
-
-    # Sagittal right
-    for actor in actors:
-        actor.display(x=slices[0])
-
-    scene.yaw(-90)
-    scene.roll(90)
-    scene.reset_camera()
-    sagittal_scene = window.snapshot(scene, size=viewsize, offscreen=offscreen)
-
-    # Coronal anterior
-    for actor in actors:
-        actor.display(y=slices[1])
-
-    scene.roll(90)
-    scene.pitch(90)
-    scene.reset_camera()
-    coronal_scene = window.snapshot(scene, size=viewsize, offscreen=offscreen)
-
-    # Plot different views
-    fig, axes = plt.subplots(1,3, figsize=figsize)
-    axes[0].imshow(axial_scene, cmap=cmap, origin=origin)
-    axes[0].axis("off")
-    axes[0].set_title("Axial superior")
-    axes[1].imshow(sagittal_scene, cmap=cmap, origin=origin)
-    axes[1].axis("off")
-    axes[1].set_title("Sagittal right")
-    axes[2].imshow(coronal_scene, cmap=cmap, origin=origin)
-    axes[2].axis("off")
-    axes[2].set_title("Coronal anterior")
-
-    return fig
-~~~
-{: .language-python}
+We will now use the `generate_anatomical_slice_figure` utility function that
+allows us to generate three anatomical views (axial superior, sagittal right
+and coronal anterior) of the data.
 
 Here we visualize only the central slices of the 40x40x10 region (i.e. the
 `[40:80, 40:80, 45:55]` volume data region) that has been used.
 
 ~~~
+from utils.visualization_utils import generate_anatomical_slice_figure
+
 colormap = "plasma"
 
 # Build the representation of the data
-fodf_spheres = actor.odf_slicer(csd_odf, sphere=default_sphere, scale=0.9,
-                                norm=False, colormap=colormap)
+fodf_actor = actor.odf_slicer(csd_odf, sphere=default_sphere, scale=0.9,
+                              norm=False, colormap=colormap)
 
 # Compute the slices to be shown
 slices = tuple(elem // 2 for elem in data_small.shape[:-1])
 
 # Generate the figure
-fig = generate_anatomical_views(slices, fodf_spheres, cmap=colormap)
+fig = generate_anatomical_slice_figure(slices, fodf_actor, cmap=colormap)
 
 fig.savefig(os.path.join(out_dir, "csd_odfs.png"), dpi=300,
             bbox_inches="tight")
@@ -383,10 +311,10 @@ nib.save(nib.Nifti1Image(peak_indices, affine), os.path.join(out_dir,
     'peaks_indices.nii.gz'))
 
 # Build the representation of the data
-fodf_peaks = actor.peak_slicer(csd_peaks.peak_dirs, csd_peaks.peak_values)
+peaks_actor = actor.peak_slicer(csd_peaks.peak_dirs, csd_peaks.peak_values)
 
 # Generate the figure
-fig = generate_anatomical_views(slices, fodf_peaks, cmap=colormap)
+fig = generate_anatomical_slice_figure(slices, peaks_actor, cmap=colormap)
 
 fig.savefig(os.path.join(out_dir, "csd_peaks.png"), dpi=300,
     bbox_inches="tight")
@@ -400,11 +328,11 @@ CSD Peaks.
 We can finally visualize both the fODFs and peaks in the same space.
 
 ~~~
-fodf_spheres.GetProperty().SetOpacity(0.4)
+fodf_actor.GetProperty().SetOpacity(0.4)
 
 # Generate the figure
-fig = generate_anatomical_views(slices, fodf_peaks, fodf_spheres,
-                                cmap=colormap)
+fig = generate_anatomical_slice_figure(slices, peaks_actor, fodf_actor,
+                                       cmap=colormap)
 
 fig.savefig(os.path.join(out_dir, "csd_peaks_fodfs.png"), dpi=300,
             bbox_inches="tight")
