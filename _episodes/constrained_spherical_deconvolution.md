@@ -422,11 +422,15 @@ References
 > >         offscreen=True)
 > > 
 > >     axes[ix].imshow(odf_scene_arr, cmap="plasma", origin="lower")
+> >     axes[ix].set_title("%d deg" % angle)
 > >     axes[ix].axis("off")
 > > 
 > > plt.show()
 > > ~~~
 > > {: .language-python}
+> >
+> > ![Multiple orientation cross angles]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/odf_multiple_angles.png){:class="img-responsive"} \
+> > CSD at multiple crossing angles
 > {: .solution}
 {: .challenge}
 
