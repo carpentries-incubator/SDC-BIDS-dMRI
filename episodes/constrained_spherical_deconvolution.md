@@ -368,7 +368,8 @@ References
 >
 > Helpful hints: 
 >   * To set the angle between tensors, use `[(0, 0), (angle, 0)]`
->   * You may need to use a higher resolution sphere
+>   * You may need to use a higher resolution sphere than `default_sphere`
+>   * Below is some code to generate multiple tensors
 > ~~~
 > from dipy.sims.voxel import multi_tensor_odf
 > 
