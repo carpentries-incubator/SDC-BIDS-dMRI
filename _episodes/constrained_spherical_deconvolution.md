@@ -427,10 +427,7 @@ References
 > > 
 > > plt.show()
 > > ~~~
-> > {: .language-python}
-> >
-> > ![Multiple orientation cross angles]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/odf_multiple_angles.png){:class="img-responsive"} \
-> > CSD at multiple crossing angles
+> > {: .language-python}s
 > {: .solution}
 {: .challenge}
 
