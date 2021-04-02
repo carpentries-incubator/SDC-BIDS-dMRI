@@ -371,6 +371,7 @@ References
 >   * You may need to use a higher resolution sphere than `default_sphere`
 >   * You may need to rotate the scene to visualzie the ODFs
 >   * Below is some code to generate multiple tensors
+>
 > ~~~
 > from dipy.sims.voxel import multi_tensor_odf
 > 
