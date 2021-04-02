@@ -427,7 +427,7 @@ References
 > > 
 > > plt.show()
 > > ~~~
-> > {: .language-python}s
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
