@@ -319,6 +319,8 @@ streamlines = Streamlines(streamlines_generator)
 > > plt.show()
 > > ~~~
 > > {: .language-python}
+> >
+> > ![Binary Stopping Criteria Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_exercise.png){:class="img-responsive"}
 > {: .solution}
 {: .challenge}
 
