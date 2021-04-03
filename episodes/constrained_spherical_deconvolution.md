@@ -410,7 +410,7 @@ References
 > >
 > > fig, axes = plt.subplots(1,5, figsize=(10,10))
 > >
-> > # Create synthetic ODF of different angles
+> > # Simulate ODF of different angles
 > > for ix, angle in enumerate([90, 60, 45, 30, 20]):
 > >     angles = [(0, 0), (angle, 0)]
 > >     odf = multi_tensor_odf(get_sphere("repulsion724").vertices, mevals, angles, fractions)
