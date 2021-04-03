@@ -312,7 +312,6 @@ streamlines = Streamlines(streamlines_generator)
 > > ~~~
 > > from fury import actor, window
 > >
-<!-- > > streamline_cmap = np.ones((len(streamlines), 3)) -->
 > > streamlines_actor = actor.line(streamlines, window.colors.red, opacity=0.2)
 > > 
 > > fig = generate_anatomical_volume_figure(streamlines_actor)
