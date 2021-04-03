@@ -361,15 +361,17 @@ References
 
 > ## Exercise 1
 >
-> In this episode, the ODF of a single fibre population (i.e. no crossing 
-> fibres) was visualized. Simulate what the ODF would look like given
-> crossing angles of 90, 60, 45, 30, and 20 degrees. We have included
-> helpful hints and code below to help you get started.
+> In this episode, the response function was estimated from a region of
+> single coherent fibre populations and its ODF was visualized. Alternatively, 
+> We can simulate what the ODF would look like for multiple fibre
+> populations. For the following exercise, simulate the ODF for two fibre 
+> populations with crossing angles of 90, 60, 45, 30, and 20 degrees. We 
+> have included helpful hints and code below to help you get started.
 >
 > Helpful hints: 
 >   * To set the angle between tensors, use `[(0, 0), (angle, 0)]`
 >   * You may need to use a higher resolution sphere than `default_sphere`
->   * You may need to rotate the scene to visualzie the ODFs
+>   * You may need to rotate the scene to visualize the ODFs
 >   * Below is some code to simulate multiple fibre orientations
 >
 > ~~~
@@ -394,7 +396,7 @@ References
 > > from dipy.viz import window, actor
 > > from dipy.sims.voxel import multi_tensor_odf
 > >
-> > # Create output directory to stoage image
+> > # Create the output directory to stoage image
 > > out_dir = '../../data/ds000221/derivatives/dwi/reconstruction/exercise/dwi/'
 > > 
 > > if not os.path.exists(out_dir):
@@ -428,6 +430,10 @@ References
 > > plt.show()
 > > ~~~
 > > {: .language-python}
+> > 
+> > ![ODFs of differing crossing angles]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/odfs_multiple_angles.png){:class="img-responsive"} \
+ODFs of different crossing angles.
+> >
 > {: .solution}
 {: .challenge}
 
