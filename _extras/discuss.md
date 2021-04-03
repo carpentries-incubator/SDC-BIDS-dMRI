@@ -6,14 +6,19 @@ title: Discussion
 
 ## Setting up the camera viewpoint
 
-The [Constrained Spherical Deconvolution] episode defines an utility function
-(`generate_anatomical_views`) that receives a list of data and generates a
-[Matplotlib] `Figure` instance containing the axial superior, sagittal right
-and coronal anterior views of the data at the specified slices. The method
-achieves this by setting up the camera in the appropriate viewpoints. These
-viewpoints are obtained applying rotations at given angles; in the mentioned
-method, the rotations are applied to the focal point. These rotations are then
-defined according to the following perpendicular axes:
+The `utils.visualization_utils` module defines a series of utility functions
+used by several episodes to generate plots of the data according to some
+prefixed anatomically meaningful orientations. The
+`generate_anatomical_slice_figure` and `generate_anatomical_volume_figure`
+methods receive a list of the actors containing the representations of the
+underlying data to be displayed and generates a [Matplotlib] `Figure` instance
+containing the axial superior, sagittal right and coronal anterior views.
+`generate_anatomical_slice_figure` displays the data at some given particular
+slices. The methods achieve this by calling some auxiliary functions that set
+up the camera in the appropriate viewpoints. These viewpoints are obtained
+applying rotations at given angles; in the mentioned method, the rotations are
+applied to the focal point. These rotations are then defined according to the
+following perpendicular axes:
 
 - **pitch** (transverse axis): an axis running from right to left, allowing
 rotations in the sagittal plane.

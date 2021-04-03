@@ -61,7 +61,11 @@ from dipy.tracking import utils
 from dipy.tracking.local_tracking import LocalTracking
 from dipy.tracking.streamline import Streamlines
 from dipy.tracking.stopping_criterion import ThresholdStoppingCriterion
-from dipy.viz import window, actor, colormap
+
+from fury import actor, colormap
+
+from utils.visualization_utils import (generate_anatomical_slice_figure,
+                                       generate_anatomical_volume_figure)
 
 
 dwi_layout = BIDSLayout('../../data/ds000221/derivatives/uncorrected_topup_eddy/', validate=False)
@@ -207,15 +211,15 @@ sft = StatefulTractogram(streamlines, dwi_img, Space.RASMM)
 save_tractogram(sft, "tractogram_probabilistic_dg_pmf.trk")
 
 # Plot the tractogram
-scene = window.Scene()
-scene.add(actor.line(streamlines, colormap.line_colors(streamlines)))
-prob_tractogram_dg_pmf_scene_arr = window.snapshot(
-    scene, fname=os.path.join(out_dir, 'tractogram_probabilistic_dg_pmf.png'),
-    size=(200, 200), offscreen=True)
 
-fig, axes = plt.subplots()
-axes.imshow(prob_tractogram_dg_pmf_scene_arr, origin="lower")
-axes.axis("off")
+# Build the representation of the data
+streamlines_actor = actor.line(streamlines, colormap.line_colors(streamlines))
+
+# Generate the figure
+fig = generate_anatomical_volume_figure(streamlines_actor)
+
+fig.savefig(os.path.join(out_dir, "tractogram_probabilistic_dg_pmf.png"),
+            dpi=300, bbox_inches="tight")
 plt.show()
 ~~~
 {: .language-python}
@@ -250,15 +254,15 @@ sft = StatefulTractogram(streamlines, dwi_img, Space.RASMM)
 save_tractogram(sft, "tractogram_probabilistic_dg_sh.trk")
 
 # Plot the tractogram
-scene = window.Scene()
-scene.add(actor.line(streamlines, colormap.line_colors(streamlines)))
-prob_tractogram_dg_sh_scene_arr = window.snapshot(
-    scene, fname=os.path.join(out_dir, 'tractogram_probabilistic_dg_sh.png'),
-    size=(800, 800), offscreen=True)
 
-fig, axes = plt.subplots()
-axes.imshow(prob_tractogram_dg_sh_scene_arr, origin="lower")
-axes.axis("off")
+# Build the representation of the data
+streamlines_actor = actor.line(streamlines, colormap.line_colors(streamlines))
+
+# Generate the figure
+fig = generate_anatomical_volume_figure(streamlines_actor)
+
+fig.savefig(os.path.join(out_dir, "tractogram_probabilistic_dg_sh.png"),
+            dpi=300, bbox_inches="tight")
 plt.show()
 ~~~
 {: .language-python}
@@ -287,19 +291,21 @@ to the tracking process.
 
 ~~~
 # Save the peaks
-nib.save(nib.Nifti1Image(reshape_peaks_for_visualization(csd_peaks),
+nib.save(nib.Nifti1Image(reshape_peaks_for_visualization(peaks),
                          affine), os.path.join(out_dir, 'peaks.nii.gz'))
 
 # Visualize the peaks
-scene = window.Scene()
-fodf_peaks = actor.peak_slicer(peaks.peak_dirs, csd_peaks.peak_values)
-scene.add(fodf_peaks)
-peaks_scene_arr = window.snapshot(
-    scene, fname=os.path.join(out_dir, 'peaks.png'), size=(600, 600),
-    offscreen=True)
-fig, axes = plt.subplots()
-axes.imshow(peaks_scene_arr, origin="lower")
-axes.axis("off")
+
+# Build the representation of the data
+peaks_actor = actor.peak_slicer(peaks.peak_dirs, peaks.peak_values)
+
+# Compute the slices to be shown
+slices = tuple(elem // 2 for elem in dwi_data.shape[:-1])
+
+# Generate the figure
+fig = generate_anatomical_slice_figure(slices, peaks_actor)
+
+fig.savefig(os.path.join(out_dir, "peaks.png"), dpi=300, bbox_inches="tight")
 plt.show()
 ~~~
 {: .language-python}
@@ -325,16 +331,15 @@ save_tractogram(sft, "tractogram_probabilistic_dg_sh_pmf.trk")
 
 
 # Plot the tractogram
-scene = window.Scene()
-scene.add(actor.line(streamlines, colormap.line_colors(streamlines)))
-prob_tractogram_dg_sh_pmf_scene_arr = window.snapshot(
-    scene,
-    fname=os.path.join(out_dir, 'tractogram_probabilistic_dg_sh_pmf.png'),
-    size=(800, 800), offscreen=True)
 
-fig, axes = plt.subplots()
-axes.imshow(prob_tractogram_dg_sh_pmf_scene_arr, origin="lower")
-axes.axis("off")
+# Build the representation of the data
+streamlines_actor = actor.line(streamlines, colormap.line_colors(streamlines))
+
+# Generate the figure
+fig = generate_anatomical_volume_figure(streamlines_actor)
+
+fig.savefig(os.path.join(out_dir, "tractogram_probabilistic_dg_sh_pmf.png"),
+            dpi=300, bbox_inches="tight")
 plt.show()
 ~~~
 {: .language-python}
