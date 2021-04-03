@@ -431,7 +431,7 @@ References
 > > ~~~
 > > {: .language-python}
 > > 
-> > ![ODFs of differing crossing angles]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/odfs_multiple_angles.png){:class="img-responsive"} \
+> > ![ODFs of differing crossing angles]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/odf_multiple_angles.png){:class="img-responsive"} \
 ODFs of different crossing angles.
 > >
 > {: .solution}
