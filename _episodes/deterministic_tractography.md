@@ -299,7 +299,7 @@ plt.show()
 streamlines = Streamlines(streamlines_generator)
 > > ~~~
 > > {: .language-python}
-> {:. solution}
+> {: .solution}
 > 
 > ## Exercise 2
 > 
