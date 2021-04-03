@@ -44,8 +44,8 @@ def generate_sagittal_right_view(scene, size=(600, 600), offscreen=True):
         A `window.Scene` instance seen from a sagittal right view.
     """
 
-    scene.yaw(-90)
-    scene.roll(90)
+    scene.yaw(90)
+    scene.roll(-90)
     scene.reset_camera()
     sagittal_scene = window.snapshot(scene, size=size, offscreen=offscreen)
 
