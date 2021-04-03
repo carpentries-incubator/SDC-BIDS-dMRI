@@ -228,4 +228,98 @@ plt.show()
 
 ![EuDX Determinsitic Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_EuDX.png){:class="img-responsive"}
 
+> ## Exercise 1
+> 
+> In this episode, we used applied a threshold stopping criteria
+> to stop tracking when we reach a voxel where FA is below 0.2.
+> There are also other stopping criteria available. We encourage
+> you to read the `DIPY` documentation about the others. For this
+> exercise, repeat the tractography, but apply a binary stopping 
+> criteria (`BinaryStoppingCriterion`) using the seed mask.
+>
+> > ## Solution
+> > 
+> > ~~~
+> > import os
+> >
+> > import nibabel as nib
+> > import numpy as np
+> > 
+> > from bids.layout import BIDSLayout
+> > 
+> > from dipy.io.gradients import read_bvals_bvecs
+> > from dipy.core.gradients import gradient_table
+> > from dipy.data import get_sphere
+> > from dipy.direction import peaks_from_model
+> > import dipy.reconst.dti as dti
+> > from dipy.segment.mask import median_otsu
+> > from dipy.tracking import utils
+> > from dipy.tracking.local_tracking import LocalTracking
+> > from dipy.tracking.streamline import Streamlines
+> > 
+> > dwi_layout = BIDSLayout("../../data/ds000221/derivatives/uncorrected_topup_eddy", validate=False)
+> > gradient_layout = BIDSLayout("../../data/ds000221/", > > validate=False)
+> > 
+> > # Get subject data
+> > subj = '010006'
+> > dwi_fname = dwi_layout.get(subject=subj, suffix='dwi', extension='nii.gz', return_type='file')[0]
+> > bvec_fname = dwi_layout.get(subject=subj, extension='eddy_rotated_bvecs', return_type='file')[0]
+> > bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bval', return_type='file')[0]
+> > 
+> > dwi_img = nib.load(dwi_fname)
+> > affine = dwi_img.affine
+> > 
+> > bvals, bvecs = read_bvals_bvecs(bval_fname, bvec_fname)
+> > gtab = gradient_table(bvals, bvecs)
+> > 
+> > dwi_data = dwi_img.get_data()
+> > dwi_data, dwi_mask = median_otsu(dwi_data, vol_idx=[0], numpass=1)  # Specify the volume index to the b0 volumes
+> > 
+> > # Fit tensor and compute FA map
+> > dti_model = dti.TensorModel(gtab)
+> > dti_fit = dti_model.fit(dwi_data, mask=dwi_mask)  
+> > fa_img = dti_fit.fa
+> > evecs_img = dti_fit.evecs
+> > 
+> > sphere = get_sphere('symmetric362')
+> > peak_indices = peaks_from_model(model=dti_model, data=dwi_data, sphere=sphere, relative_peak_threshold=.2, min_separation_angle=25, mask=dwi_mask, npeaks=2)
+> > 
+> > # Create a binary seed mask
+> > seed_mask = fa_img.copy()
+> > seed_mask[seed_mask>=0.2] = 1
+> > seed_mask[seed_mask<0.2] = 0
+> > 
+> > seeds = utils.seeds_from_mask(seed_mask, affine=affine, density=1)
+> > 
+> > # Set stopping criteria
+> > stopping_criterion = BinaryStoppingCriterion(seed_mask==1)
+> > 
+> > # Perform tracking
+> > streamlines_generator = LocalTracking(peak_indices, stopping_criterion, seeds, affine=affine, step_size=.5)
+streamlines = Streamlines(streamlines_generator)
+> > ~~~
+> > {: .language-python}
+> {:. solution}
+> 
+> ## Exercise 2
+> 
+> Visualize the tractogram! As an additional challenge, set the
+> color of the streamlines in the tractogram to red and change
+> the opacity to `0.2`.
+> 
+> > ## Solution 
+> >
+> > ~~~
+> > from fury import actor, window
+> >
+<!-- > > streamline_cmap = np.ones((len(streamlines), 3)) -->
+> > streamlines_actor = actor.line(streamlines, window.colors.red, opacity=0.2)
+> > 
+> > fig = generate_anatomical_volume_figure(streamlines_actor)
+> > plt.show()
+> > ~~~
+> > {: .language-python}
+> {: .solution}
+{: .challenge}
+
 {% include links.md %}
