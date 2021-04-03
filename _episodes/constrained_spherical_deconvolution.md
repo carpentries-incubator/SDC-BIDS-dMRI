@@ -408,7 +408,7 @@ References
 > > # Set fraction for each tensor 
 > > fractions = [50, 50]
 > >
-> > fig, axes = plt.subplots(1,5, figsize=(10,10))
+> > fig, axes = plt.subplots(1,5, figsize=(10,2))
 > >
 > > # Simulate ODF of different angles
 > > for ix, angle in enumerate([90, 60, 45, 30, 20]):
