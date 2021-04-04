@@ -226,7 +226,7 @@ def generate_anatomical_volume_figure(
 
     scene_titles = ["Coronal anterior", "Sagittal right", "Axial superior"]
 
-    coronal_scene, sagittal_scene, axial_scene= \
+    coronal_scene, sagittal_scene, axial_scene = \
         generate_anatomical_volume_views(*actors, size=viewsize)
 
     fig = generate_figure(
@@ -259,13 +259,13 @@ def generate_anatomical_slice_figure(
         A `Figure` instance containing the anatomical views of the actor(s).
     """
 
-    scene_titles = ["Axial superior", "Sagittal_left", "Coronal anterior"]
+    scene_titles = ["Coronal anterior", "Sagittal right", "Axial superior"]
 
-    axial_scene, sagittal_scene, coronal_scene = \
+    coronal_scene, sagittal_scene, axial_scene = \
         generate_anatomical_slice_views(slices, *actors, size=viewsize)
 
     fig = generate_figure(
-        scene_titles, axial_scene, sagittal_scene, coronal_scene, cmap=cmap,
+        scene_titles, coronal_scene, sagittal_scene, axial_scene, cmap=cmap,
         figsize=figsize)
 
     return fig
