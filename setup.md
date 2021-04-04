@@ -171,7 +171,7 @@ $ osf -p cmq8a clone ./data
 Notebooks expect them to be placed in the `data` folder that exists in the root
 of the repository. 
 
-Note the above command clones the entire repository, which may be quite large and
+Note that the above command clones the entire repository, which may be quite large and
 take a while to download. Alternatively, data from a single subject is available
 and can be downloaded by running:
 ~~~
