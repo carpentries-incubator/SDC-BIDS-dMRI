@@ -160,8 +160,8 @@ an insightful idea around the SD framework. The response function's ODF should
 have sharp lobes, as the anisotropy of its diffusivity indicates:
 
 ~~~
-from dipy.viz import window, actor
 from dipy.sims.voxel import single_tensor_odf
+from fury import window, actor
 
 scene = window.Scene()
 evals = response[0]
