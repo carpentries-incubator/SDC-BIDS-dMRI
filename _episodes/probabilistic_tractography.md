@@ -209,7 +209,13 @@ sft = StatefulTractogram(streamlines, dwi_img, Space.RASMM)
 
 # Save the tractogram
 save_tractogram(sft, "tractogram_probabilistic_dg_pmf.trk")
+~~~
+{: .language-python}
 
+We will easily generate the anatomical views on the generated tractogram using
+the `generate_anatomical_volume_figure` helper function:
+
+~~~
 # Plot the tractogram
 
 # Build the representation of the data
@@ -252,7 +258,13 @@ sft = StatefulTractogram(streamlines, dwi_img, Space.RASMM)
 
 # Save the tractogram
 save_tractogram(sft, "tractogram_probabilistic_dg_sh.trk")
+~~~
+{: .language-python}
 
+
+We will visualize the tractogram using the three usual anatomical views:
+
+~~~
 # Plot the tractogram
 
 # Build the representation of the data
@@ -293,7 +305,12 @@ to the tracking process.
 # Save the peaks
 nib.save(nib.Nifti1Image(reshape_peaks_for_visualization(peaks),
                          affine), os.path.join(out_dir, 'peaks.nii.gz'))
+~~~
+{: .language-python}
 
+As usual, we will use `fury` to visualize the peaks:
+
+~~~
 # Visualize the peaks
 
 # Build the representation of the data
@@ -328,8 +345,12 @@ sft = StatefulTractogram(streamlines, dwi_img, Space.RASMM)
 
 # Save the tractogram
 save_tractogram(sft, "tractogram_probabilistic_dg_sh_pmf.trk")
+~~~
+{: .language-python}
 
+We will again visualize the tractogram using the three usual anatomical views:
 
+~~~
 # Plot the tractogram
 
 # Build the representation of the data

@@ -310,6 +310,12 @@ peak_indices = csd_peaks.peak_indices
 nib.save(nib.Nifti1Image(peak_indices, affine), os.path.join(out_dir,
     'peaks_indices.nii.gz'))
 
+~~~
+{: .language-python}
+
+We can visualize them as usual using `fury`:
+
+~~~
 # Build the representation of the data
 peaks_actor = actor.peak_slicer(csd_peaks.peak_dirs, csd_peaks.peak_values)
 
