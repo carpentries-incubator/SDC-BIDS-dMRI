@@ -96,7 +96,7 @@ Next, we will need to create the tensor model using our gradient table, and then
 import dipy.reconst.dti as dti
 from dipy.segment.mask import median_otsu
 
-dwi_data = dwi_data.get_data()
+dwi_data = dwi_data.get_fdata()
 dwi_data, dwi_mask = median_otsu(dwi_data, vol_idx=[0], numpass=1)
 
 dti_model = dti.TensorModel(gtab)
@@ -231,7 +231,7 @@ Though other models are outside the scope of this lesson, we recommend looking i
 > > gt_bvals, gt_bvecs = read_bvals_bvecs(bval, bvec)
 > > gtab = gradient_table(gt_bvals, gt_bvecs)
 > >
-> > dwi_data = dwi_data.get_data()
+> > dwi_data = dwi_data.get_fdata()
 > > dwi_data, dwi_mask = median_otsu(dwi_data, vol_idx=[0], numpass=1)
 > >
 > > # Fit dti model
