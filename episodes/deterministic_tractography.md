@@ -62,7 +62,7 @@ We will now create a mask and constrain the fitting within the mask.
 import dipy.reconst.dti as dti
 from dipy.segment.mask import median_otsu
 
-dwi_data = dwi_img.get_data()
+dwi_data = dwi_img.get_fdata()
 dwi_data, dwi_mask = median_otsu(dwi_data, vol_idx=[0], numpass=1)  # Specify the volume index to the b0 volumes
 
 dti_model = dti.TensorModel(gtab)
