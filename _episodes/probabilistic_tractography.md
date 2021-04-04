@@ -62,11 +62,6 @@ from dipy.tracking.local_tracking import LocalTracking
 from dipy.tracking.streamline import Streamlines
 from dipy.tracking.stopping_criterion import ThresholdStoppingCriterion
 
-from fury import actor, colormap
-
-from utils.visualization_utils import (generate_anatomical_slice_figure,
-                                       generate_anatomical_volume_figure)
-
 
 dwi_layout = BIDSLayout('../../data/ds000221/derivatives/uncorrected_topup_eddy/', validate=False)
 gradient_layout = BIDSLayout('../../data/ds000221/', validate=False)
@@ -216,6 +211,10 @@ We will easily generate the anatomical views on the generated tractogram using
 the `generate_anatomical_volume_figure` helper function:
 
 ~~~
+from fury import actor, colormap
+
+from utils.visualization_utils import generate_anatomical_volume_figure
+
 # Plot the tractogram
 
 # Build the representation of the data
@@ -311,6 +310,8 @@ nib.save(nib.Nifti1Image(reshape_peaks_for_visualization(peaks),
 As usual, we will use `fury` to visualize the peaks:
 
 ~~~
+from utils.visualization_utils import generate_anatomical_slice_figure
+
 # Visualize the peaks
 
 # Build the representation of the data
