@@ -49,6 +49,10 @@ def generate_sagittal_right_view(scene, size=(600, 600), offscreen=True):
     scene.reset_camera()
     sagittal_scene = window.snapshot(scene, size=size, offscreen=offscreen)
 
+    # Reset scene
+    scene.roll(90)
+    scene.yaw(-90)
+
     return sagittal_scene
 
 
@@ -69,10 +73,14 @@ def generate_coronal_anterior_view(scene, size=(600, 600), offscreen=True):
         A `window.Scene` instance seen from a coronal anterior view.
     """
 
-    scene.roll(90)
+    scene.yaw(90)
     scene.pitch(-90)
     scene.reset_camera()
     coronal_scene = window.snapshot(scene, size=size, offscreen=offscreen)
+
+    # Reset scene
+    scene.pitch(90)
+    scene.yaw(-90)
 
     return coronal_scene
 
