@@ -70,7 +70,7 @@ def generate_coronal_anterior_view(scene, size=(600, 600), offscreen=True):
     """
 
     scene.roll(90)
-    scene.pitch(90)
+    scene.pitch(-90)
     scene.reset_camera()
     coronal_scene = window.snapshot(scene, size=size, offscreen=offscreen)
 
