@@ -42,6 +42,7 @@ jobs:
         virtualenv ~/sdc_bids_dmri
         pip install -r requirements.txt
         pip install pytest nbval
+        export PYTHONPATH=$PYTHONPATH:`realpath ${{ github.workspace }}/utils`
 
     # Download the necessary data
     - name: Download data
