@@ -160,8 +160,8 @@ an insightful idea around the SD framework. The response function's ODF should
 have sharp lobes, as the anisotropy of its diffusivity indicates:
 
 ~~~
-from dipy.viz import window, actor
 from dipy.sims.voxel import single_tensor_odf
+from fury import window, actor
 
 scene = window.Scene()
 evals = response[0]
@@ -310,6 +310,12 @@ peak_indices = csd_peaks.peak_indices
 nib.save(nib.Nifti1Image(peak_indices, affine), os.path.join(out_dir,
     'peaks_indices.nii.gz'))
 
+~~~
+{: .language-python}
+
+We can visualize them as usual using `fury`:
+
+~~~
 # Build the representation of the data
 peaks_actor = actor.peak_slicer(csd_peaks.peak_dirs, csd_peaks.peak_values)
 

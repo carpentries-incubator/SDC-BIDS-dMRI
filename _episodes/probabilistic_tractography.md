@@ -62,11 +62,6 @@ from dipy.tracking.local_tracking import LocalTracking
 from dipy.tracking.streamline import Streamlines
 from dipy.tracking.stopping_criterion import ThresholdStoppingCriterion
 
-from fury import actor, colormap
-
-from utils.visualization_utils import (generate_anatomical_slice_figure,
-                                       generate_anatomical_volume_figure)
-
 
 dwi_layout = BIDSLayout('../../data/ds000221/derivatives/uncorrected_topup_eddy/', validate=False)
 gradient_layout = BIDSLayout('../../data/ds000221/', validate=False)
@@ -209,6 +204,16 @@ sft = StatefulTractogram(streamlines, dwi_img, Space.RASMM)
 
 # Save the tractogram
 save_tractogram(sft, "tractogram_probabilistic_dg_pmf.trk")
+~~~
+{: .language-python}
+
+We will easily generate the anatomical views on the generated tractogram using
+the `generate_anatomical_volume_figure` helper function:
+
+~~~
+from fury import actor, colormap
+
+from utils.visualization_utils import generate_anatomical_volume_figure
 
 # Plot the tractogram
 
@@ -252,7 +257,13 @@ sft = StatefulTractogram(streamlines, dwi_img, Space.RASMM)
 
 # Save the tractogram
 save_tractogram(sft, "tractogram_probabilistic_dg_sh.trk")
+~~~
+{: .language-python}
 
+
+We will visualize the tractogram using the three usual anatomical views:
+
+~~~
 # Plot the tractogram
 
 # Build the representation of the data
@@ -293,6 +304,13 @@ to the tracking process.
 # Save the peaks
 nib.save(nib.Nifti1Image(reshape_peaks_for_visualization(peaks),
                          affine), os.path.join(out_dir, 'peaks.nii.gz'))
+~~~
+{: .language-python}
+
+As usual, we will use `fury` to visualize the peaks:
+
+~~~
+from utils.visualization_utils import generate_anatomical_slice_figure
 
 # Visualize the peaks
 
@@ -328,8 +346,12 @@ sft = StatefulTractogram(streamlines, dwi_img, Space.RASMM)
 
 # Save the tractogram
 save_tractogram(sft, "tractogram_probabilistic_dg_sh_pmf.trk")
+~~~
+{: .language-python}
 
+We will again visualize the tractogram using the three usual anatomical views:
 
+~~~
 # Plot the tractogram
 
 # Build the representation of the data
