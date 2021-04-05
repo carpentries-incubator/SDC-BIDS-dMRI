@@ -56,7 +56,7 @@ The <code>reconst</code> module contains implementations of the following models
 
 The different algorithms implemented in the module all share a similar conceptual structure:
 
-* <code>ReconstModel</code> objects (e.g., <code>TensorModel</code>) carry the parameters that are required in order to fit a model. For example, the directions and magnitudes of the gradients that were applied in the experiment. The objects all have a <code>fit</code> method, which takes in data, and emites a <code>ReconstFit</code> object. This is where a lot of the heavy lifting of the processing will take place.
+* <code>ReconstModel</code> objects (e.g. <code>TensorModel</code>) carry the parameters that are required in order to fit a model. For example, the directions and magnitudes of the gradients that were applied in the experiment. The objects all have a <code>fit</code> method, which takes in data, and emites a <code>ReconstFit</code> object. This is where a lot of the heavy lifting of the processing will take place.
 * <code>ReconstFit</code> objects carry the model that was used to generate the object. They also include the parameters that were estimated during fitting of the data. They have methods to calculate derived statistics, which can differ from model to model. All objects also have an orientation distribution function (<code>odf</code>), and most (but not all) contain a <code>predict</code> method, which enables the prediction of another dataset based on the current gradient table.
 
 
@@ -115,7 +115,7 @@ Mathematically, FA is defined as the normalized variance of the eigenvalues of t
 
 ![FA equation]({{ relative_root_path }}/fig/diffusion_tensor_imaging/fa_eqn.png){:class="img-responsive"}
 
-Values of FA vary between 0 and 1 (unitless). In the cases of perfect, isotropic diffusion, ![Isotropic diffusion eigenvalues]({{ relative_root_path }}/fig/diffusion_tensor_imaging/fa_iso.png), the diffusion tensor is a sphere and FA = 0.  If the first two eigenvalues are equal the tensor will be oblate or planar, whereas if the first eigenvalue is larger than the other two, it will have the mentioned ellipsoid shape: as diffusion progressively becomes more anisotropic, eigenvalues become more unequal, causing the tensor to be elongated, with FA approaching 1. Note that FA should be interpreted carefully. It may be an indication of the density of packing fibers in a voxel and the amount of myelin wrapped around those axons, but it is not always a measure of "tissue integrity".
+Values of FA vary between 0 and 1 (unitless). In the cases of perfect, isotropic diffusion, ![Isotropic diffusion eigenvalues]({{ relative_root_path }}/fig/diffusion_tensor_imaging/fa_iso.png), the diffusion tensor is a sphere and FA = 0. If the first two eigenvalues are equal the tensor will be oblate or planar, whereas if the first eigenvalue is larger than the other two, it will have the mentioned ellipsoid shape: as diffusion progressively becomes more anisotropic, eigenvalues become more unequal, causing the tensor to be elongated, with FA approaching 1. Note that FA should be interpreted carefully. It may be an indication of the density of packing fibers in a voxel and the amount of myelin wrapped around those axons, but it is not always a measure of "tissue integrity".
 
 Let's take a look at what the FA map looks like! An FA map is a gray-scale image, where higher intensities reflect more anisotropic diffuse regions.
 
