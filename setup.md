@@ -87,6 +87,13 @@ $ pip install -r requirements.txt
 
 from the root of the repository folder.
 
+Additionally, a helpful module to view anatomical slices have been included in the
+`utils` folder. To use this in python, run the following command:
+~~~
+$ export PYTHONPATH=$PYTHONPATH:`realpath ./utils`
+~~~
+{: .bash}
+
 Users may choose to run the notebooks using [Jupyter] or [iPython]. The
 `Jupyter` dependency can be installed by running:
 ~~~
@@ -177,7 +184,7 @@ and can be downloaded by running:
 ~~~
 $ cd ./data
 $ osf -p cmq8a fetch ds000221_subject/ds000221_sub-010006.zip 
-$ unzip sub-010006.zip
+$ unzip ds000221_sub-010006.zip
 ~~~
 {: .bash}
 
