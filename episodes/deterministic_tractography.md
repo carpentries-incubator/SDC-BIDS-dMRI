@@ -34,10 +34,6 @@ from bids.layout import BIDSLayout
 from dipy.io.gradients import read_bvals_bvecs
 from dipy.core.gradients import gradient_table
 
-from fury import actor, colormap
-
-from utils.visualization_utils import generate_anatomical_volume_figure
-
 
 dwi_layout = BIDSLayout("../../data/ds000221/derivatives/uncorrected_topup_eddy", validate=False)
 gradient_layout = BIDSLayout("../../data/ds000221/", validate=False)
@@ -196,9 +192,6 @@ loaded into other software for visualization or further analysis. To do so, we n
 tractogram state using `StatefulTractogram` and `save_tractogram` to save the file. 
 Note that we will have to specify the space to save the tractogram in.
 
-We can then generate the streamlines 3D scene using the `fury` python package,
-and visualize the scene's contents with `matplotlib`.
-
 ~~~
 from dipy.io.stateful_tractogram import Space, StatefulTractogram
 from dipy.io.streamline import save_tractogram
@@ -207,6 +200,17 @@ sft = StatefulTractogram(streamlines, dwi_img, Space.RASMM)
 
 # Save the tractogram
 save_tractogram(sft, os.path.join(out_dir, "tractogram_deterministic_EuDX.trk"))
+~~~
+{: .language-python}
+
+
+We can then generate the streamlines 3D scene using the `fury` python package,
+and visualize the scene's contents with `matplotlib`.
+
+~~~
+from fury import actor, colormap
+
+from utils.visualization_utils import generate_anatomical_volume_figure
 
 # Plot the tractogram
 
