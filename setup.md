@@ -184,7 +184,7 @@ and can be downloaded by running:
 ~~~
 $ cd ./data
 $ osf -p cmq8a fetch ds000221_subject/ds000221_sub-010006.zip 
-$ unzip sub-010006.zip
+$ unzip ds000221_sub-010006.zip
 ~~~
 {: .bash}
 
