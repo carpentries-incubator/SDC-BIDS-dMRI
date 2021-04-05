@@ -169,7 +169,17 @@ $ osf -p cmq8a clone ./data
 {: .bash}
 
 Notebooks expect them to be placed in the `data` folder that exists in the root
-of the repository.
+of the repository. 
+
+Note that the above command clones the entire repository, which may be quite large and
+take a while to download. Alternatively, data from a single subject is available
+and can be downloaded by running:
+~~~
+$ cd ./data
+$ osf -p cmq8a fetch ds000221_subject/ds000221_sub-010006.zip 
+$ unzip sub-010006.zip
+~~~
+{: .bash}
 
 
 {% include links.md %}
