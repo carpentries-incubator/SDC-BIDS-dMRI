@@ -1,22 +1,11 @@
 #!/bin/bash
-
-# Assume using non Compute Canada / SciNet node.
-
-# Download anat data
-cat ./files/download_list | xargs -I '{}' aws s3 sync --no-sign-request \
-s3://openneuro/ds000030/ds000030_R1.0.5/uncompressed/{}/anat \
-./data/ds000030/{}/anat \
---exclude '*' \
---include '*sub-10788*' 
-
-# Download dwi data 
-cat ./files/download_list | xargs -I '{}' aws s3 sync --no-sign-request \
-s3://openneuro/ds000030/ds000030_R1.0.5/uncompressed/{}/dwi \
-./data/ds000030/{}/dwi \ 
---exclude '*' \
---include '*sub-10788*'
+# Add utils
+export PYTHONPATH=$PYTHONPATH:`realpath ./utils`
 
 # Download preprocessed dwi data
-osf -p cmq8a clone ./data
-mv ./data/cmq8a/osfstorage/ds000030/derivatives ./data/ds000030
-rm -r ./data/cmq8a
+pushd . 
+cd ./data
+osf -p cmq8a fetch ds000221_subject/ds000221_sub-010006.zip 
+unzip ds000221_sub-010006.zip
+rm sub-010006.zip
+popd 
