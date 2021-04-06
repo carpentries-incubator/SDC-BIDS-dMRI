@@ -303,16 +303,22 @@ streamlines = Streamlines(streamlines_generator)
 > 
 > ## Exercise 2
 > 
-> Visualize the tractogram! As an additional challenge, set the
-> color of the streamlines in the tractogram to red and change
-> the opacity to `0.2`.
+>Visualize the tractogram! As an additional challenge, set the
+> color of the streamlines to display the values of the
+FA map 
+> and change the opacity to `0.05`. You may need to transform 
+> the streamlines from world coordinates to the subject's native space 
+>using `transform_streamlines` from `dipy.tracking.streamline`.
 > 
 > > ## Solution 
 > >
 > > ~~~
 > > from fury import actor, window
-> >
-> > streamlines_actor = actor.line(streamlines, window.colors.red, opacity=0.2)
+> > 
+> > from dipy.tracking.streamline import transform_streamlines
+> > 
+> > streamlines_native = transform_streamlines(streamlines, np.linalg.inv(affine))
+> > streamlines_actor = actor.line(streamlines_native, fa_img, opacity=0.05)
 > > 
 > > fig = generate_anatomical_volume_figure(streamlines_actor)
 > > plt.show()
