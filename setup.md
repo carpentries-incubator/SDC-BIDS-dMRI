@@ -90,7 +90,7 @@ from the root of the repository folder.
 Additionally, a helpful module to view anatomical slices have been included in the
 `utils` folder. To use this in python, run the following command:
 ~~~
-$ export PYTHONPATH=$PYTHONPATH:`realpath ./utils`
+$ export PYTHONPATH=$PYTHONPATH:`realpath .`
 ~~~
 {: .bash}
 
