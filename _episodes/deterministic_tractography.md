@@ -160,8 +160,8 @@ thresholding above our stopping criterion.
 from dipy.tracking import utils
 
 seed_mask = fa_img.copy()
-seed_mask[seed_mask>=0.2] = 1
-seed_mask[seed_mask<0.2] = 0
+seed_mask[seed_mask >= 0.2] = 1
+seed_mask[seed_mask < 0.2] = 0
 
 seeds = utils.seeds_from_mask(seed_mask, affine=affine, density=1)
 ~~~
@@ -230,7 +230,7 @@ plt.show()
 
 > ## Exercise 1
 > 
-> In this episode, we used applied a threshold stopping criteria
+> In this episode, we sapplied a threshold stopping criteria
 > to stop tracking when we reach a voxel where FA is below 0.2.
 > There are also other stopping criteria available. We encourage
 > you to read the `DIPY` documentation about the others. For this
@@ -272,7 +272,7 @@ plt.show()
 > > bvals, bvecs = read_bvals_bvecs(bval_fname, bvec_fname)
 > > gtab = gradient_table(bvals, bvecs)
 > > 
-> > dwi_data = dwi_img.get_data()
+> > dwi_data = dwi_img.get_fdata()
 > > dwi_data, dwi_mask = median_otsu(dwi_data, vol_idx=[0], numpass=1)  # Specify the volume index to the b0 volumes
 > > 
 > > # Fit tensor and compute FA map
@@ -286,8 +286,8 @@ plt.show()
 > > 
 > > # Create a binary seed mask
 > > seed_mask = fa_img.copy()
-> > seed_mask[seed_mask>=0.2] = 1
-> > seed_mask[seed_mask<0.2] = 0
+> > seed_mask[seed_mask >= 0.2] = 1
+> > seed_mask[seed_mask < 0.2] = 0
 > > 
 > > seeds = utils.seeds_from_mask(seed_mask, affine=affine, density=1)
 > > 
