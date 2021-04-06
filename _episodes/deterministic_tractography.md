@@ -17,8 +17,7 @@ keypoints:
 ## Deterministic tractography
 
 Deterministic tractography algorithms perform tracking of streamlines by
-following a predictable path, such as following the primary diffusion direction
-($\lambda_1$).
+following a predictable path, such as following the primary diffusion direction.
 
 In order to demonstrate how to perform deterministic tracking on a diffusion MRI dataset, we will 
 build from the preprocessing presented in a previous episode and compute the diffusion tensor.
