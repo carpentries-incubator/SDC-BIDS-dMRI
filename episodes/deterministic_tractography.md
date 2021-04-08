@@ -295,19 +295,18 @@ plt.show()
 > > 
 > > # Perform tracking
 > > streamlines_generator = LocalTracking(peak_indices, stopping_criterion, seeds, affine=affine, step_size=.5)
-streamlines = Streamlines(streamlines_generator)
+> > streamlines = Streamlines(streamlines_generator)
 > > ~~~
 > > {: .language-python}
 > {: .solution}
 > 
 > ## Exercise 2
 > 
->Visualize the tractogram! As an additional challenge, set the
+> Visualize the tractogram! As an additional challenge, set the
 > color of the streamlines to display the values of the
-FA map 
-> and change the opacity to `0.05`. You may need to transform 
+> FA map and change the opacity to `0.05`. You may need to transform 
 > the streamlines from world coordinates to the subject's native space 
->using `transform_streamlines` from `dipy.tracking.streamline`.
+> using `transform_streamlines` from `dipy.tracking.streamline`.
 > 
 > > ## Solution 
 > >
