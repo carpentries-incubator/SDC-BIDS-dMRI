@@ -229,12 +229,13 @@ plt.show()
 
 > ## Exercise 1
 > 
-> In this episode, we sapplied a threshold stopping criteria
+> In this episode, we applied a threshold stopping criteria
 > to stop tracking when we reach a voxel where FA is below 0.2.
 > There are also other stopping criteria available. We encourage
 > you to read the `DIPY` documentation about the others. For this
 > exercise, repeat the tractography, but apply a binary stopping 
 > criteria (`BinaryStoppingCriterion`) using the seed mask.
+> Visualize the tractogram!
 >
 > > ## Solution
 > > 
@@ -255,6 +256,9 @@ plt.show()
 > > from dipy.tracking import utils
 > > from dipy.tracking.local_tracking import LocalTracking
 > > from dipy.tracking.streamline import Streamlines
+> >
+> > from utils.visualization_utils import generate_anatomical_volume_figure
+> > from fury import actor, colormap
 > > 
 > > dwi_layout = BIDSLayout("../../data/ds000221/derivatives/uncorrected_topup_eddy", validate=False)
 > > gradient_layout = BIDSLayout("../../data/ds000221/", > > validate=False)
@@ -296,14 +300,22 @@ plt.show()
 > > # Perform tracking
 > > streamlines_generator = LocalTracking(peak_indices, stopping_criterion, seeds, affine=affine, step_size=.5)
 > > streamlines = Streamlines(streamlines_generator)
+> >
+> > # Plot the tractogram
+> > # Build the representation of the data
+streamlines_actor = actor.line(streamlines, colormap.line_colors(streamlines))
+> > 
+> > # Generate the figure
+> > fig = generate_anatomical_volume_figure(streamlines_actor)
+> > plt.show()
 > > ~~~
 > > {: .language-python}
+> > ![Binary Stopping Criterion Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_ex1.png){:class="img-responsive"}
 > {: .solution}
 > 
 > ## Exercise 2
 > 
-> Visualize the tractogram! As an additional challenge, set the
-> color of the streamlines to display the values of the
+> As an additional challenge, set the color of the streamlines to display the values of the
 > FA map and change the opacity to `0.05`. You may need to transform 
 > the streamlines from world coordinates to the subject's native space 
 > using `transform_streamlines` from `dipy.tracking.streamline`.
@@ -311,6 +323,7 @@ plt.show()
 > > ## Solution 
 > >
 > > ~~~
+> > import numpy as np
 > > from fury import actor, window
 > > 
 > > from dipy.tracking.streamline import transform_streamlines
@@ -323,7 +336,7 @@ plt.show()
 > > ~~~
 > > {: .language-python}
 > >
-> > ![Binary Stopping Criteria Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_fa.png){:class="img-responsive"}
+> > ![FA Mapped Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_fa.png){:class="img-responsive"}
 > {: .solution}
 {: .challenge}
 
