@@ -51,7 +51,7 @@ jobs:
         cd ${{ github.workspace }}/data
         osf -p cmq8a fetch ds000221_subject/ds000221_sub-010006.zip
         unzip ds000221_sub-010006.zip 
-        rm ds000221_subject/ds000221_sub-010006.zip
+        rm ds000221_sub-010006.zip
         popd 
         
     # Run the actual tests of all the Python Notebooks.
