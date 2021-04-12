@@ -17,8 +17,7 @@ keypoints:
 ## Deterministic tractography
 
 Deterministic tractography algorithms perform tracking of streamlines by
-following a predictable path, such as following the primary diffusion direction
-($\lambda_1$).
+following a predictable path, such as following the primary diffusion direction.
 
 In order to demonstrate how to perform deterministic tracking on a diffusion MRI dataset, we will 
 build from the preprocessing presented in a previous episode and compute the diffusion tensor.
@@ -160,8 +159,8 @@ thresholding above our stopping criterion.
 from dipy.tracking import utils
 
 seed_mask = fa_img.copy()
-seed_mask[seed_mask>=0.2] = 1
-seed_mask[seed_mask<0.2] = 0
+seed_mask[seed_mask >= 0.2] = 1
+seed_mask[seed_mask < 0.2] = 0
 
 seeds = utils.seeds_from_mask(seed_mask, affine=affine, density=1)
 ~~~
@@ -227,5 +226,118 @@ plt.show()
 {: .language-python}
 
 ![EuDX Determinsitic Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_EuDX.png){:class="img-responsive"}
+
+> ## Exercise 1
+> 
+> In this episode, we applied a threshold stopping criteria
+> to stop tracking when we reach a voxel where FA is below 0.2.
+> There are also other stopping criteria available. We encourage
+> you to read the `DIPY` documentation about the others. For this
+> exercise, repeat the tractography, but apply a binary stopping 
+> criteria (`BinaryStoppingCriterion`) using the seed mask.
+> Visualize the tractogram!
+>
+> > ## Solution
+> > 
+> > ~~~
+> > import os
+> >
+> > import nibabel as nib
+> > import numpy as np
+> > 
+> > from bids.layout import BIDSLayout
+> > 
+> > from dipy.io.gradients import read_bvals_bvecs
+> > from dipy.core.gradients import gradient_table
+> > from dipy.data import get_sphere
+> > from dipy.direction import peaks_from_model
+> > import dipy.reconst.dti as dti
+> > from dipy.segment.mask import median_otsu
+> > from dipy.tracking import utils
+> > from dipy.tracking.local_tracking import LocalTracking
+> > from dipy.tracking.streamline import Streamlines
+> >
+> > from utils.visualization_utils import generate_anatomical_volume_figure
+> > from fury import actor, colormap
+> > 
+> > dwi_layout = BIDSLayout("../../data/ds000221/derivatives/uncorrected_topup_eddy", validate=False)
+> > gradient_layout = BIDSLayout("../../data/ds000221/", > > validate=False)
+> > 
+> > # Get subject data
+> > subj = '010006'
+> > dwi_fname = dwi_layout.get(subject=subj, suffix='dwi', extension='nii.gz', return_type='file')[0]
+> > bvec_fname = dwi_layout.get(subject=subj, extension='eddy_rotated_bvecs', return_type='file')[0]
+> > bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bval', return_type='file')[0]
+> > 
+> > dwi_img = nib.load(dwi_fname)
+> > affine = dwi_img.affine
+> > 
+> > bvals, bvecs = read_bvals_bvecs(bval_fname, bvec_fname)
+> > gtab = gradient_table(bvals, bvecs)
+> > 
+> > dwi_data = dwi_img.get_fdata()
+> > dwi_data, dwi_mask = median_otsu(dwi_data, vol_idx=[0], numpass=1)  # Specify the volume index to the b0 volumes
+> > 
+> > # Fit tensor and compute FA map
+> > dti_model = dti.TensorModel(gtab)
+> > dti_fit = dti_model.fit(dwi_data, mask=dwi_mask)  
+> > fa_img = dti_fit.fa
+> > evecs_img = dti_fit.evecs
+> > 
+> > sphere = get_sphere('symmetric362')
+> > peak_indices = peaks_from_model(model=dti_model, data=dwi_data, sphere=sphere, relative_peak_threshold=.2, min_separation_angle=25, mask=dwi_mask, npeaks=2)
+> > 
+> > # Create a binary seed mask
+> > seed_mask = fa_img.copy()
+> > seed_mask[seed_mask >= 0.2] = 1
+> > seed_mask[seed_mask < 0.2] = 0
+> > 
+> > seeds = utils.seeds_from_mask(seed_mask, affine=affine, density=1)
+> > 
+> > # Set stopping criteria
+> > stopping_criterion = BinaryStoppingCriterion(seed_mask==1)
+> > 
+> > # Perform tracking
+> > streamlines_generator = LocalTracking(peak_indices, stopping_criterion, seeds, affine=affine, step_size=.5)
+> > streamlines = Streamlines(streamlines_generator)
+> >
+> > # Plot the tractogram
+> > # Build the representation of the data
+streamlines_actor = actor.line(streamlines, colormap.line_colors(streamlines))
+> > 
+> > # Generate the figure
+> > fig = generate_anatomical_volume_figure(streamlines_actor)
+> > plt.show()
+> > ~~~
+> > {: .language-python}
+> > ![Binary Stopping Criterion Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_ex1.png){:class="img-responsive"}
+> {: .solution}
+> 
+> ## Exercise 2
+> 
+> As an additional challenge, set the color of the streamlines to display the values of the
+> FA map and change the opacity to `0.05`. You may need to transform 
+> the streamlines from world coordinates to the subject's native space 
+> using `transform_streamlines` from `dipy.tracking.streamline`.
+> 
+> > ## Solution 
+> >
+> > ~~~
+> > import numpy as np
+> > from fury import actor, window
+> > 
+> > from dipy.tracking.streamline import transform_streamlines
+> > 
+> > streamlines_native = transform_streamlines(streamlines, np.linalg.inv(affine))
+> > streamlines_actor = actor.line(streamlines_native, fa_img, opacity=0.05)
+> > 
+> > fig = generate_anatomical_volume_figure(streamlines_actor)
+> > plt.show()
+> > ~~~
+> > {: .language-python}
+> >
+> > ![FA Mapped Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_fa.png){:class="img-responsive"}
+> {: .solution}
+{: .challenge}
 
 {% include links.md %}
