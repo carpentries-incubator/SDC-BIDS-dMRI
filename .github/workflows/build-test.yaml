@@ -60,6 +60,6 @@ jobs:
         source ~/sdc_bids_dmri/bin/activate
         pytest --nbval-lax -v code/introduction/solutions/introduction_solutions.ipynb
         pytest --nbval-lax -v code/diffusion_tensor_imaging/solutions/diffusion_tensor_imaging_solutions.ipynb
-        pytest --nbval-lax -v code/constrained_spherical_deconvolution/constrained_spherical_deconvolution.ipynb
+        pytest --nbval-lax -v code/constrained_spherical_deconvolution/solutions/constrained_spherical_deconvolution_solutions.ipynb
         pytest --nbval-lax -v code/deterministic_tractography/solutions/deterministic_tractography_solutions.ipynb
         pytest --nbval-lax -v code/probabilistic_tractography/probabilistic_tractography.ipynb

@@ -134,7 +134,7 @@ print(response)
 {: .language-python}
 
 ~~~
-(array([0.00159258, 0.00033926, 0.00033926]), 209.55229)
+(array([0.00160273, 0.00034256, 0.00034256]), 209.55229)
 ~~~
 {: .output}
 
@@ -151,7 +151,7 @@ print(ratio)
 {: .language-python}
 
 ~~~
-0.21373311340767914
+0.2137331138364376
 ~~~
 {: .output}
 
@@ -160,8 +160,11 @@ an insightful idea around the SD framework. The response function's ODF should
 have sharp lobes, as the anisotropy of its diffusivity indicates:
 
 ~~~
+import matplotlib.pyplot as plt
 from dipy.sims.voxel import single_tensor_odf
 from fury import window, actor
+
+%matplotlib inline
 
 scene = window.Scene()
 evals = response[0]
@@ -176,9 +179,6 @@ scene.add(response_actor)
 response_scene_arr = window.snapshot(
     scene, fname=os.path.join(out_dir, 'frf.png'), size=(200, 200),
     offscreen=True)
-
-import matplotlib.pyplot as plt
-%matplotlib inline
 
 fig, axes = plt.subplots()
 axes.imshow(response_scene_arr, cmap="plasma", origin="lower")
@@ -359,5 +359,79 @@ References
    Non-negativity constrained super-resolved spherical deconvolution",
    Neuroimage, vol. 35, no. 4, pp. 1459-1472, 2007.
 
+> ## Exercise 1
+>
+> Simulate the ODF for two fibre populations with crossing angles of 
+> 90, 60, 45, 30, and 20 degrees. We have included helpful hints and 
+> code below to help you get started.
+>
+> Helpful hints: 
+>   * To set the angle between tensors, use `[(0, 0), (angle, 0)]`
+>   * You may need to use a higher resolution sphere than `default_sphere`
+>   * You may need to rotate the scene to visualize the ODFs
+>   * Below is some code to simulate multiple fibre orientations
+>
+> ~~~
+> from dipy.sims.voxel import multi_tensor_odf
+> 
+> # Eigenvalues for multiple orientations
+> mevals = np.array(([0.0015, 0.00015, 0.00015], [0.0015, 0.00015, 0.00015]))
+>
+> # Set fractional value of each tensor
+> fractions = [50, 50]
+> ~~~
+> {: .language-python}
+>
+> > ## Solution
+> > 
+> > ~~~
+> > import matplotlib.pyplot as plt 
+> > 
+> > import numpy as np
+> > 
+> > from dipy.data import get_sphere
+> > from dipy.viz import window, actor
+> > from dipy.sims.voxel import multi_tensor_odf
+> >
+> > # Create the output directory to store the image
+> > out_dir = '../../data/ds000221/derivatives/dwi/reconstruction/exercise/dwi/'
+> > 
+> > if not os.path.exists(out_dir):
+> >    os.makedirs(out_dir)
+> >
+> > # Set eigenvalues for tensors
+> > mevals = np.array(([0.0015, 0.00015, 0.00015], [0.0015, 0.00015, 0.00015]))
+> >
+> > # Set fraction for each tensor 
+> > fractions = [50, 50]
+> >
+> > fig, axes = plt.subplots(1,5, figsize=(10,2))
+> >
+> > # Simulate ODF of different angles
+> > for ix, angle in enumerate([90, 60, 45, 30, 20]):
+> >     angles = [(0, 0), (angle, 0)]
+> >     odf = multi_tensor_odf(get_sphere("repulsion724").vertices, mevals, angles, fractions)
+> >     scene = window.Scene()
+> >     odf_actor = actor.odf_slicer(odf[None, None, None, :], sphere=get_sphere("repulsion724"), 
+> >         colormap='plasma')
+> >     odf_actor.RotateX(90)
+> >     scene.add(odf_actor)
+> >     odf_scene_arr = window.snapshot(
+> >         scene, fname=os.path.join(out_dir, 'odf_%d_angle.png' % angle), size=(200, 200),
+> >         offscreen=True)
+> > 
+> >     axes[ix].imshow(odf_scene_arr, cmap="plasma", origin="lower")
+> >     axes[ix].set_title("%d deg" % angle)
+> >     axes[ix].axis("off")
+> > 
+> > plt.show()
+> > ~~~
+> > {: .language-python}
+> > 
+> > ![ODFs of differing crossing angles]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/odf_multiple_angles.png){:class="img-responsive"} \
+ODFs of different crossing angles.
+> >
+> {: .solution}
+{: .challenge}
 
 {% include links.md %}
