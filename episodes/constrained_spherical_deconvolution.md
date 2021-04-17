@@ -134,7 +134,7 @@ print(response)
 {: .language-python}
 
 ~~~
-(array([0.00159258, 0.00033926, 0.00033926]), 209.55229)
+(array([0.00160273, 0.00034256, 0.00034256]), 209.55229)
 ~~~
 {: .output}
 
@@ -151,7 +151,7 @@ print(ratio)
 {: .language-python}
 
 ~~~
-0.21373311340767914
+0.2137331138364376
 ~~~
 {: .output}
 
@@ -160,8 +160,11 @@ an insightful idea around the SD framework. The response function's ODF should
 have sharp lobes, as the anisotropy of its diffusivity indicates:
 
 ~~~
+import matplotlib.pyplot as plt
 from dipy.sims.voxel import single_tensor_odf
 from fury import window, actor
+
+%matplotlib inline
 
 scene = window.Scene()
 evals = response[0]
@@ -176,9 +179,6 @@ scene.add(response_actor)
 response_scene_arr = window.snapshot(
     scene, fname=os.path.join(out_dir, 'frf.png'), size=(200, 200),
     offscreen=True)
-
-import matplotlib.pyplot as plt
-%matplotlib inline
 
 fig, axes = plt.subplots()
 axes.imshow(response_scene_arr, cmap="plasma", origin="lower")
@@ -361,12 +361,9 @@ References
 
 > ## Exercise 1
 >
-> In this episode, the response function was estimated from a region of
-> single coherent fibre populations and its ODF was visualized. Alternatively, 
-> We can simulate what the ODF would look like for multiple fibre
-> populations. For the following exercise, simulate the ODF for two fibre 
-> populations with crossing angles of 90, 60, 45, 30, and 20 degrees. We 
-> have included helpful hints and code below to help you get started.
+> Simulate the ODF for two fibre populations with crossing angles of 
+> 90, 60, 45, 30, and 20 degrees. We have included helpful hints and 
+> code below to help you get started.
 >
 > Helpful hints: 
 >   * To set the angle between tensors, use `[(0, 0), (angle, 0)]`
@@ -396,7 +393,7 @@ References
 > > from dipy.viz import window, actor
 > > from dipy.sims.voxel import multi_tensor_odf
 > >
-> > # Create the output directory to stoage image
+> > # Create the output directory to store the image
 > > out_dir = '../../data/ds000221/derivatives/dwi/reconstruction/exercise/dwi/'
 > > 
 > > if not os.path.exists(out_dir):
