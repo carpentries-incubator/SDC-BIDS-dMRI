@@ -259,6 +259,7 @@ plt.show()
 > >
 > > from utils.visualization_utils import generate_anatomical_volume_figure
 > > from fury import actor, colormap
+> > import matplotlib.pyplot as plt
 > > 
 > > dwi_layout = BIDSLayout("../../data/ds000221/derivatives/uncorrected_topup_eddy", validate=False)
 > > gradient_layout = BIDSLayout("../../data/ds000221/", > > validate=False)
@@ -324,9 +325,11 @@ streamlines_actor = actor.line(streamlines, colormap.line_colors(streamlines))
 > >
 > > ~~~
 > > import numpy as np
-> > from fury import actor, window
+> > from fury import actor
 > > 
 > > from dipy.tracking.streamline import transform_streamlines
+> > from utils.visualizations_utils import generate_anatomical_volume_figure
+> > import matplotlib.pyplot as plt 
 > > 
 > > streamlines_native = transform_streamlines(streamlines, np.linalg.inv(affine))
 > > streamlines_actor = actor.line(streamlines_native, fa_img, opacity=0.05)
