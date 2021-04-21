@@ -384,20 +384,13 @@ References
 >
 > > ## Solution
 > > 
+> > We will first simulate the ODFs for the different crossing angles:
+> >
 > > ~~~
-> > import matplotlib.pyplot as plt 
-> > 
 > > import numpy as np
 > > 
 > > from dipy.data import get_sphere
-> > from dipy.viz import window, actor
 > > from dipy.sims.voxel import multi_tensor_odf
-> >
-> > # Create the output directory to store the image
-> > out_dir = '../../data/ds000221/derivatives/dwi/reconstruction/exercise/dwi/'
-> > 
-> > if not os.path.exists(out_dir):
-> >    os.makedirs(out_dir)
 > >
 > > # Set eigenvalues for tensors
 > > mevals = np.array(([0.0015, 0.00015, 0.00015], [0.0015, 0.00015, 0.00015]))
@@ -405,15 +398,47 @@ References
 > > # Set fraction for each tensor 
 > > fractions = [50, 50]
 > >
-> > fig, axes = plt.subplots(1,5, figsize=(10,2))
+> > # Create a list of the crossing angles to be simulated
+> > angles = [90, 60, 45, 30, 20]
 > >
-> > # Simulate ODF of different angles
-> > for ix, angle in enumerate([90, 60, 45, 30, 20]):
-> >     angles = [(0, 0), (angle, 0)]
-> >     odf = multi_tensor_odf(get_sphere("repulsion724").vertices, mevals, angles, fractions)
+> > odf = []
+> >
+> > # Simulate ODFs of different angles
+> > for angle in angles:
+> >     _angles = [(0, 0), (angle, 0)]
+> >     _odf = multi_tensor_odf(get_sphere(
+> >         "repulsion724").vertices, mevals, _angles, fractions)
+> >     odf.append(_odf)
+> > ~~~
+> > {: .language-python}
+> >
+> > We are now able to visualize and save to disk a screenshot of each ODF
+> > crossing. As it can be seen, as the crossing angle becomes smaller,
+> > distinguishing the underlying fiber orientations becomes harder: an ODF
+> > might be unable to resolve different fiber populations at such crossings,
+> > and be only able to indicate a single orientation. This has an impact on
+> > tractography, since the tracking procedure will only be able to propagate
+> > streamlines according to peaks retrieved by the ODFs. Also, note that thi
+> > problem is worsened by the presence of noise in real diffusion data.
+> >
+> > ~~~
+> > import matplotlib.pyplot as plt
+> >
+> > from fury import window, actor
+> >
+> > # Create the output directory to store the image
+> > out_dir = '../../data/ds000221/derivatives/dwi/reconstruction/exercise/dwi/'
+> >
+> > if not os.path.exists(out_dir):
+> >     os.makedirs(out_dir)
+> >
+> > fig, axes = plt.subplots(1, len(angles), figsize=(10, 2))
+> >
+> > # Visualize the simulated ODFs of different angles
+> > for ix, (_odf, angle) in enumerate(zip(odf, angles)):
 > >     scene = window.Scene()
-> >     odf_actor = actor.odf_slicer(odf[None, None, None, :], sphere=get_sphere("repulsion724"), 
-> >         colormap='plasma')
+> >     odf_actor = actor.odf_slicer(_odf[None, None, None, :], sphere=get_sphere("repulsion724"),
+> >                                  colormap='plasma')
 > >     odf_actor.RotateX(90)
 > >     scene.add(odf_actor)
 > >     odf_scene_arr = window.snapshot(
