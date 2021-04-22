@@ -83,7 +83,7 @@ In order to install the `Python` dependencies, it suffices to run:
 ~~~
 $ pip install -r requirements.txt
 ~~~
-{: .bash}
+{: .language-bash}
 
 from the root of the repository folder.
 
@@ -92,20 +92,20 @@ Additionally, a helpful module to view anatomical slices have been included in t
 ~~~
 $ export PYTHONPATH=$PYTHONPATH:`realpath .`
 ~~~
-{: .bash}
+{: .language-bash}
 
 Users may choose to run the notebooks using [Jupyter] or [iPython]. The
 `Jupyter` dependency can be installed by running:
 ~~~
 $ pip install jupyter
 ~~~
-{: .bash}
+{: .language-bash}
 
 `iPython` can be installed through `pip` running:
 ~~~
 $ pip install ipython
 ~~~
-{: .bash}
+{: .language-bash}
 
 Some `Python` distributions, such as the one provided by [Anaconda], might
 ship these packages by default.
@@ -117,7 +117,7 @@ ship these packages by default.
 > ~~~
 > $ pip show dipy
 > ~~~
-> {: .bash}
+> {: .language-bash}
 >
 > Similarly, it can be checked that a given package can be imported in Python by
 > running, for example:
@@ -125,7 +125,7 @@ ship these packages by default.
 > $ python
 > >>> import dipy
 > ~~~
-> {: .bash}
+> {: .language-bash}
 >
 > Alternatively, the package version can also be checked by running, for example:
 > ~~~
@@ -133,14 +133,14 @@ ship these packages by default.
 > >>> import dipy
 > >>> print(dipy.__version__)
 > ~~~
-> {: .bash}
+> {: .language-bash}
 >
 > You can also see the packages and versions of all `pip`-installed dependencies
 > by typing:
 > ~~~
 > $ pip freeze
 > ~~~
-> {: .bash}
+> {: .language-bash}
 {: .discussion}
 
 In order to run the notebooks, the notebook server needs to be started. Once the
@@ -149,14 +149,14 @@ started running:
 ~~~
 $ ipython notebook
 ~~~
-{: .bash}
+{: .language-bash}
 
 if using `IPython`, and running:
 
 ~~~
 jupyter notebook
 ~~~
-{: .bash}
+{: .language-bash}
 
 if using `Jupyter`.
 
@@ -173,7 +173,7 @@ The data used in the lesson is hosted in [OSF]. It can be downloaded by running:
 ~~~
 $ osf -p cmq8a clone ./data
 ~~~
-{: .bash}
+{: .language-bash}
 
 Notebooks expect them to be placed in the `data` folder that exists in the root
 of the repository. 
@@ -186,7 +186,7 @@ $ cd ./data
 $ osf -p cmq8a fetch ds000221_subject/ds000221_sub-010006.zip 
 $ unzip ds000221_sub-010006.zip
 ~~~
-{: .bash}
+{: .language-bash}
 
 
 {% include links.md %}
