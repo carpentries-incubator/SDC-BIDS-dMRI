@@ -135,7 +135,9 @@ this value).
 ~~~
 from dipy.direction import peaks_from_model
 
-peak_indices = peaks_from_model(model=dti_model, data=dwi_data, sphere=sphere, relative_peak_threshold=.2, min_separation_angle=25, mask=dwi_mask, npeaks=2)
+peak_indices = peaks_from_model(
+    model=dti_model, data=dwi_data, sphere=sphere, relative_peak_threshold=.2,
+    min_separation_angle=25, mask=dwi_mask, npeaks=2)
 ~~~
 {: .language-python}
 
@@ -178,7 +180,8 @@ from dipy.tracking.local_tracking import LocalTracking
 from dipy.tracking.streamline import Streamlines
 
 # Initialize local tracking - computation happens in the next step.
-streamlines_generator = LocalTracking(peak_indices, stopping_criterion, seeds, affine=affine, step_size=.5)
+streamlines_generator = LocalTracking(
+    peak_indices, stopping_criterion, seeds, affine=affine, step_size=.5)
 
 # Generate streamlines object
 streamlines = Streamlines(streamlines_generator)
@@ -286,8 +289,11 @@ plt.show()
 > > evecs_img = dti_fit.evecs
 > > 
 > > sphere = get_sphere('symmetric362')
-> > peak_indices = peaks_from_model(model=dti_model, data=dwi_data, sphere=sphere, relative_peak_threshold=.2, min_separation_angle=25, mask=dwi_mask, npeaks=2)
-> > 
+> > peak_indices = peaks_from_model(
+> >        model=dti_model, data=dwi_data, sphere=sphere,
+> >        relative_peak_threshold=.2, min_separation_angle=25, mask=dwi_mask,
+> >        npeaks=2)
+> >
 > > # Create a binary seed mask
 > > seed_mask = fa_img.copy()
 > > seed_mask[seed_mask >= 0.2] = 1
@@ -299,7 +305,8 @@ plt.show()
 > > stopping_criterion = BinaryStoppingCriterion(seed_mask==1)
 > > 
 > > # Perform tracking
-> > streamlines_generator = LocalTracking(peak_indices, stopping_criterion, seeds, affine=affine, step_size=.5)
+> > streamlines_generator = LocalTracking(
+> >     peak_indices, stopping_criterion, seeds, affine=affine, step_size=.5)
 > > streamlines = Streamlines(streamlines_generator)
 > >
 > > # Plot the tractogram

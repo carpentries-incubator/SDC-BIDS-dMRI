@@ -16,7 +16,8 @@ image analysis.
 > MRI, scientific programming tools used throughout the lesson ([see the
 BIDS-dMRI Setup page](https://carpentries-incubator.github.io/SDC-BIDS-dMRI/setup.html)),
 and teaching experience.
-> If you are teaching this lesson in a workshop, please see the [Instructor notes](./guide/index.html).
+> If you are teaching this lesson in a workshop, please see the
+> [Instructor notes](./guide/index.html).
 {: .prereq}
 
 > ## Prerequisites for learners
