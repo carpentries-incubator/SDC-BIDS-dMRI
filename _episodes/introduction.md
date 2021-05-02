@@ -18,18 +18,40 @@ start: true
 
 ## Diffusion Weighted Imaging (DWI)
 
-Diffusion imaging probes the random, microscopic motion of water protons by employing MRI sequences which are sensitive to the geometry and environmental organization surrounding the water protons. This is a popular technique for studying the white matter of the brain. The diffusion within biological structures, such as the brain, are often restricted due to barriers (eg. cell membranes), resulting in a preferred direction of diffusion (anisotropy). A typical diffusion MRI scan will acquire multiple volumes that are sensitive to a particular diffusion direction and result in diffusion-weighted images (DWI). Diffusion that exhibits directionality in the same direction result in an attenuated signal. With further processing (to be discussed later in the lesson), the acquired images can provide measurements which are related to the microscopic changes and estimate white matter trajectories. Images with no diffusion weighting are also acquired as part of the acquisition protocol.
+Diffusion imaging probes the random, microscopic motion of water protons by
+employing MRI sequences which are sensitive to the geometry and environmental
+organization surrounding the water protons. This is a popular technique for
+studying the white matter of the brain. The diffusion within biological
+structures, such as the brain, are often restricted due to barriers (e.g. cell
+membranes), resulting in a preferred direction of diffusion (anisotropy). A
+typical diffusion MRI scan will acquire multiple volumes that are sensitive to
+a particular diffusion direction and result in diffusion-weighted images (DWI).
+Diffusion that exhibits directionality in the same direction result in an
+attenuated signal. With further processing (to be discussed later in the
+lesson), the acquired images can provide measurements which are related to the
+microscopic changes and estimate white matter trajectories. Images with no
+diffusion weighting are also acquired as part of the acquisition protocol.
 
 ![Diffusion along X, Y, and Z directions]({{ relative_root_path }}/fig/introduction/DiffusionDirections.png){:class="img-responsive"} \
 Diffusion along X, Y, and Z directions
 
 ## b-values & b-vectors
 
-In addition to the acquired diffusion images, two files are collected as part of the diffusion dataset. These files correspond to the gradient amplitude (b-values) and directions (b-vectors) of the diffusion measurement and are named with the extensions <code>.bval</code> and <code>.bvec</code> respectively. The b-value is the diffusion-sensitizing factor, and reflects the timing & strength of the gradients used to acquire the diffusion-weighted images. The b-vector corresponds to the direction of the diffusion sensitivity. Together these two files define the diffusion MRI measurement as a set of gradient directions and corresponding amplitudes.
+In addition to the acquired diffusion images, two files are collected as part
+of the diffusion dataset. These files correspond to the gradient amplitude
+(b-values) and directions (b-vectors) of the diffusion measurement and are
+named with the extensions <code>.bval</code> and <code>.bvec</code>
+respectively. The b-value is the diffusion-sensitizing factor, and reflects the
+timing & strength of the gradients used to acquire the diffusion-weighted
+images. The b-vector corresponds to the direction of the diffusion sensitivity.
+Together these two files define the diffusion MRI measurement as a set of
+gradient directions and corresponding amplitudes.
 
 ## Dataset
 
-Below is a tree diagram showing the folder structure of a single MR subject and session within ds000221. This was obtained by using the bash command <code>tree<code>.
+Below is a tree diagram showing the folder structure of a single MR subject and
+session within ds000221. This was obtained by using the bash command
+<code>tree<code>.
 
 ~~~
 tree '../data/ds000221'
@@ -96,9 +118,12 @@ tree '../data/ds000221'
 
 ## Querying a BIDS Dataset
 
-[`pybids`](https://bids-standard.github.io/pybids/) is a Python API for querying, summarizing and manipulating the BIDS folder structure. We will make use of <code>pybids</code> to query the necessary files.
+[`pybids`](https://bids-standard.github.io/pybids/) is a Python API for
+querying, summarizing and manipulating the BIDS folder structure. We will make
+use of <code>pybids</code> to query the necessary files.
 
-Lets first pull the metadata from its associated JSON file using the <code>get_metadata()</code> function for the first run.
+Lets first pull the metadata from its associated JSON file using the
+<code>get_metadata()</code> function for the first run.
 
 ~~~
 from bids.layout import BIDSLayout
@@ -107,7 +132,8 @@ layout = BIDSLayout("../data/ds000221", validate=False)
 ~~~
 {: .language-python}
 
-Now that we have a layout object, we can work with a BIDS dataset! Lets extract the metadata. from the dataset.
+Now that we have a layout object, we can work with a BIDS dataset! Lets extract
+the metadata. from the dataset.
 
 ~~~
 dwi = layout.get(subject='010006', suffix='dwi', extension='nii.gz', return_type='file')[0]
@@ -135,7 +161,8 @@ layout.get_metadata(dwi)
 
 ## Diffusion Imaging in Python ([dipy](https://dipy.org))
 
-For this lesson, we will use the <code>Dipy</code> (Diffusion Imaging in Python) package for processing and analysing diffusion MRI.
+For this lesson, we will use the <code>Dipy</code> (Diffusion Imaging in
+Python) package for processing and analysing diffusion MRI.
 
 ### Why <code>dipy</code>?
 
@@ -146,13 +173,21 @@ For this lesson, we will use the <code>Dipy</code> (Diffusion Imaging in Python)
 
 ### Installing <code>dipy</code>
 
-The easiest way to install <code>Dipy</code> is to use <code>pip</code>! Additionally, <code>Dipy</code> makes use of the FURY library for visualization. We will also install this using <code>pip</code>!
+The easiest way to install <code>Dipy</code> is to use <code>pip</code>!
+Additionally, <code>Dipy</code> makes use of the FURY library for
+visualization. We will also install this using <code>pip</code>!
 
-We can install it by entering the following in a terminal <code>pip install dipy</code>. We will do so using Jupyter Magic in the following cell!
+We can install it by entering the following in a terminal
+<code>pip install dipy</code>. We will do so using Jupyter Magic in the
+following cell!
 
 ### Defining a measurement: <code>GradientTable</code>
 
-<code>Dipy</code> has a built-in function that allows us to read in <code>bval</code> and <code>bvec</code> files named <code>read_bvals_bvecs</code> under the <code>dipy.io.gradients</code> module. Let's first grab the path to our gradient directions and amplitude files and load them into memory.
+<code>Dipy</code> has a built-in function that allows us to read in
+<code>bval</code> and <code>bvec</code> files named
+<code>read_bvals_bvecs</code> under the <code>dipy.io.gradients</code> module.
+Let's first grab the path to our gradient directions and amplitude files and
+load them into memory.
 
 ~~~
 bvec = layout.get_bvec(dwi)
@@ -179,7 +214,9 @@ data.shape
 ~~~
 {: .output}
 
-We can see that the data is 4 dimensional. The 4th dimension represents the different diffusion directions we are sensitive to. Next, let's take a look at a slice.
+We can see that the data is 4 dimensional. The 4th dimension represents the
+different diffusion directions we are sensitive to. Next, let's take a look at
+a slice.
 
 ~~~
 x_slice = data[58, :, :, 0]
@@ -196,7 +233,9 @@ for i, slice in enumerate(slices):
 
 ![DWI slice]({{ relative_root_path }}/fig/introduction/dwi_slice.png){:class="img-responsive"}
 
-We can also see how the diffusion gradients are represented. This is plotted on a sphere, the further away from the center of the sphere, the stronger the diffusion gradient (increased sensitivity to diffusion).
+We can also see how the diffusion gradients are represented. This is plotted on
+a sphere, the further away from the center of the sphere, the stronger the
+diffusion gradient (increased sensitivity to diffusion).
 
 ~~~
 bvec_txt = np.genfromtxt(bvec)
@@ -209,7 +248,12 @@ ax.scatter(bvec_txt[0], bvec_txt[1], bvec_txt[2])
 
 ![Diffusion gradient sphere]({{ relative_root_path }}/fig/introduction/diffusion_gradient.png){:class="img-responsive"}
 
-The files associated with the diffusion gradients need to converted to a <code>GradientTable</code> object to be used with <code>Dipy</code>. A <code>GradientTable</code> object can be implemented using the <code>dipy.core.gradients</code> module. The input to the <code>GradientTable</code> should be our the values for our gradient directions and amplitudes we read in.
+The files associated with the diffusion gradients need to converted to a
+<code>GradientTable</code> object to be used with <code>Dipy</code>. A
+<code>GradientTable</code> object can be implemented using the
+<code>dipy.core.gradients</code> module. The input to the
+<code>GradientTable</code> should be our the values for our gradient directions
+and amplitudes we read in.
 
 ~~~
 from dipy.io.gradients import read_bvals_bvecs
@@ -220,9 +264,13 @@ gtab = gradient_table(gt_bvals, gt_bvecs)
 ~~~
 {: .language-python}
 
-We will need this gradient table later on to process our data and generate diffusion tensor images (DTI)!
+We will need this gradient table later on to process our data and generate
+diffusion tensor images (DTI)!
 
-There is also a built in function for gradient tables, <code>b0s_mask</code> that can be used to separate diffusion weighted measurements from non-diffusion weighted measurements (b=0s/mm^2). We will extract the vector corresponding to diffusion weighted measurements!
+There is also a built in function for gradient tables, <code>b0s_mask</code>
+that can be used to separate diffusion weighted measurements from non-diffusion
+weighted measurements (b=0s/mm^2). We will extract the vector corresponding to
+diffusion weighted measurements!
 
 ~~~
 gtab.bvecs[~gtab.b0s_mask]
@@ -293,7 +341,9 @@ array([[ 0.0480948 , -0.518981  ,  0.853432  ],
 ~~~
 {: .output}
 
-It is also important to know where our diffusion weighting free measurements are as we need them for registration in our preprocessing, (our next notebook). The gtab.b0s_mask shows that this is our first volume of our dataset.
+It is also important to know where our diffusion weighting free measurements
+are as we need them for registration in our preprocessing, (our next notebook).
+The gtab.b0s_mask shows that this is our first volume of our dataset.
 
 ~~~
 gtab.b0s_mask
@@ -312,7 +362,9 @@ array([ True, False, False, False, False, False, False, False, False,
 ~~~
 {: .output}
 
-In the next few notebooks, we will talk more about preprocessing the diffusion weighted images, reconstructing the diffusion tensor model, and reconstruction axonal trajectories via tractography.
+In the next few notebooks, we will talk more about preprocessing the diffusion
+weighted images, reconstructing the diffusion tensor model, and reconstruction
+axonal trajectories via tractography.
 
 > ## Exercise 1
 >
