@@ -39,7 +39,7 @@ scenes.
 ## Multi-shell dMRI data
 
 The lesson presented a way to recover the fODFs on single shell data using the
-Constrained Spherical Deconvolution method. This is also called Single-Shell
+[Constrained Spherical Deconvolution] method. This is also called Single-Shell
 Single-Tissue (SSST) CSD since only the white matter tissue is used in the
 process. Having multiple shell data allows for decomposition of the
 contribution of different tissues (as different macroscopic tissues have unique
@@ -73,6 +73,6 @@ to reach the level of detail that invasive methods, such as chemical tracers or
 anatomical sectioning, offer.
 
 
-[Constrained Spherical Deconvolution]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/constrained_spherical_deconvolution/index.html
+[Constrained Spherical Deconvolution]: {{ relative_root_path }}/{% link _episodes/constrained_spherical_deconvolution.md %}
 
 {% include links.md %}
