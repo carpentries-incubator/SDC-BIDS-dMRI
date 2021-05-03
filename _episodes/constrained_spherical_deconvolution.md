@@ -232,7 +232,8 @@ csd_model = ConstrainedSphericalDeconvModel(gtab, response, sh_order=sh_order, c
 ~~~
 {: .language-python}
 
-For illustration purposes we will fit only a small portion of the data representing the splenium of the corpus callosum.
+For illustration purposes we will fit only a small portion of the data
+representing the splenium of the corpus callosum.
 
 ~~~
 data_small = data[40:80, 40:80, 45:55]
@@ -241,7 +242,8 @@ csd_fit = csd_model.fit(data_small)
 sh_coeffs = csd_fit.shm_coeff
 
 # Save the SH coefficients
-nib.save(nib.Nifti1Image(sh_coeffs.astype(np.float32), affine), os.path.join(out_dir, 'sh_coeffs.nii.gz'))
+nib.save(nib.Nifti1Image(sh_coeffs.astype(np.float32), affine),
+         os.path.join(out_dir, 'sh_coeffs.nii.gz'))
 ~~~
 {: .language-python}
 

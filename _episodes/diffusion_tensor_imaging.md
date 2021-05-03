@@ -86,9 +86,9 @@ The different algorithms implemented in the module all share a similar conceptua
 
 * <code>ReconstModel</code> objects (e.g. <code>TensorModel</code>) carry the parameters that 
 are required in order to fit a model. For example, the directions and magnitudes of the gradients 
-that were applied in the experiment. <code>TensorModel</code> objects have a <code>fit</code> method, which takes 
-in data, and returns a <code>ReconstFit</code> object. This is where a lot of the heavy lifting 
-of the processing will take place.
+that were applied in the experiment. <code>TensorModel</code> objects have a <code>fit</code>
+method, which takes  in data, and returns a <code>ReconstFit</code> object. This is where a lot of
+the heavy lifting of the processing will take place.
 * <code>ReconstFit</code> objects carry the model that was used to generate the object. 
 They also include the parameters that were estimated during fitting of the data. They have 
 methods to calculate derived statistics, which can differ from model to model. All objects also 
@@ -98,7 +98,9 @@ current gradient table.
 
 ### Reconstruction with the DTI Model
 
-Let's get started! First, we will need to grab the **preprocessed** DWI files and load them! We will also load in the anatomical image to use as a reference later on.
+Let's get started! First, we will need to grab the **preprocessed** DWI files
+and load them! We will also load in the anatomical image to use as a reference
+later on.
 
 ~~~
 from bids.layout import BIDSLayout
@@ -295,7 +297,8 @@ data!
 
 > ## Exercise 1
 >
-> Plot the axial and radial diffusivity maps of the example given. Start from fitting the preprocessed diffusion image.
+> Plot the axial and radial diffusivity maps of the example given. Start from
+> fitting the preprocessed diffusion image.
 >
 > > ## Solution
 > >
