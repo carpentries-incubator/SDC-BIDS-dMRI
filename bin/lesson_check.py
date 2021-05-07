@@ -56,6 +56,9 @@ P_INTERNAL_LINK_DEF = re.compile(r'^\[([^\]]+)\]:\s*(.+)')
 # Pattern to match {% include ... %} statements
 P_INTERNAL_INCLUDE_LINK = re.compile(r'^{% include ([^ ]*) %}$')
 
+# Pattern to match image-only and link-only lines
+P_LINK_IMAGE_LINE = re.compile("^[> ]*(!?)\[([^]]+)\][([]([^)]+)[])][ ]*$")
+
 # What kinds of blockquotes are allowed?
 KNOWN_BLOCKQUOTES = {
     'callout',
@@ -227,7 +230,17 @@ def read_references(reporter, ref_path):
     with open(ref_path, 'r', encoding='utf-8') as reader:
         for (num, line) in enumerate(reader, 1):
 
-            if P_INTERNAL_INCLUDE_LINK.search(line): continue
+            # Skip empty lines
+            if len(line.strip()) == 0:
+                continue
+
+            # Skip HTML comments
+            if line.strip().startswith("<!--") and line.strip().endswith("-->"):
+                   continue
+
+            # Skip Liquid's {% include ... %} lines
+            if P_INTERNAL_INCLUDE_LINK.search(line):
+                continue
 
             m = P_INTERNAL_LINK_DEF.search(line)
 
@@ -366,12 +379,19 @@ class CheckBase:
         """Check the raw text of the lesson body."""
 
         if self.args.line_lengths:
-            over = [i for (i, l, n) in self.lines if (
-                n > MAX_LINE_LEN) and (not l.startswith('!'))]
-            self.reporter.check(not over,
+            over_limit = []
+
+            for (i, l, n) in self.lines:
+                # Report lines that are longer than the suggested
+                # line length limit only if they're not
+                # link-only or image-only lines.
+                if n > MAX_LINE_LEN and not P_LINK_IMAGE_LINE.match(l):
+                    over_limit.append(i)
+
+            self.reporter.check(not over_limit,
                                 self.filename,
                                 'Line(s) too long: {0}',
-                                ', '.join([str(i) for i in over]))
+                                ', '.join([str(i) for i in over_limit]))
 
     def check_trailing_whitespace(self):
         """Check for whitespace at the ends of lines."""
@@ -500,7 +520,7 @@ class CheckEpisode(CheckBase):
         """Run extra tests."""
 
         super().check()
-        if not using_remote_theme():
+        if not using_remote_theme(args.source_dir):
             self.check_reference_inclusion()
 
     def check_metadata(self):
