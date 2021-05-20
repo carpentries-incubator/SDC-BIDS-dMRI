@@ -162,7 +162,7 @@ would result in streamlines being unable to propagate to other white matter
 areas). Visually inspecting the GFA map might provide with a sufficient
 guarantee about the goodness of the value.
 
-![GFA]({{ relative_root_path }}/fig/probabilistic_tractography/gfa.png){:class="img-responsive"} \
+![GFA]({{ relative_root_path }}/fig/probabilistic_tractography/gfa.png) \
 GFA
 
 The Fiber Orientation Distribution (FOD) of the CSD model estimates the
@@ -212,7 +212,7 @@ the `generate_anatomical_volume_figure` helper function:
 
 ~~~
 from fury import actor, colormap
-
+r
 from utils.visualization_utils import generate_anatomical_volume_figure
 
 # Plot the tractogram
@@ -229,7 +229,7 @@ plt.show()
 ~~~
 {: .language-python}
 
-![PMF direction getter-derived probabilistic tractogram]({{ relative_root_path }}/fig/probabilistic_tractography/tractogram_probabilistic_dg_pmf.png){:class="img-responsive"} \
+![PMF direction getter-derived probabilistic tractogram]({{ relative_root_path }}/fig/probabilistic_tractography/tractogram_probabilistic_dg_pmf.png) \
 Streamlines representing white matter using probabilistic direction getter from
 PMF
 
@@ -279,7 +279,7 @@ plt.show()
 {: .language-python}
 
 
-![SH direction getter-derived probabilistic tractogram]({{ relative_root_path }}/fig/probabilistic_tractography/tractogram_probabilistic_dg_sh.png){:class="img-responsive"} \
+![SH direction getter-derived probabilistic tractogram]({{ relative_root_path }}/fig/probabilistic_tractography/tractogram_probabilistic_dg_sh.png) \
 Streamlines representing white matter using probabilistic direction getter from
 SH
 
@@ -328,7 +328,7 @@ plt.show()
 ~~~
 {: .language-python}
 
-![CSD model peaks for tracking]({{ relative_root_path }}/fig/probabilistic_tractography/peaks.png){:class="img-responsive"} \
+![CSD model peaks for tracking]({{ relative_root_path }}/fig/probabilistic_tractography/peaks.png) \
 Peaks obtained from the CSD model for tracking purposes
 
 We will now perform the tracking process using the local orientation
@@ -367,7 +367,7 @@ plt.show()
 {: .language-python}
 
 
-![PMF SH direction getter-derived probabilistic tractogram]({{ relative_root_path }}/fig/probabilistic_tractography/tractogram_probabilistic_dg_sh_pmf.png){:class="img-responsive"} \
+![PMF SH direction getter-derived probabilistic tractogram]({{ relative_root_path }}/fig/probabilistic_tractography/tractogram_probabilistic_dg_sh_pmf.png) \
 Streamlines representing white matter using probabilistic direction getter from
 SH (peaks_from_model)
 

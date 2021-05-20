@@ -25,7 +25,7 @@ Streamline propagation is, in essence, a numerical analysis integration
 problem. The problem lies in finding a curve that joins a set of discrete local
 directions. As such, it takes the form of a differential equation problem of
 the form:
-![Streamline propagation equation]({{ relative_root_path }}/fig/local_tractography/streamline_propagation_diff_equation.png){:class="img-responsive"} \
+![Streamline propagation equation]({{ relative_root_path }}/fig/local_tractography/streamline_propagation_diff_equation.png) \
 Streamline propagation differential equation
 
 where the curve $r(s)$ needs to be solved for.
