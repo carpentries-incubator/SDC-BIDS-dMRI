@@ -32,7 +32,7 @@ lesson), the acquired images can provide measurements which are related to the
 microscopic changes and estimate white matter trajectories. Images with no
 diffusion weighting are also acquired as part of the acquisition protocol.
 
-![Diffusion along X, Y, and Z directions]({{ relative_root_path }}/fig/introduction/DiffusionDirections.png){:class="img-responsive"} \
+![Diffusion along X, Y, and Z directions]({{ relative_root_path }}/fig/introduction/DiffusionDirections.png) \
 Diffusion along X, Y, and Z directions
 
 ## b-values & b-vectors
@@ -231,7 +231,7 @@ for i, slice in enumerate(slices):
 ~~~
 {: .language-python}
 
-![DWI slice]({{ relative_root_path }}/fig/introduction/dwi_slice.png){:class="img-responsive"}
+![DWI slice]({{ relative_root_path }}/fig/introduction/dwi_slice.png)
 
 We can also see how the diffusion gradients are represented. This is plotted on
 a sphere, the further away from the center of the sphere, the stronger the
@@ -246,7 +246,7 @@ ax.scatter(bvec_txt[0], bvec_txt[1], bvec_txt[2])
 ~~~
 {: .language-python}
 
-![Diffusion gradient sphere]({{ relative_root_path }}/fig/introduction/diffusion_gradient.png){:class="img-responsive"}
+![Diffusion gradient sphere]({{ relative_root_path }}/fig/introduction/diffusion_gradient.png)
 
 The files associated with the diffusion gradients need to converted to a
 <code>GradientTable</code> object to be used with <code>Dipy</code>. A
