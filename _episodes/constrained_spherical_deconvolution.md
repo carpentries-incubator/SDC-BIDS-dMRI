@@ -11,6 +11,7 @@ objectives:
 keypoints:
 - "CSD uses the information along more gradient encoding directions"
 - "It allows to resolve complex fiber configurations, such as crossings"
+math: true
 ---
 
 {% include base_path.html %}
