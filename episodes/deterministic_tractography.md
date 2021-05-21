@@ -107,7 +107,7 @@ plt.show()
 ~~~
 {: .language-python}
 
-![FA]({{ relative_root_path }}/fig/deterministic_tractography/fa.png){:class="img-responsive"}
+![FA]({{ relative_root_path }}/fig/deterministic_tractography/fa.png)
 
 One of the inputs of `EuDX` is the discretized voxel directions on a unit
 sphere. Therefore, it is necessary to discretize the eigenvectors before
@@ -228,7 +228,7 @@ plt.show()
 ~~~
 {: .language-python}
 
-![EuDX Determinsitic Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_EuDX.png){:class="img-responsive"}
+![EuDX Determinsitic Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_EuDX.png)
 
 > ## Exercise 1
 > 
@@ -318,7 +318,7 @@ streamlines_actor = actor.line(streamlines, colormap.line_colors(streamlines))
 > > plt.show()
 > > ~~~
 > > {: .language-python}
-> > ![Binary Stopping Criterion Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_ex1.png){:class="img-responsive"}
+> > ![Binary Stopping Criterion Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_ex1.png)
 > {: .solution}
 > 
 > ## Exercise 2
@@ -346,7 +346,7 @@ streamlines_actor = actor.line(streamlines, colormap.line_colors(streamlines))
 > > ~~~
 > > {: .language-python}
 > >
-> > ![FA Mapped Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_fa.png){:class="img-responsive"}
+> > ![FA Mapped Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_fa.png)
 > {: .solution}
 {: .challenge}
 
