@@ -11,6 +11,7 @@ objectives:
 keypoints:
 - "Local tractography uses local orientation information obtained from diffusion MRI data"
 - "Tractography requires seeds to begin tracking and a stopping criterion for termination"
+math: true
 ---
 
 {% include base_path.html %}
