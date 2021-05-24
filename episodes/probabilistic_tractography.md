@@ -11,6 +11,7 @@ objectives:
 keypoints:
 - "Probabilistic tractography incorporates uncertainty to the tracking process"
 - "Provides tractograms that explore more white matter axonal fibers"
+math: true
 ---
 
 {% include base_path.html %}
