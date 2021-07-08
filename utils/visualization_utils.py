@@ -182,10 +182,10 @@ def generate_figure(
 
     Arguments
     ---------
-    scenes : window.Scene
-        Scene(s) to be displayed.
     scene_titles : list
         Scene title.
+    *scenes : ndarray
+        Scene data to be displayed.
     cmap : str
         Colormap to be applied to the overlay.
     figsize : Tuple (int, int)
