@@ -49,6 +49,13 @@ gradient directions and corresponding amplitudes.
 
 ## Dataset
 
+For the rest of this lesson, we will make use of a subset of a publicly
+available dataset, ds000221, originally hosted at [openneuro.org](https://openneuro.org/datasets/ds000221/versions/1.0.0).
+The dataset is structured according to the Brain Imaging Data Structure
+([BIDS](https://bids-specification.readthedocs.io/en/etable/)). Please check
+the [the BIDS-dMRI Setup page](https://carpentries-incubator.github.io/SDC-BIDS-dMRI/setup.html)
+to download the dataset.
+
 Below is a tree diagram showing the folder structure of a single MR subject and
 session within ds000221. This was obtained by using the bash command
 <code>tree<code>.
@@ -109,7 +116,7 @@ tree '../data/ds000221'
     │    │    ├── sub-010002_ses-01_acq-SEfmapDWI_dir-AP_epi.nii.gz
     │    │    ├── sub-010002_ses-01_acq-SEfmapDWI_dir-PA_epi.json
     │    │    └── sub-010002_ses-01_acq-SEfmapDWI_dir-PA_epi.nii.gz
-    │    └── fmap
+    │    └── func
     │    │    ├── sub-010002_ses-01_task-rest_acq-AP_run-01_bold.json
     │    │    └── sub-010002_ses-01_task-rest_acq-AP_run-01_bold.nii.gz
     └── ses-02/
@@ -122,18 +129,23 @@ tree '../data/ds000221'
 querying, summarizing and manipulating the BIDS folder structure. We will make
 use of <code>pybids</code> to query the necessary files.
 
-Lets first pull the metadata from its associated JSON file using the
+Let's first pull the metadata from its associated JSON file using the
 <code>get_metadata()</code> function for the first run.
 
 ~~~
+import bids
 from bids.layout import BIDSLayout
+
+?BIDSLayout
+
+bids.config.set_option('extension_initial_dot', True)
 
 layout = BIDSLayout("../data/ds000221", validate=False)
 ~~~
 {: .language-python}
 
-Now that we have a layout object, we can work with a BIDS dataset! Lets extract
-the metadata. from the dataset.
+Now that we have a layout object, we can work with a BIDS dataset! Let's
+extract the metadata from the dataset.
 
 ~~~
 dwi = layout.get(subject='010006', suffix='dwi', extension='nii.gz', return_type='file')[0]
@@ -171,16 +183,6 @@ Python) package for processing and analysing diffusion MRI.
 - Implementations of many state-of-the art algorithms
 - High performance. Many algorithms implemented in [cython](http://cython.org/)
 
-### Installing <code>dipy</code>
-
-The easiest way to install <code>Dipy</code> is to use <code>pip</code>!
-Additionally, <code>Dipy</code> makes use of the FURY library for
-visualization. We will also install this using <code>pip</code>!
-
-We can install it by entering the following in a terminal
-<code>pip install dipy</code>. We will do so using Jupyter Magic in the
-following cell!
-
 ### Defining a measurement: <code>GradientTable</code>
 
 <code>Dipy</code> has a built-in function that allows us to read in
@@ -195,7 +197,7 @@ bval = layout.get_bval(dwi)
 ~~~
 {: .language-python}
 
-Now that we have the necessary diffusion files, lets explore the data!
+Now that we have the necessary diffusion files, let's explore the data!
 
 ~~~
 import numpy as np
@@ -243,6 +245,8 @@ bvec_txt = np.genfromtxt(bvec)
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 ax.scatter(bvec_txt[0], bvec_txt[1], bvec_txt[2])
+
+plt.show()
 ~~~
 {: .language-python}
 
@@ -278,66 +282,66 @@ gtab.bvecs[~gtab.b0s_mask]
 {: .language-python}
 
 ~~~
-array([[ 0.0480948 , -0.518981  ,  0.853432  ],
-       [ 0.980937  , -0.0827268 , -0.175836  ],
-       [-0.24275   , -0.355443  , -0.902625  ],
-       [-0.292642  , -0.878897  ,  0.376696  ],
-       [ 0.085518  , -0.362038  , -0.928232  ],
-       [ 0.470646  , -0.695075  ,  0.543473  ],
-       [-0.865701  , -0.485398  ,  0.122274  ],
-       [ 0.226775  , -0.23832   ,  0.944339  ],
-       [ 0.334443  , -0.89435   , -0.29713   ],
-       [ 0.727534  ,  0.0823542 ,  0.681111  ],
-       [-0.625823  ,  0.126479  ,  0.769642  ],
-       [ 0.353667  , -0.886595  ,  0.298111  ],
-       [-0.853084  , -0.472587  , -0.221153  ],
-       [ 0.516586  , -0.856143  , -0.0125875 ],
-       [-0.766369  , -0.458916  ,  0.449527  ],
-       [-0.125754  , -0.637058  , -0.760489  ],
-       [-0.149251  , -0.743085  ,  0.652341  ],
-       [ 0.937341  , -0.348404  , -0.00268246],
-       [-0.124163  , -0.219376  ,  0.967708  ],
-       [-0.36458   , -0.906103  , -0.214613  ],
-       [ 0.579767  , -0.204866  ,  0.788606  ],
-       [ 0.445586  , -0.692181  , -0.567749  ],
-       [-0.905294  , -0.174158  , -0.387442  ],
-       [-0.282606  , -0.482101  ,  0.829284  ],
-       [-0.731609  , -0.431568  , -0.527729  ],
-       [ 0.676757  , -0.438047  , -0.591705  ],
-       [ 0.171374  , -0.758177  ,  0.629125  ],
-       [-0.59121   , -0.711294  , -0.380173  ],
-       [-0.46017   , -0.155292  ,  0.874144  ],
-       [ 0.845645  , -0.162694  ,  0.508345  ],
-       [-0.130717  , -0.98886   ,  0.0712005 ],
-       [ 0.975624  , -0.0906642 ,  0.199845  ],
-       [-0.288147  ,  0.100936  ,  0.952252  ],
-       [ 0.655193  , -0.70285   ,  0.276989  ],
-       [-0.442479  , -0.607006  , -0.660118  ],
-       [-0.471845  , -0.674107  ,  0.56828   ],
-       [ 0.638596  , -0.702848  , -0.313369  ],
-       [-0.642432  , -0.712214  ,  0.2829    ],
-       [ 0.850936  , -0.431779  ,  0.299125  ],
-       [-0.240808  , -0.830023  , -0.503063  ],
-       [-0.578162  , -0.401657  ,  0.710211  ],
-       [ 0.100487  , -0.838741  , -0.535178  ],
-       [-0.924592  , -0.196278  ,  0.326504  ],
-       [-0.0210952 , -0.967749  , -0.251032  ],
-       [-0.764669  , -0.142405  ,  0.628492  ],
-       [ 0.197294  , -0.980191  ,  0.0173175 ],
-       [ 0.405727  ,  0.0420623 ,  0.913026  ],
-       [ 0.859032  , -0.144763  , -0.491028  ],
-       [ 0.380277  , -0.486027  ,  0.786872  ],
-       [-0.6891    , -0.721525  , -0.0674049 ],
-       [ 0.430722  , -0.388461  , -0.814602  ],
-       [ 0.0366712 , -0.92944   ,  0.367147  ],
-       [-0.540564  , -0.318621  , -0.778634  ],
-       [ 0.775224  , -0.631369  , -0.0200052 ],
-       [ 0.0646129 ,  0.0600214 ,  0.996104  ],
-       [-0.978577  , -0.203636  , -0.0303294 ],
-       [ 0.199971  , -0.618334  , -0.760049  ],
-       [ 0.678143  , -0.446978  ,  0.583381  ],
-       [-0.448761  , -0.888954  ,  0.0915084 ],
-       [ 0.849148  , -0.426713  , -0.311228  ]])
+array([[-2.51881e-02, -3.72268e-01,  9.27783e-01],
+       [ 9.91276e-01, -1.05773e-01, -7.86433e-02],
+       [-1.71007e-01, -5.00324e-01, -8.48783e-01],
+       [-3.28334e-01, -8.07475e-01,  4.90083e-01],
+       [ 1.59023e-01, -5.08209e-01, -8.46425e-01],
+       [ 4.19677e-01, -5.94275e-01,  6.86082e-01],
+       [-8.76364e-01, -4.64096e-01,  1.28844e-01],
+       [ 1.47409e-01, -8.01322e-02,  9.85824e-01],
+       [ 3.50020e-01, -9.29191e-01, -1.18704e-01],
+       [ 6.70475e-01,  1.96486e-01,  7.15441e-01],
+       [-6.85569e-01,  2.47048e-01,  6.84808e-01],
+       [ 3.21619e-01, -8.24329e-01,  4.65879e-01],
+       [-8.35634e-01, -5.07463e-01, -2.10233e-01],
+       [ 5.08740e-01, -8.43979e-01,  1.69950e-01],
+       [-8.03836e-01, -3.83790e-01,  4.54481e-01],
+       [-6.82578e-02, -7.53445e-01, -6.53959e-01],
+       [-2.07898e-01, -6.27330e-01,  7.50490e-01],
+       [ 9.31645e-01, -3.38939e-01,  1.30988e-01],
+       [-2.04382e-01, -5.95385e-02,  9.77079e-01],
+       [-3.52674e-01, -9.31125e-01, -9.28787e-02],
+       [ 5.11906e-01, -7.06485e-02,  8.56132e-01],
+       [ 4.84626e-01, -7.73448e-01, -4.08554e-01],
+       [-8.71976e-01, -2.40158e-01, -4.26593e-01],
+       [-3.53191e-01, -3.41688e-01,  8.70922e-01],
+       [-6.89136e-01, -5.16115e-01, -5.08642e-01],
+       [ 7.19336e-01, -5.25068e-01, -4.54817e-01],
+       [ 1.14176e-01, -6.44483e-01,  7.56046e-01],
+       [-5.63224e-01, -7.67654e-01, -3.05754e-01],
+       [-5.31237e-01, -1.29342e-02,  8.47125e-01],
+       [ 7.99914e-01, -7.30043e-02,  5.95658e-01],
+       [-1.43792e-01, -9.64620e-01,  2.20979e-01],
+       [ 9.55196e-01, -5.23107e-02,  2.91314e-01],
+       [-3.64423e-01,  2.53394e-01,  8.96096e-01],
+       [ 6.24566e-01, -6.44762e-01,  4.40680e-01],
+       [-3.91818e-01, -7.09411e-01, -5.85845e-01],
+       [-5.21993e-01, -5.74810e-01,  6.30172e-01],
+       [ 6.56573e-01, -7.41002e-01, -1.40812e-01],
+       [-6.68597e-01, -6.60616e-01,  3.41414e-01],
+       [ 8.20224e-01, -3.72360e-01,  4.34259e-01],
+       [-2.05263e-01, -9.02465e-01, -3.78714e-01],
+       [-6.37020e-01, -2.83529e-01,  7.16810e-01],
+       [ 1.37944e-01, -9.14231e-01, -3.80990e-01],
+       [-9.49691e-01, -1.45434e-01,  2.77373e-01],
+       [-7.31922e-03, -9.95911e-01, -9.00386e-02],
+       [-8.14263e-01, -4.20783e-02,  5.78969e-01],
+       [ 1.87418e-01, -9.63210e-01,  1.92618e-01],
+       [ 3.30434e-01,  1.92714e-01,  9.23945e-01],
+       [ 8.95093e-01, -2.18266e-01, -3.88805e-01],
+       [ 3.11358e-01, -3.49170e-01,  8.83819e-01],
+       [-6.86317e-01, -7.27289e-01, -4.54356e-03],
+       [ 4.92805e-01, -5.14280e-01, -7.01897e-01],
+       [-8.03482e-04, -8.56796e-01,  5.15655e-01],
+       [-4.77664e-01, -4.45734e-01, -7.57072e-01],
+       [ 7.68954e-01, -6.22151e-01,  1.47095e-01],
+       [-1.55099e-02,  2.22329e-01,  9.74848e-01],
+       [-9.74410e-01, -2.11297e-01, -7.66740e-02],
+       [ 2.56251e-01, -7.33793e-01, -6.29193e-01],
+       [ 6.24656e-01, -3.42071e-01,  7.01992e-01],
+       [-4.61411e-01, -8.64670e-01,  1.98612e-01],
+       [ 8.68547e-01, -4.66754e-01, -1.66634e-01]])
 ~~~
 {: .output}
 
@@ -373,18 +377,7 @@ axonal trajectories via tractography.
 > > ## Solution
 > >
 > > ~~~
-> > dwi_data = layout.get(suffix=dwi', extension='nii.gz', return_type='file')
-> > ~~~
-> > {: .language-python}
-> {: .solution}
->
-> Get the metadata for the diffusion associated with subject 010016.
->
-> > ## Solution
-> >
-> > ~~~
-> > dwi = layout.get(subject='010016', suffix='dwi', extension='nii.gz', return_type='file')[0]
-> > layout.get_metadata(dwi)
+> > dwi_data = layout.get(suffix='dwi', extension='nii.gz', return_type='file')
 > > ~~~
 > > {: .language-python}
 > {: .solution}
