@@ -26,7 +26,7 @@ and teaching experience.
 signal or image is represented digitally, an entry-level knowledge about aspects
 linked to medical image analysis, and a minimal set of computing and programming
 skills to install the required tools and to follow the lesson ([see the
-BIDS-dMRI Setup page](https://carpentries-incubator.github.io/SDC-BIDS-dMRI/setup.html).
+BIDS-dMRI Setup page](https://carpentries-incubator.github.io/SDC-BIDS-dMRI/setup.html)).
 This lesson requires learners to have completed the [Introduction to MRI and BIDS carpentry](https://carpentries-incubator.github.io/SDC-BIDS-IntroMRI/)
 corresponding to the Neuroimaging Curriculum.
 {: .prereq}

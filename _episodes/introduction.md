@@ -76,8 +76,8 @@ tree '../data/ds000221'
 ├── sub-010001/
 └── sub-010002/
     ├── ses-01/
-    │    ├── anat
-    │    │    ├── sub-010002_ses-01_acq-lowres_FLAIR.json
+    │    ├── anat
+    │    │    ├── sub-010002_ses-01_acq-lowres_FLAIR.json
     │    │    ├── sub-010002_ses-01_acq-lowres_FLAIR.nii.gz
     │    │    ├── sub-010002_ses-01_acq-mp2rage_defacemask.nii.gz
     │    │    ├── sub-010002_ses-01_acq-mp2rage_T1map.nii.gz
@@ -88,37 +88,37 @@ tree '../data/ds000221'
     │    │    ├── sub-010002_ses-01_inv-2_mp2rage.nii.gz
     │    │    ├── sub-010002_ses-01_T2w.json
     │    │    └── sub-010002_ses-01_T2w.nii.gz
-    │    ├── dwi
-    │    │    ├── sub-010002_ses-01_dwi.bval
-    │    │    │── sub-010002_ses-01_dwi.bvec
-    │    │    │── sub-010002_ses-01_dwi.json
-    │    │    └── sub-010002_ses-01_dwi.nii.gz
-    │    ├── fmap
-    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_magnitude1.json
-    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_magnitude1.nii.gz
-    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_magnitude2.json
-    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_magnitude2.nii.gz
-    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_phasediff.json
-    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_phasediff.nii.gz
-    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.json
-    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.nii.gz
-    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.json
-    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.nii.gz
-    │    │    ├── sub-010002_ses-01_acq-sefmapBOLDpre_dir-AP_epi.json
-    │    │    ├── sub-010002_ses-01_acq-sefmapBOLDpre_dir-AP_epi.nii.gz
-    │    │    ├── sub-010002_ses-01_acq-sefmapBOLDpre_dir-PA_epi.json
-    │    │    ├── sub-010002_ses-01_acq-sefmapBOLDpre_dir-PA_epi.nii.gz
-    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.json
-    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.nii.gz
-    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.json
-    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.nii.gz
-    │    │    ├── sub-010002_ses-01_acq-SEfmapDWI_dir-AP_epi.json
-    │    │    ├── sub-010002_ses-01_acq-SEfmapDWI_dir-AP_epi.nii.gz
-    │    │    ├── sub-010002_ses-01_acq-SEfmapDWI_dir-PA_epi.json
-    │    │    └── sub-010002_ses-01_acq-SEfmapDWI_dir-PA_epi.nii.gz
+    │    ├── dwi
+    │    │    ├── sub-010002_ses-01_dwi.bval
+    │    │    │── sub-010002_ses-01_dwi.bvec
+    │    │    │── sub-010002_ses-01_dwi.json
+    │    │    └── sub-010002_ses-01_dwi.nii.gz
+    │    ├── fmap
+    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_magnitude1.json
+    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_magnitude1.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_magnitude2.json
+    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_magnitude2.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_phasediff.json
+    │    │    ├── sub-010002_ses-01_acq-GEfmap_run-01_phasediff.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.json
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.json
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-sefmapBOLDpre_dir-AP_epi.json
+    │    │    ├── sub-010002_ses-01_acq-sefmapBOLDpre_dir-AP_epi.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-sefmapBOLDpre_dir-PA_epi.json
+    │    │    ├── sub-010002_ses-01_acq-sefmapBOLDpre_dir-PA_epi.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.json
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-AP_epi.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.json
+    │    │    ├── sub-010002_ses-01_acq-SEfmapBOLDpost_dir-PA_epi.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-SEfmapDWI_dir-AP_epi.json
+    │    │    ├── sub-010002_ses-01_acq-SEfmapDWI_dir-AP_epi.nii.gz
+    │    │    ├── sub-010002_ses-01_acq-SEfmapDWI_dir-PA_epi.json
+    │    │    └── sub-010002_ses-01_acq-SEfmapDWI_dir-PA_epi.nii.gz
     │    └── func
-    │    │    ├── sub-010002_ses-01_task-rest_acq-AP_run-01_bold.json
-    │    │    └── sub-010002_ses-01_task-rest_acq-AP_run-01_bold.nii.gz
+    │    │    ├── sub-010002_ses-01_task-rest_acq-AP_run-01_bold.json
+    │    │    └── sub-010002_ses-01_task-rest_acq-AP_run-01_bold.nii.gz
     └── ses-02/
 ~~~
 {: .output}
