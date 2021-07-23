@@ -51,6 +51,7 @@ import os
 import nibabel as nib
 import numpy as np
 
+import bids
 from bids.layout import BIDSLayout
 
 from dipy.core.gradients import gradient_table
@@ -63,6 +64,8 @@ from dipy.tracking.local_tracking import LocalTracking
 from dipy.tracking.streamline import Streamlines
 from dipy.tracking.stopping_criterion import ThresholdStoppingCriterion
 
+
+bids.config.set_option('extension_initial_dot', True)
 
 dwi_layout = BIDSLayout('../../data/ds000221/derivatives/uncorrected_topup_eddy/', validate=False)
 gradient_layout = BIDSLayout('../../data/ds000221/', validate=False)
