@@ -100,15 +100,22 @@ single coherent fiber populations. This is determined by checking the
 Fractional Anisotropy (FA) derived from the DTI model.
 
 For example, if we use an ROI at the center of the brain, we will
-find single fibers from the corpus callosum. `DIPY`'s `auto_response` function
-will calculate FA for an ROI of radius equal to `roi_radius` in the center
-of the volume and return the response function estimated in that region for
-the voxels with FA higher than a given threshold.
+find single fibers from the corpus callosum. `DIPY`'s `auto_response_ssst`
+function will calculate the FA for an ROI of radius equal to `roi_radii` in
+the center of the volume, and return the response function estimated in that
+region for the voxels with FA higher than a given threshold.
+
+> ## The fiber response function and the diffusion model
+> The `auto_response_ssst` method is relevant within a Single-Shell
+> Single-Tissue (SSST) context/model; e.g. Multi-Shell Multi-Tissue (MSMT)
+> context/models require the fiber response
+> function to be computed differently.
+{: .callout}
 
 ~~~
-from dipy.reconst.csdeconv import auto_response
+from dipy.reconst.csdeconv import auto_response_ssst
 
-response, ratio = auto_response(gtab, data, roi_radius=10, fa_thr=0.7)
+response, ratio = auto_response_ssst(gtab, data, roi_radii=10, fa_thr=0.7)
 
 # Create the directory to save the results
 out_dir = '../../data/ds000221/derivatives/dwi/reconstruction/sub-%s/ses-01/dwi/' % subj

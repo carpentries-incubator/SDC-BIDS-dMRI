@@ -57,7 +57,7 @@ from dipy.core.gradients import gradient_table
 from dipy.data import get_fnames
 from dipy.io.gradients import read_bvals_bvecs
 from dipy.reconst.csdeconv import (ConstrainedSphericalDeconvModel,
-                                   auto_response)
+                                   auto_response_ssst)
 from dipy.tracking import utils
 from dipy.tracking.local_tracking import LocalTracking
 from dipy.tracking.streamline import Streamlines
@@ -110,7 +110,7 @@ We will now estimate the FRF and set the CSD model to feed the local orientation
 information to the streamline propagation object:
 
 ~~~
-response, ratio = auto_response(gtab, dwi_data, roi_radius=10, fa_thr=0.7)
+response, ratio = auto_response_ssst(gtab, dwi_data, roi_radii=10, fa_thr=0.7)
 sh_order = 2
 csd_model = ConstrainedSphericalDeconvModel(gtab, response, sh_order=sh_order)
 csd_fit = csd_model.fit(dwi_data, mask=seed_mask)
