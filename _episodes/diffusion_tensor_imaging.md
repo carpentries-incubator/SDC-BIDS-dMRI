@@ -103,11 +103,14 @@ and load them! We will also load in the anatomical image to use as a reference
 later on.
 
 ~~~
+import bids
 from bids.layout import BIDSLayout
 from dipy.io.gradients import read_bvals_bvecs
 from dipy.core.gradients import gradient_table
 from nilearn import image as img
 import nibabel as nib
+
+bids.config.set_option('extension_initial_dot', True)
 
 deriv_layout = BIDSLayout("../data/ds000221/derivatives", validate=False)
 subj="010006"
