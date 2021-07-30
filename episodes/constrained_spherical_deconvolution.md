@@ -58,6 +58,7 @@ import os
 import nibabel as nib
 import numpy as np
 
+import bids
 from bids.layout import BIDSLayout
 
 from dipy.core.gradients import gradient_table
@@ -65,6 +66,8 @@ from dipy.data import default_sphere
 from dipy.io.gradients import read_bvals_bvecs
 from dipy.io.image import load_nifti
 
+
+bids.config.set_option('extension_initial_dot', True)
 
 dwi_layout = BIDSLayout('../../data/ds000221/derivatives/uncorrected_topup_eddy/', validate=False)
 t1_layout = BIDSLayout('../../data/ds000221/derivatives/uncorrected_topup_eddy_regT1/', validate=False)
