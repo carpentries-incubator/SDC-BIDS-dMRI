@@ -13,19 +13,22 @@ jobs:
     strategy:
       matrix:
         python-version: [3.7, 3.8, 3.9]
+    env:
+      ANTSPATH: /opt/ants
+      FSLPATH: /opt/fsl
 
     steps:
     - name: Checkout GitHub repository
       uses: actions/checkout@v2
 
-    # Run with multiple Python versions.
+    # Run with multiple Python versions
     - name: Setup Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
 
-    # Use a cache for the pip install to avoid reinstalling every time this is run.
-    - name: Cache pip install
+    # Install Python requirements
+    - name: Install requirements
       uses: actions/cache@v2
       id: cache
       with:
@@ -33,14 +36,38 @@ jobs:
         key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
             ${{ env.pythonLocation }}-
-
-    # Install all requirements to run these tests.
-    - name: Install requirements
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest nbval
+
+    - name: Install ANTs
+      uses: actions/cache@v2
+      with:
+        path: /opt/ants
+        key: ants-v1
+        restore-keys: |
+          ants-v1
+        run: |
+            if [[ ! -d "${ANTSPATH}" ]]; then
+              sudo mkdir -p $ANTSPATH
+              curl -sSL "https://dl.dropbox.com/s/gwf51ykkk5bifyj/ants-Linux-centos6_x86_64-v2.3.4.tar.gz" | sudo tar -xzC $ANTSPATH --strip-components 1
+            fi
+
+    - name: Install FSL
+      uses: actions/cache@v2
+      with:
+        path: /opt/fsl
+        key: fsl-v1
+        restore-keys: |
+          fsl-v1
+        run: |
+            if [[ ! -d "${FSLPATH}" ]]; then
+              wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py || echo "Failed to download FSL installer"
+              python fslinstaller.py -d $FSLPATH -p -q || echo "Failed to install FSL"
+              rm -rf /opt/fsl/*/data/atlases
+            fi
 
     # Download the necessary data
     - name: Download data
