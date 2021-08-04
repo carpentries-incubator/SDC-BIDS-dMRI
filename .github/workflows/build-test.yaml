@@ -17,6 +17,7 @@ jobs:
       ANTSPATH: /opt/ants
       FSLPATH: /opt/fsl
       FSLDIR: /opt/fsl
+      PATH: "/opt/ants:/opt/fsl/bin:$PATH"
 
     steps:
     - uses: actions/cache@v2
@@ -71,10 +72,9 @@ jobs:
     - name: Install FSL
       run: |
         if [[ ! -d "${FSLPATH}" ]]; then
-          sudo mkdir -p $FSLPATH
           curl -sSL "https://fsl.fmrib.ox.ac.uk/fsldownloads/fsl-6.0.2-centos6_64.tar.gz" | sudo tar -xzC $FSLPATH --strip-components 1
           sudo bash ${FSLPATH}/etc/fslconf/fslpython_install.sh -f $FSLPATH
-          sudo rm -rf /opt/fsl/*/data/atlases
+          sudo rm -rf ${FSLPATH}/data/atlases
         fi
 
     - name: Checkout GitHub repository
@@ -117,6 +117,7 @@ jobs:
         export PYTHONPATH=$PYTHONPATH:`realpath ${{ github.workspace }}`
         pytest --nbval-lax -v code/introduction/introduction.ipynb
         pytest --nbval-lax -v code/introduction/solutions/introduction_solutions.ipynb
+        pytest --nbval-lax -v code/preprocessing/solutions/preprocessing_solutions.ipynb
         pytest --nbval-lax -v code/diffusion_tensor_imaging/diffusion_tensor_imaging.ipynb
         pytest --nbval-lax -v code/diffusion_tensor_imaging/solutions/diffusion_tensor_imaging_solutions.ipynb
         pytest --nbval-lax -v code/constrained_spherical_deconvolution/constrained_spherical_deconvolution.ipynb
