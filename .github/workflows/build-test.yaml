@@ -2,8 +2,7 @@ name: Build, test
 
 on:
   push:
-    branches:
-      - main
+    branch: main
   pull_request:
 
 jobs:
@@ -19,13 +18,15 @@ jobs:
       FSLDIR: /opt/fsl
 
     steps:
-    - uses: actions/cache@v2
+    - name: Cache Ubuntu dependencies
+      uses: actions/cache@v2
       with:
         path: /var/lib/apt
         key: apt-cache-v1
         restore-keys: |
           apt-cache-v1
-    - name: Install dependencies
+
+    - name: Install Ubuntu dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y --no-install-recommends \
@@ -49,26 +50,29 @@ jobs:
                              libxrender1 \
                              libxt6
 
-    - uses: actions/cache@v2
+    - name: Cache ANTs install
+      uses: actions/cache@v2
       with:
         path: /opt/ants
         key: ants-v1
         restore-keys: |
           ants-v1
+
     - name: Install ANTs
       run: |
         if [[ ! -d "${ANTSPATH}" ]]; then
           sudo mkdir -p $ANTSPATH
           curl -sSL "https://dl.dropbox.com/s/gwf51ykkk5bifyj/ants-Linux-centos6_x86_64-v2.3.4.tar.gz" | sudo tar -xzC $ANTSPATH --strip-components 1
         fi
-        export PATH=/opt/ants:$PATH
 
-    - uses: actions/cache@v2
+    - name: Cache FSL intall
+      uses: actions/cache@v2
       with:
         path: /opt/fsl
         key: fsl-v2
         restore-keys: |
           fsl-v2
+
     - name: Install FSL
       run: |
         if [[ ! -d "${FSLPATH}" ]]; then
@@ -77,7 +81,6 @@ jobs:
           sudo bash ${FSLPATH}/etc/fslconf/fslpython_install.sh -f $FSLPATH
           sudo rm -rf ${FSLPATH}/data/atlases
         fi
-        export PATH=/opt/fsl/bin:$PATH
 
     - name: Checkout GitHub repository
       uses: actions/checkout@v2
@@ -88,14 +91,15 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    # Install Python requirements
-    - uses: actions/cache@v2
+    - name: Cache Python package install
+      uses: actions/cache@v2
       id: cache
       with:
         path: ${{ env.pythonLocation }}
         key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
             ${{ env.pythonLocation }}-
+
     - name: Install Python requirements
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
@@ -103,7 +107,6 @@ jobs:
         pip install -r requirements.txt
         pip install pytest nbval
 
-    # Download the necessary data
     - name: Download data
       run: |
         pushd `pwd`
@@ -113,10 +116,10 @@ jobs:
         rm ds000221_sub-010006.zip
         popd
 
-    # Run the actual tests of all the Python Notebooks.
-    - name: Test Notebooks
+    - name: Run pytest on Jupyter notebooks
       run: |
         export PYTHONPATH=$PYTHONPATH:`realpath ${{ github.workspace }}`
+        export PATH=/opt/fsl/bin:/opt/ants:$PATH
         pytest --nbval-lax -v code/introduction/introduction.ipynb
         pytest --nbval-lax -v code/introduction/solutions/introduction_solutions.ipynb
         pytest --nbval-lax -v code/preprocessing/solutions/preprocessing_solutions.ipynb
