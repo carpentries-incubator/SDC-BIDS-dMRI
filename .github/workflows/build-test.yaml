@@ -16,6 +16,7 @@ jobs:
       ANTSPATH: /opt/ants
       FSLPATH: /opt/fsl
       FSLDIR: /opt/fsl
+      FSLOUTPUTTYPE: NIFTI_GZ
 
     steps:
     - name: Cache Ubuntu dependencies
