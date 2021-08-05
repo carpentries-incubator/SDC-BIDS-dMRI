@@ -17,7 +17,6 @@ jobs:
       ANTSPATH: /opt/ants
       FSLPATH: /opt/fsl
       FSLDIR: /opt/fsl
-      PATH: "/opt/ants:/opt/fsl/bin:$PATH"
 
     steps:
     - uses: actions/cache@v2
@@ -62,20 +61,23 @@ jobs:
           sudo mkdir -p $ANTSPATH
           curl -sSL "https://dl.dropbox.com/s/gwf51ykkk5bifyj/ants-Linux-centos6_x86_64-v2.3.4.tar.gz" | sudo tar -xzC $ANTSPATH --strip-components 1
         fi
+        export PATH=/opt/ants:$PATH
 
     - uses: actions/cache@v2
       with:
         path: /opt/fsl
-        key: fsl-v1
+        key: fsl-v2
         restore-keys: |
-          fsl-v1
+          fsl-v2
     - name: Install FSL
       run: |
         if [[ ! -d "${FSLPATH}" ]]; then
+          sudo mkdir -p $FSLPATH
           curl -sSL "https://fsl.fmrib.ox.ac.uk/fsldownloads/fsl-6.0.2-centos6_64.tar.gz" | sudo tar -xzC $FSLPATH --strip-components 1
           sudo bash ${FSLPATH}/etc/fslconf/fslpython_install.sh -f $FSLPATH
           sudo rm -rf ${FSLPATH}/data/atlases
         fi
+        export PATH=/opt/fsl/bin:$PATH
 
     - name: Checkout GitHub repository
       uses: actions/checkout@v2
