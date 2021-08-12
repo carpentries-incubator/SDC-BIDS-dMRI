@@ -2,8 +2,7 @@ name: Build, test
 
 on:
   push:
-    branches:
-      - main
+    branch: main
   pull_request:
 
 jobs:
@@ -13,19 +12,87 @@ jobs:
     strategy:
       matrix:
         python-version: [3.7, 3.8, 3.9]
+    env:
+      ANTSPATH: /opt/ants
+      FSLPATH: /opt/fsl
+      FSLDIR: /opt/fsl
+      FSLOUTPUTTYPE: NIFTI_GZ
 
     steps:
+    - name: Cache Ubuntu dependencies
+      uses: actions/cache@v2
+      with:
+        path: /var/lib/apt
+        key: apt-cache-v1
+        restore-keys: |
+          apt-cache-v1
+
+    - name: Install Ubuntu dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends \
+                             bc \
+                             bzip2 \
+                             ca-certificates \
+                             curl \
+                             dc \
+                             file \
+                             libfontconfig1 \
+                             libfreetype6 \
+                             libgl1-mesa-dev \
+                             libgl1-mesa-dri \
+                             libglu1-mesa-dev \
+                             libgomp1 \
+                             libice6 \
+                             libxcursor1 \
+                             libxft2 \
+                             libxinerama1 \
+                             libxrandr2 \
+                             libxrender1 \
+                             libxt6
+
+    - name: Cache ANTs install
+      uses: actions/cache@v2
+      with:
+        path: /opt/ants
+        key: ants-v1
+        restore-keys: |
+          ants-v1
+
+    - name: Install ANTs
+      run: |
+        if [[ ! -d "${ANTSPATH}" ]]; then
+          sudo mkdir -p $ANTSPATH
+          curl -sSL "https://dl.dropbox.com/s/gwf51ykkk5bifyj/ants-Linux-centos6_x86_64-v2.3.4.tar.gz" | sudo tar -xzC $ANTSPATH --strip-components 1
+        fi
+
+    - name: Cache FSL intall
+      uses: actions/cache@v2
+      with:
+        path: /opt/fsl
+        key: fsl-v2
+        restore-keys: |
+          fsl-v2
+
+    - name: Install FSL
+      run: |
+        if [[ ! -d "${FSLPATH}" ]]; then
+          sudo mkdir -p $FSLPATH
+          curl -sSL "https://fsl.fmrib.ox.ac.uk/fsldownloads/fsl-6.0.2-centos6_64.tar.gz" | sudo tar -xzC $FSLPATH --strip-components 1
+          sudo bash ${FSLPATH}/etc/fslconf/fslpython_install.sh -f $FSLPATH
+          sudo rm -rf ${FSLPATH}/data/atlases
+        fi
+
     - name: Checkout GitHub repository
       uses: actions/checkout@v2
 
-    # Run with multiple Python versions.
+    # Run with multiple Python versions
     - name: Setup Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
 
-    # Use a cache for the pip install to avoid reinstalling every time this is run.
-    - name: Cache pip install
+    - name: Cache Python package install
       uses: actions/cache@v2
       id: cache
       with:
@@ -34,15 +101,13 @@ jobs:
         restore-keys: |
             ${{ env.pythonLocation }}-
 
-    # Install all requirements to run these tests.
-    - name: Install requirements
+    - name: Install Python requirements
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest nbval
 
-    # Download the necessary data
     - name: Download data
       run: |
         pushd `pwd`
@@ -52,12 +117,13 @@ jobs:
         rm ds000221_sub-010006.zip
         popd
 
-    # Run the actual tests of all the Python Notebooks.
-    - name: Test Notebooks
+    - name: Run pytest on Jupyter notebooks
       run: |
         export PYTHONPATH=$PYTHONPATH:`realpath ${{ github.workspace }}`
+        export PATH=/opt/fsl/bin:/opt/ants:$PATH
         pytest --nbval-lax -v code/introduction/introduction.ipynb
         pytest --nbval-lax -v code/introduction/solutions/introduction_solutions.ipynb
+        pytest --nbval-lax -v code/preprocessing/solutions/preprocessing_solutions.ipynb
         pytest --nbval-lax -v code/diffusion_tensor_imaging/diffusion_tensor_imaging.ipynb
         pytest --nbval-lax -v code/diffusion_tensor_imaging/solutions/diffusion_tensor_imaging_solutions.ipynb
         pytest --nbval-lax -v code/constrained_spherical_deconvolution/constrained_spherical_deconvolution.ipynb
