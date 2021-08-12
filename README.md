@@ -92,7 +92,7 @@ To cite this lesson, please consult with [CITATION](CITATION)
 [slack_channel_status]: https://img.shields.io/badge/Slack_Channel-neuroimaging-E01563.svg
 [slack_channel_url]: https://swcarpentry.slack.com/messages/CCJBHKCHZ
 [binder_svg]: https://mybinder.org/badge_logo.svg
-[binder_url]: https://mybinder.org/v2/gh/carpentries-incubator/SDC-BIDS-dMRI/main
+[binder_url]: https://mybinder.org/v2/gh/carpentries-incubator/SDC-BIDS-dMRI/main?urlpath=lab/tree/code
 [episode01]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/introduction/index.html
 [episode02]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/preprocessing/index.html
 [episode03]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/local_orientation_reconstruction/index.html
