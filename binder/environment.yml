@@ -10,6 +10,7 @@ dependencies:
   - git
   - dipy=1.3.0
   - fury=0.6.1
+  - jupyter_contrib_nbextensions
   - matplotlib
   - nibabel
   - nilearn=0.7.0
