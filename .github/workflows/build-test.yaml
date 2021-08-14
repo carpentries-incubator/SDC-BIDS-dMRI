@@ -122,7 +122,7 @@ jobs:
         export PYTHONPATH=$PYTHONPATH:`realpath ${{ github.workspace }}`
         export PATH=/opt/fsl/bin:/opt/ants:$PATH
         # pytest --nbval-lax -v code/introduction.ipynb
-        pytest --nbval-lax -v code/preprocessing.ipynb
+        pytest -rfXx --tb=long --nbval-lax -v code/preprocessing.ipynb
         # pytest --nbval-lax -v code/diffusion_tensor_imaging.ipynb
         # pytest --nbval-lax -v code/constrained_spherical_deconvolution.ipynb
         # pytest --nbval-lax -v code/deterministic_tractography.ipynb
