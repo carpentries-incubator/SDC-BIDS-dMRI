@@ -66,7 +66,7 @@ jobs:
           curl -sSL "https://dl.dropbox.com/s/gwf51ykkk5bifyj/ants-Linux-centos6_x86_64-v2.3.4.tar.gz" | sudo tar -xzC $ANTSPATH --strip-components 1
         fi
 
-    - name: Cache FSL intall
+    - name: Cache FSL install
       uses: actions/cache@v2
       with:
         path: /opt/fsl
