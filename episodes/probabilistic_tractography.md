@@ -125,6 +125,8 @@ anisotropy of tissues, and hence, it provides an estimation of the underlying
 tissue type.
 
 ~~~
+from scipy import ndimage  # To rotate image for visualization purposes
+import matplotlib.pyplot as plt
 from dipy.reconst.shm import CsaOdfModel
 from dipy.tracking.stopping_criterion import ThresholdStoppingCriterion
 
@@ -143,10 +145,6 @@ gfa_img = nib.Nifti1Image(gfa.astype(np.float32), affine)
 nib.save(gfa_img, os.path.join(out_dir, 'gfa.nii.gz'))
 
 # Plot the GFA
-import matplotlib.pyplot as plt
-
-from scipy import ndimage  # To rotate image for visualization purposes
-
 %matplotlib inline
 
 fig, ax = plt.subplots(1, 3, figsize=(10, 10))
