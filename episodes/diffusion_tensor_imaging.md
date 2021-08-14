@@ -344,6 +344,13 @@ data!
 > > plot.plot_anat(rd_img, cut_coords=(0, -29, 20), vmin=0, vmax=0.01)
 > > ~~~
 > > {: .language-python}
+> >
+> > ![Axial diffusivity map]({{ relative_root_path }}/fig/diffusion_tensor_imaging/axial_diffusivity_map.png) \
+Axial diffusivity map.
+> >
+> > ![Radial diffusivity map]({{ relative_root_path }}/fig/diffusion_tensor_imaging/radial_diffusivity_map.png) \
+Radial diffusivity map.
+> >
 > {: .solution}
 {: .challenge}
 
