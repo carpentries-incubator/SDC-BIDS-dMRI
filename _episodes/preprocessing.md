@@ -53,7 +53,10 @@ image to use later on, as well as the second inversion from the anatomical
 acquisition for brainmasking purposes.
 
 ~~~
+import bids
 from bids.layout import BIDSLayout
+
+bids.config.set_option('extension_initial_dot', True)
 
 layout = BIDSLayout("../../data/ds000221", validate=False)
 
