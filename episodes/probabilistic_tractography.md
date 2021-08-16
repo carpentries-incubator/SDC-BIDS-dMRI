@@ -57,11 +57,6 @@ from bids.layout import BIDSLayout
 from dipy.core.gradients import gradient_table
 from dipy.data import get_fnames
 from dipy.io.gradients import read_bvals_bvecs
-from dipy.reconst.csdeconv import (ConstrainedSphericalDeconvModel,
-                                   auto_response_ssst)
-from dipy.tracking.local_tracking import LocalTracking
-from dipy.tracking.streamline import Streamlines
-from dipy.tracking.stopping_criterion import ThresholdStoppingCriterion
 
 
 bids.config.set_option('extension_initial_dot', True)
@@ -112,6 +107,9 @@ We will now estimate the FRF and set the CSD model to feed the local orientation
 information to the streamline propagation object:
 
 ~~~
+from dipy.reconst.csdeconv import (ConstrainedSphericalDeconvModel,
+                                   auto_response_ssst)
+
 response, ratio = auto_response_ssst(gtab, dwi_data, roi_radii=10, fa_thr=0.7)
 sh_order = 2
 csd_model = ConstrainedSphericalDeconvModel(gtab, response, sh_order=sh_order)
@@ -127,7 +125,10 @@ anisotropy of tissues, and hence, it provides an estimation of the underlying
 tissue type.
 
 ~~~
+from scipy import ndimage  # To rotate image for visualization purposes
+import matplotlib.pyplot as plt
 from dipy.reconst.shm import CsaOdfModel
+from dipy.tracking.stopping_criterion import ThresholdStoppingCriterion
 
 csa_model = CsaOdfModel(gtab, sh_order=sh_order)
 gfa = csa_model.fit(dwi_data, mask=seed_mask).gfa
@@ -144,10 +145,6 @@ gfa_img = nib.Nifti1Image(gfa.astype(np.float32), affine)
 nib.save(gfa_img, os.path.join(out_dir, 'gfa.nii.gz'))
 
 # Plot the GFA
-import matplotlib.pyplot as plt
-
-from scipy import ndimage  # To rotate image for visualization purposes
-
 %matplotlib inline
 
 fig, ax = plt.subplots(1, 3, figsize=(10, 10))
@@ -195,6 +192,8 @@ from dipy.direction import ProbabilisticDirectionGetter
 from dipy.data import small_sphere
 from dipy.io.stateful_tractogram import Space, StatefulTractogram
 from dipy.io.streamline import save_tractogram
+from dipy.tracking.local_tracking import LocalTracking
+from dipy.tracking.streamline import Streamlines
 
 fod = csd_fit.odf(small_sphere)
 pmf = fod.clip(min=0)
