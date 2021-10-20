@@ -314,13 +314,14 @@ plt.show()
 > >
 > > # Plot the tractogram
 > > # Build the representation of the data
-streamlines_actor = actor.line(streamlines, colormap.line_colors(streamlines))
+> > streamlines_actor = actor.line(streamlines, colormap.line_colors(streamlines))
 > > 
 > > # Generate the figure
 > > fig = generate_anatomical_volume_figure(streamlines_actor)
 > > plt.show()
 > > ~~~
 > > {: .language-python}
+> > 
 > > ![Binary Stopping Criterion Tractography]({{ relative_root_path }}/fig/deterministic_tractography/tractogram_deterministic_ex1.png)
 > {: .solution}
 > 
