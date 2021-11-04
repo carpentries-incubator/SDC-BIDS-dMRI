@@ -8,4 +8,5 @@ unzip data/ds000221_sub-010006.zip -d data
 rm data/ds000221_sub-010006.zip
 
 # export pythonpath
-export PYTHONPATH=$PYTHONPATH:utils/
+export PYTHONPATH=utils/:$PYTHONPATH
+export PATH=utils/:$PATH
