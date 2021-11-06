@@ -54,7 +54,7 @@ and eigenvectors (![Diffusivity matrix eigenvectors]({{ relative_root_path }}/fi
 from the previously described matrix. 
 The computed eigenvalues and eigenvectors are normally sorted in descending magnitude (i.e. 
 ![Diffusivity matrix eigenvalues magnitudes]({{ relative_root_path }}/fig/diffusion_tensor_imaging/inline_sortedeigvec.png){:class="inline"}).
-Eigenvalues are always strictly positive in the context of dMRI and are measured in mm^2/s. 
+Eigenvalues are always strictly positive in the context of dMRI and are measured in $mm^2/s$.
 In the DTI model, the largest eigenvalue gives the principal direction of the diffusion tensor, 
 and the other two eigenvectors span the orthogonal plane to the former direction.
 
@@ -209,7 +209,7 @@ Imaging". Hum. Brain Mapp. 2012, 34(11) pp. 2747-2766).
 An often used complimentary measure to FA is mean diffusivity (MD). MD is a measure of the 
 degree of diffusion, independent of direction. This is sometimes known as the apparent diffusion 
 coefficient (ADC). Mathematically, MD is computed as the mean eigenvalues of the tensor and 
-is measured in mm^2/s.
+is measured in $mm^2/s$.
 
 ![MD equation]({{ relative_root_path }}/fig/diffusion_tensor_imaging/md_eqn.png)
 
@@ -237,7 +237,7 @@ along the primary axis of diffusion, along
 On the other hand, RD reflects the average diffusivity along the other two minor axes 
 (being named as *perpendicular diffusivity* in some works) 
 (![Radial diffusivity eigenvalues]({{ relative_root_path }}/fig/diffusion_tensor_imaging/minor_axes.png)){:class="inline"}
-. Both are measured in mm^2/s.
+. Both are measured in $mm^2/s$.
 
 ![Axial and radial diffusivities]({{ relative_root_path }}/fig/diffusion_tensor_imaging/ax_rad_diff.png)
 

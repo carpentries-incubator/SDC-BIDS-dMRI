@@ -25,9 +25,9 @@ reached. Preprocessing is performed using a few well-known software packages
 (e.g. `FSL`, `ANTs`). For the purposes of these lessons, preprocessing steps
 requiring these software packages has already been performed for the dataset
 <code>ds000221</code> and the commands required for each step will be provided.
-This dataset contains single shell diffusion data with 7 b=0 s/mm^2 volumes
-(non-diffusion weighted) and 60 b=1000 s/mm^2 volumes. In addition, field maps
-(found in the <code>fmap</code> directory are acquired with opposite
+This dataset contains single shell diffusion data with 7 $b = 0 s/mm^2$ volumes
+(non-diffusion weighted) and 60 $b = 1000 s/mm^2$ volumes. In addition, field
+maps (found in the <code>fmap</code> directory are acquired with opposite
 phase-encoding directions).
 
 To illustrate what the preprocessing step may look like, here is an example
@@ -128,9 +128,9 @@ in opposing directions.
 
 Here, we will make use of the two opposite phase-encoded acquisitions found in
 the <code>fmap</code> directory of each subject. These are acquired with a
-diffusion weighting of b = 0 s/mm^2. Alternatively, if these are not available,
-one can also extract and make use of the non-diffusion weighted images
-(assuming the data is also acquired with opposite phase encoding directions).
+diffusion weighting of $b = 0 s/mm^2$. Alternatively, if these are not
+available, one can also extract and make use of the non-diffusion weighted
+images (assuming the data is also acquired with opposite phase encoding directions).
 
 First, we will merge the two files so that all of the volumes are in 1 file.
 
@@ -170,7 +170,7 @@ are used. Briefly:
   regarding the acquisition.
 * <code>--config=b02b0.cnf</code> makes use of a predefined config file
   supplied with <code>topup</code>, which contains parameters useful to
-  registering with good b=0 s/mm^2 images.
+  registering with good $b = 0 s/mm^2$ images.
 * <code>--out</code> defines the output files containing the spline
   coefficients for the induced field, as well as subject movement parameters
 
@@ -329,9 +329,9 @@ nib.save(img, os.path.join(out_dir, "sub-010006_ses-01_dwi_proc-eddy_b0.nii.gz")
 To perform the registration between the diffusion volumes and T1w, we will make
 use of `ANTs`, specifically the <code>antsRegistrationSyNQuick.sh</code> script
 and <code>antsApplyTransform</code>. We will begin by registering the diffusion
-b=0 s/mm^2 volume to get the appropriate transforms to align the two images. We
-will then apply the inverse transformation to the T1w volume such that it is
-aligned to the diffusion volume.
+$b = 0 s/mm^2$ volume to get the appropriate transforms to align the two
+images. We will then apply the inverse transformation to the T1w volume such
+that it is aligned to the diffusion volume.
 
 Here, we will constrain <code>antsRegistrationSyNQuick.sh</code> to perform a
 rigid and affine transformation (we will explain why in the final step). There
@@ -340,7 +340,7 @@ are a few parameters that must be set:
 * <code>-d</code> - Image dimension (2/3D)
 * <code>-t</code> - Transformation type (<code>a</code> performs only rigid + affine transformation)
 * <code>-f</code> - Fixed image (anatomical T1w)
-* <code>-m</code> - Moving image (DWI b=0 s/mm^2)
+* <code>-m</code> - Moving image (b0 DWI volume)
 * <code>-o</code> - Output prefix (prefix to be appended to output files)
 
 ~~~
