@@ -214,7 +214,7 @@ the `generate_anatomical_volume_figure` helper function:
 
 ~~~
 from fury import actor, colormap
-r
+
 from utils.visualization_utils import generate_anatomical_volume_figure
 
 # Plot the tractogram
