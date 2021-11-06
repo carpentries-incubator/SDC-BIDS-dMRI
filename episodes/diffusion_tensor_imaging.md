@@ -247,16 +247,19 @@ On the other hand, RD reflects the average diffusivity along the other two minor
 There are several ways of visualizing tensors. One way is using an RGB map, which overlays the 
 primary diffusion orientation on an FA map. The colours of this map encodes the diffusion 
 orientation. Note that this map provides no directional information (e.g. whether the diffusion 
-flows from right-to-left or vice-versa). To do this with <code>DIPY</code>, we can use the 
+flows from right-to-left or vice-versa). To do this with `DIPY`, we can use the
 <code>color_fa</code> function. The colours map to the following orientations:
 
 * Red = Left / Right
 * Green = Anterior / Posterior
 * Blue = Superior / Inferior
 
-_Note: The plotting functions in <code>nilearn</code> are unable to visualize these RGB maps. 
-However, we can use the <code>matplotlib</code> library to view these images._
-
+> ## Diffusion scalar map visualization
+>
+> The plotting functions in [`nilearn`](https://nilearn.github.io/stable/index.html)
+> are unable to visualize these RGB maps. However, we can use the
+> [`Matplotlib`](https://matplotlib.org/) library to view these images.
+{: .callout}
 
 ~~~
 from dipy.reconst.dti import color_fa
@@ -274,13 +277,16 @@ ax[2].imshow(ndimage.rotate(RGB_map[:, :, RGB_map.shape[2]//2, :], 90, reshape=F
 ![RGB FA map]({{ relative_root_path }}/fig/diffusion_tensor_imaging/plot_fa_rgb.png)
 
 Another way of visualizing the tensors is to display the diffusion tensor in each imaging voxel 
-with colour encoding 
-(Please refer to the [<code>DIPY</code> documentation](https://dipy.org/tutorials/) for 
-the necessary steps to perform this type of visualization, as it can be memory intensive). 
-Below is an example of one such tensor visualization.
+with colour encoding. Below is an example of one such tensor visualization.
 
 ![Tensor visualization]({{ relative_root_path }}/fig/diffusion_tensor_imaging/TensorViz.png)
 
+> ## Tensor visualization
+>
+> Visualizing tensors can be memory intensive. Please refer to the
+> [`DIPY` documentation](https://dipy.org/tutorials/) for the necessary steps to
+> perform this type of visualization.
+{: .callout}
 
 ### Some notes on DTI
 
