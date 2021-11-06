@@ -272,8 +272,8 @@ diffusion tensor images (DTI)!
 
 There is also a built-in function for gradient tables, <code>b0s_mask</code>
 that can be used to separate diffusion weighted measurements from non-diffusion
-weighted measurements (b=0s/mm^2). We will extract the vector corresponding to
-diffusion weighted measurements!
+weighted measurements ($b = 0 s/mm^2$). We will extract the vector
+corresponding to diffusion weighted measurements!
 
 ~~~
 gtab.bvecs[~gtab.b0s_mask]
