@@ -311,7 +311,6 @@ data!
 > > import dipy.reconst.dti as dti
 > > from dipy.segment.mask import median_otsu
 > > from nilearn import image as img
-> > import nibabel as nib
 > >
 > > deriv_layout = BIDSLayout("../data/ds000221/derivatives", validate=False)
 > > subj="010006"
