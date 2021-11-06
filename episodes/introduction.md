@@ -271,7 +271,7 @@ gtab = gradient_table(gt_bvals, gt_bvecs)
 We will need this gradient table later on to process our data and generate
 diffusion tensor images (DTI)!
 
-There is also a built in function for gradient tables, <code>b0s_mask</code>
+There is also a built-in function for gradient tables, <code>b0s_mask</code>
 that can be used to separate diffusion weighted measurements from non-diffusion
 weighted measurements (b=0s/mm^2). We will extract the vector corresponding to
 diffusion weighted measurements!

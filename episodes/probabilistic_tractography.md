@@ -236,7 +236,7 @@ Streamlines representing white matter using probabilistic direction getter from
 PMF
 
 One disadvantage of using a discrete PMF to represent possible tracking
-directions is that it tends to take up a lot of memory (RAM). The size of the
+directions is that it tends to take up a lot of RAM memory. The size of the
 PMF, the FOD in this case, must be equal to the number of possible tracking
 directions on the hemisphere, and every voxel has a unique PMF. In this case
 the data is ``(81, 106, 76)`` and ``small_sphere`` has 181 directions so the

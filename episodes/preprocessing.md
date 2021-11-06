@@ -106,7 +106,7 @@ nib.save(img, os.path.join(out_dir, "sub-%s_ses-01_brainmask.nii.gz" % subj))
 ~~~
 {: .language-python}
 
-![b0 brain mask]]({{ relative_root_path }}/fig/preprocessing/dwi_brainmask.png)
+![b0 brainmask]]({{ relative_root_path }}/fig/preprocessing/dwi_brainmask.png)
 
 ### FSL [<code>topup</code>](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/topup)
 
@@ -127,7 +127,7 @@ phase-encoding directions, which results in the same field creating distortions
 in opposing directions.
 
 Here, we will make use of the two opposite phase-encoded acquisitions found in
-the <code>fmap</code> directory of each subjet. These are acquired with a
+the <code>fmap</code> directory of each subject. These are acquired with a
 diffusion weighting of b = 0 s/mm^2. Alternatively, if these are not available,
 one can also extract and make use of the non-diffusion weighted images
 (assuming the data is also acquired with opposite phase encoding directions).
@@ -252,7 +252,7 @@ eddy_openmp --imain=../../data/ds000221/sub-010006/ses-01/dwi/sub-010006_ses-01_
 ### Registration with T1w
 
 The final step to our diffusion processing is registration to an anatomical
-image (eg. T1-weighted). This is important because the diffusion data,
+image (e.g. T1-weighted). This is important because the diffusion data,
 typically acquired using echo planar imaging or EPI, enables faster
 acquisitions at the cost of lower resolution and introduction of distortions
 (as seen above). Registration with the anatomical image not only helps to
@@ -277,11 +277,11 @@ mv ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006
 ~~~
 {: .language-bash}
 
-![T1w brain mask]({{ relative_root_path }}/fig/preprocessing/T1w_brainmask.png)
+![T1w brainmask]({{ relative_root_path }}/fig/preprocessing/T1w_brainmask.png)
 
 Note, we use <code>bet</code> here, as well as the second inversion of the
-anatomical image, as it provides us with a better brain mask. The
-<code>bet</code> command above is called to output only the binarymask and the
+anatomical image, as it provides us with a better brainmask. The
+<code>bet</code> command above is called to output only the binary mask and the
 fractional intensity threshold is also increased slightly (to 0.6) provide a
 smaller outline of the brain initially, and then decreased (to 0.4) to provide
 a larger outline. The flag <code>-m</code> indicates to the tool to create a
@@ -331,7 +331,7 @@ use of ANTs, specifically the <code>antsRegistrationSyNQuick.sh</code> script
 and <code>antsApplyTransform</code>. We will begin by registering the diffusion
 b=0 s/mm^2 volume to get the appropriate transforms to align the two images. We
 will then apply the inverse transformation to the T1w volume such that it is
-aligned to the diffusion volume
+aligned to the diffusion volume.
 
 Here, we will constrain <code>antsRegistrationSyNQuick.sh</code> to perform a
 rigid and affine transformation (we will explain why in the final step). There
@@ -358,7 +358,7 @@ set:
 
 * <code>-d</code> - Image dimension (2/3/4D)
 * <code>-i</code> - Input volume to be transformed (T1w)
-* <code>-r</code> - Reference volume (b0 of DWI volume)
+* <code>-r</code> - Reference volume (b0 DWI volume)
 * <code>-t</code> - Transformation file (can be called more than once)
 * <code>-o</code> - Output volume in the transformed space.
 
@@ -377,7 +377,7 @@ antsApplyTransforms -d 3 -i ../../data/ds000221/derivatives/uncorrected/sub-0100
 Following the transformation of the T1w volume, we can see that anatomical and
 diffusion weighted volumes are now aligned. It should be highlighted that as
 part of the transformation step, the T1w volume is resampled based on the voxel
-size of the ference volume (e.g. DWI).
+size of the reference volume (i.e. the b0 DWI volume in this case).
 
 ### Preprocessing notes:
 
@@ -399,7 +399,7 @@ size of the ference volume (e.g. DWI).
    steps with certain caveats, which include denoising, unringing (to
    remove/minimize effects of Gibbs ringing artifacts), and gradient
    non-linearity correction (to unwarp distortions caused by gradient-field
-   inhomogeneities using a vendor acquired gradient coefficient file.
+   inhomogeneities using a vendor acquired gradient coefficient file).
 
 3. Depending on how the data is acquired, certain steps may not be possible.
    For example, if the data is not acquired in two directions,
