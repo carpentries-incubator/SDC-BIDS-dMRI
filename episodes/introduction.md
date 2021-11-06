@@ -125,9 +125,9 @@ tree '../data/ds000221'
 
 ## Querying a BIDS Dataset
 
-[`pybids`](https://bids-standard.github.io/pybids/) is a Python API for
+[PyBIDS](https://bids-standard.github.io/pybids/) is a Python API for
 querying, summarizing and manipulating the BIDS folder structure. We will make
-use of <code>pybids</code> to query the necessary files.
+use of `PyBIDS` to query the necessary files.
 
 Let's first pull the metadata from its associated JSON file using the
 <code>get_metadata()</code> function for the first run.
@@ -171,25 +171,24 @@ layout.get_metadata(dwi)
 ~~~
 {: .output}
 
-## Diffusion Imaging in Python ([dipy](https://dipy.org))
+## Diffusion Imaging in Python ([DIPY](https://dipy.org))
 
-For this lesson, we will use the <code>Dipy</code> (Diffusion Imaging in
-Python) package for processing and analysing diffusion MRI.
+For this lesson, we will use the `DIPY` (Diffusion Imaging in Python) package
+for processing and analysing diffusion MRI.
 
-### Why <code>dipy</code>?
+### Why `DIPY`?
 
 - Fully free and open source
 - Implemented in Python. Easy to understand, and easy to use.
 - Implementations of many state-of-the art algorithms
-- High performance. Many algorithms implemented in [cython](http://cython.org/)
+- High performance. Many algorithms implemented in [Cython](http://cython.org/)
 
 ### Defining a measurement: <code>GradientTable</code>
 
-<code>Dipy</code> has a built-in function that allows us to read in
-<code>bval</code> and <code>bvec</code> files named
-<code>read_bvals_bvecs</code> under the <code>dipy.io.gradients</code> module.
-Let's first grab the path to our gradient directions and amplitude files and
-load them into memory.
+`DIPY` has a built-in function that allows us to read in <code>bval</code> and
+<code>bvec</code> files named <code>read_bvals_bvecs</code> under the
+<code>dipy.io.gradients</code> module. Let's first grab the path to our
+gradient directions and amplitude files and load them into memory.
 
 ~~~
 bvec = layout.get_bvec(dwi)
@@ -253,7 +252,7 @@ plt.show()
 ![Diffusion gradient sphere]({{ relative_root_path }}/fig/introduction/diffusion_gradient.png)
 
 The files associated with the diffusion gradients need to converted to a
-<code>GradientTable</code> object to be used with <code>Dipy</code>. A
+<code>GradientTable</code> object to be used with `DIPY`. A
 <code>GradientTable</code> object can be implemented using the
 <code>dipy.core.gradients</code> module. The input to the
 <code>GradientTable</code> should be our the values for our gradient directions

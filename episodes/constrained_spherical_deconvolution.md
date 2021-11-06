@@ -327,7 +327,7 @@ nib.save(nib.Nifti1Image(peak_indices, affine), os.path.join(out_dir,
 ~~~
 {: .language-python}
 
-We can visualize them as usual using `fury`:
+We can visualize them as usual using `FURY`:
 
 ~~~
 # Build the representation of the data

@@ -309,7 +309,7 @@ nib.save(nib.Nifti1Image(reshape_peaks_for_visualization(peaks),
 ~~~
 {: .language-python}
 
-As usual, we will use `fury` to visualize the peaks:
+As usual, we will use `FURY` to visualize the peaks:
 
 ~~~
 from utils.visualization_utils import generate_anatomical_slice_figure

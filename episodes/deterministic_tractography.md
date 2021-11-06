@@ -194,7 +194,7 @@ streamlines = Streamlines(streamlines_generator)
 {: .language-python}
 
 We just created a deterministic set of streamlines using the `EuDX` algorithm mapping the 
-human brain connectome (tractography). We can save the streamlines as a Trackvis file so it can be
+human brain connectome (tractography). We can save the streamlines as a `Trackvis` file so it can be
 loaded into other software for visualization or further analysis. To do so, we need to save the 
 tractogram state using `StatefulTractogram` and `save_tractogram` to save the file. 
 Note that we will have to specify the space to save the tractogram in.
@@ -211,8 +211,8 @@ save_tractogram(sft, os.path.join(out_dir, "tractogram_deterministic_EuDX.trk"))
 {: .language-python}
 
 
-We can then generate the streamlines 3D scene using the `fury` python package,
-and visualize the scene's contents with `matplotlib`.
+We can then generate the streamlines 3D scene using the `FURY` python package,
+and visualize the scene's contents with `Matplotlib`.
 
 ~~~
 from fury import actor, colormap
