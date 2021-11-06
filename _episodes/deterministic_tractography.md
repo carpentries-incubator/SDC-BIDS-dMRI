@@ -56,6 +56,12 @@ gtab = gradient_table(bvals, bvecs)
 
 We will now create a mask and constrain the fitting within the mask.
 
+> ## Tractography run times
+>
+> Note that many steps in the streamline propagation procedure are
+> computationally intensive, and thus may take a while to complete.
+{: .callout}
+
 ~~~
 import dipy.reconst.dti as dti
 from dipy.segment.mask import median_otsu
@@ -130,10 +136,6 @@ and a mask to apply the processing to. Additionally, we will set the minimum
 angle between directions, the maximum number of peaks to return (1 for the
 tensor model), and the relative peak threshold (returning peaks greater than
 this value).
-
-> Note
-> This step may take a while to run.
-{: .callout}
 
 ~~~
 from dipy.direction import peaks_from_model

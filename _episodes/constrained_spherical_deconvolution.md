@@ -109,10 +109,11 @@ the center of the volume, and return the response function estimated in that
 region for the voxels with FA higher than a given threshold.
 
 > ## The fiber response function and the diffusion model
+>
 > The `auto_response_ssst` method is relevant within a Single-Shell
 > Single-Tissue (SSST) context/model; e.g. Multi-Shell Multi-Tissue (MSMT)
-> context/models require the fiber response
-> function to be computed differently.
+> context/models require the fiber response function to be computed
+> differently.
 {: .callout}
 
 ~~~
