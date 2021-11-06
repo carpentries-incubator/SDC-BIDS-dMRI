@@ -347,7 +347,8 @@ array([[-2.51881e-02, -3.72268e-01,  9.27783e-01],
 
 It is also important to know where our diffusion weighting free measurements
 are as we need them for registration in our preprocessing, (our next notebook).
-The gtab.b0s_mask shows that this is our first volume of our dataset.
+<code>gtab.b0s_mask</code> shows that this is our first volume of our
+dataset.
 
 ~~~
 gtab.b0s_mask
