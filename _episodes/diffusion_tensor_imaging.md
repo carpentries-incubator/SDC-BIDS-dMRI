@@ -62,7 +62,7 @@ and the other two eigenvectors span the orthogonal plane to the former direction
 _Adapted from Jelison et al., 2004_
 
 In the following example, we will walk through how to model a diffusion dataset. While there 
-are a number of diffusion models, many of which are implemented in <code>DIPY</code>. 
+are a number of diffusion models, many of which are implemented in `DIPY`.
 However, for the purposes of this lesson, we will focus on the tensor model described above.
 
 ### Reconstruction with the `dipy.reconst` module
@@ -132,7 +132,7 @@ gtab = gradient_table(gt_bvals, gt_bvecs)
 
 Next, we will need to create the tensor model using our gradient table, and then fit the model 
 using our data! We start by creating a mask from our data. We then apply this mask to avoid 
-calculating the tensors in the background of the image! This can be done using <code>DIPY</code>'s 
+calculating the tensors in the background of the image! This can be done using `DIPY`'s
 mask module. Then we will fit out data!
 
 ~~~
@@ -256,9 +256,9 @@ flows from right-to-left or vice-versa). To do this with `DIPY`, we can use the
 
 > ## Diffusion scalar map visualization
 >
-> The plotting functions in [`nilearn`](https://nilearn.github.io/stable/index.html)
+> The plotting functions in [Nilearn](https://nilearn.github.io/stable/index.html)
 > are unable to visualize these RGB maps. However, we can use the
-> [`Matplotlib`](https://matplotlib.org/) library to view these images.
+> [Matplotlib](https://matplotlib.org/) library to view these images.
 {: .callout}
 
 ~~~
@@ -284,7 +284,7 @@ with colour encoding. Below is an example of one such tensor visualization.
 > ## Tensor visualization
 >
 > Visualizing tensors can be memory intensive. Please refer to the
-> [`DIPY` documentation](https://dipy.org/tutorials/) for the necessary steps to
+> [DIPY documentation](https://dipy.org/tutorials/) for the necessary steps to
 > perform this type of visualization.
 {: .callout}
 
