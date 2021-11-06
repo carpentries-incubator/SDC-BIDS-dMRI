@@ -228,8 +228,8 @@ z_slice = data[:, :, 30, 0]
 slices = [x_slice, y_slice, z_slice]
 
 fig, axes = plt.subplots(1, len(slices))
-for i, slice in enumerate(slices):
-    axes[i].imshow(slice.T, cmap="gray", origin="lower")
+for i, _slice in enumerate(slices):
+    axes[i].imshow(_slice.T, cmap="gray", origin="lower")
 ~~~
 {: .language-python}
 
