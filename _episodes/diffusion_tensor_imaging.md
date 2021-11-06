@@ -177,8 +177,8 @@ measure of "tissue integrity".
 Let's take a look at what the FA map looks like! An FA map is a gray-scale image, where higher 
 intensities reflect more anisotropic diffuse regions.
 
-_Note: we will have to first create the image from the array, making use of the reference 
-anatomical_
+We will create the FA image from the scalar data array using the anatomical
+reference image data as the reference image:
 
 ~~~
 import matplotlib.pyplot as plt # To enable plotting within notebook
@@ -202,7 +202,7 @@ multiple fiber crossings. Lowest FA values are indicative of non-white matter ti
 healthy brains (see, for example, Alexander et al.'s "Diffusion Tensor Imaging of the Brain". 
 Neurotherapeutics 4, 316-329 (2007), and Jeurissen et al.'s "Investigating the Prevalence of 
 Complex Fiber Configurations in White Matter Tissue with Diffusion Magnetic Resonance 
-maging". Hum. Brain Mapp. 2012, 34(11) pp. 2747-2766).
+Imaging". Hum. Brain Mapp. 2012, 34(11) pp. 2747-2766).
 
 ### Mean diffusivity (MD)
 
