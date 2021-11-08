@@ -15,7 +15,7 @@ Python is rapidly becoming the standard language for data analysis,
 visualization and automated workflow building. It is a free and open-source
 software that is relatively easy to pick up by new programmers. In addition,
 with Python packages such as `Jupyter` one can keep an interactive code journal
-of analysis - this is what we'll be using in the workshop. Using Jupyter
+of analysis - this is what we'll be using in the workshop. Using `Jupyter`
 notebooks allows you to keep a record of all the steps in your analysis,
 enabling transparency and ease of code sharing.
 
