@@ -95,11 +95,10 @@ limitations of current methods.
 
 ## Technical tips and tricks
 
-* Be clear about the purpose and convenience of using [Jupyter Notebook] to
-teach the lesson. Allow some time at the beginning of the day to provide an
-overview of how using the learned tools would be translated to a more formal
-dMRI data analysis setting once a research aspect or analysis has been
-consolidated.
+* Be clear about the purpose and convenience of using [JupyterLab] to teach the
+lesson. Allow some time at the beginning of the day to provide an overview of
+how using the learned tools would be translated to a more formal dMRI data
+analysis setting once a research aspect or analysis has been consolidated.
 * Provide a broad overview of the software tools and packages used throughout
 the lesson, and the convenience of each of them.
 * Be sure to link the tools with their corresponding documentation pages.
