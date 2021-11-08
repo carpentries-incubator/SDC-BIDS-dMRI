@@ -13,7 +13,7 @@
 [Git]: https://git-scm.com/
 [IPython]: https://ipython.org/index.html
 [Jupyter]: https://jupyter.org/
-[Jupyter Notebook]: https://jupyter-notebook.readthedocs.io/en/stable/
+[JupyterLab]: https://jupyterlab.readthedocs.io/en/latest/
 [lesson-github]: https://github.com/carpentries-incubator/SDC-BIDS-dMRI
 [Matplotlib]: https://matplotlib.org/
 [MRtrix]: https://www.mrtrix.org/

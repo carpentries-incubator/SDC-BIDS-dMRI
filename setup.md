@@ -2,13 +2,15 @@
 title: Setup
 ---
 
-This lesson uses [Jupyter Notebook] as a web-based interactive computational
-environment for learning. The `Jupyter Notebooks` can be run through [Binder],
-which builds a computing environment with all of the necessary software
-pre-installed. However, users may choose to run the notebooks locally. In that
-case, there are several pieces of software that must be installed. Although the
-main components required are `Python`-based, there are a few additional
-non-`Python` tools required.
+This lesson uses [JupyterLab] as a web-based interactive computational
+environment for learning. `JupyterLab` integrates a text editor, a terminal and
+`Jupyter Notebooks` through a single user-friendly interface, which will be
+used to run any code for the lesson. The `JupyterLab` instance and all of the
+necessary software have already been pre-installed on [Binder]. Users may
+choose to use this platform to get up and running much quicker, or may choose
+to run the notebooks locally. If running locally, there are several pieces of
+software that must be installed. Although the main components required are
+`Python`-based, there are a few additional non-`Python` tools required.
 
 Instructors should allocate some time to have all components installed.
 
@@ -27,7 +29,7 @@ to be installed locally in this case; it suffices to click on the
 
 ## Local
 
-If users choose to run the `Jupyter Notebooks` locally, the following
+If users choose to run the `Jupyter` notebooks locally, the following
 dependencies will need to be installed:
 
 - [ANTs] : used to register different anatomical data.
@@ -154,11 +156,11 @@ $ ipython notebook
 if using `IPython`, and running:
 
 ~~~
-jupyter notebook
+jupyter-lab
 ~~~
 {: .language-bash}
 
-if using `Jupyter`.
+if using `JupyterLab`.
 
 In either case, the commands will print some information about the notebook
 server in the terminal, and a web browser will be opened to the URL of the web
