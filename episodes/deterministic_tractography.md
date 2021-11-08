@@ -56,6 +56,12 @@ gtab = gradient_table(bvals, bvecs)
 
 We will now create a mask and constrain the fitting within the mask.
 
+> ## Tractography run times
+>
+> Note that many steps in the streamline propagation procedure are
+> computationally intensive, and thus may take a while to complete.
+{: .callout}
+
 ~~~
 import dipy.reconst.dti as dti
 from dipy.segment.mask import median_otsu
@@ -131,10 +137,6 @@ angle between directions, the maximum number of peaks to return (1 for the
 tensor model), and the relative peak threshold (returning peaks greater than
 this value).
 
-> Note
-> This step may take a while to run.
-{: .callout}
-
 ~~~
 from dipy.direction import peaks_from_model
 
@@ -192,7 +194,7 @@ streamlines = Streamlines(streamlines_generator)
 {: .language-python}
 
 We just created a deterministic set of streamlines using the `EuDX` algorithm mapping the 
-human connectome (tractography). We can save the streamlines as a Trackvis file so it can be 
+human brain connectome (tractography). We can save the streamlines as a `Trackvis` file so it can be
 loaded into other software for visualization or further analysis. To do so, we need to save the 
 tractogram state using `StatefulTractogram` and `save_tractogram` to save the file. 
 Note that we will have to specify the space to save the tractogram in.
@@ -209,8 +211,8 @@ save_tractogram(sft, os.path.join(out_dir, "tractogram_deterministic_EuDX.trk"))
 {: .language-python}
 
 
-We can then generate the streamlines 3D scene using the `fury` python package,
-and visualize the scene's contents with `matplotlib`.
+We can then generate the streamlines 3D scene using the `FURY` python package,
+and visualize the scene's contents with `Matplotlib`.
 
 ~~~
 from fury import actor, colormap

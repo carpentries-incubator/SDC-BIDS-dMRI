@@ -125,9 +125,9 @@ tree '../data/ds000221'
 
 ## Querying a BIDS Dataset
 
-[`pybids`](https://bids-standard.github.io/pybids/) is a Python API for
+[PyBIDS](https://bids-standard.github.io/pybids/) is a Python API for
 querying, summarizing and manipulating the BIDS folder structure. We will make
-use of <code>pybids</code> to query the necessary files.
+use of `PyBIDS` to query the necessary files.
 
 Let's first pull the metadata from its associated JSON file using the
 <code>get_metadata()</code> function for the first run.
@@ -171,25 +171,24 @@ layout.get_metadata(dwi)
 ~~~
 {: .output}
 
-## Diffusion Imaging in Python ([dipy](https://dipy.org))
+## Diffusion Imaging in Python ([DIPY](https://dipy.org))
 
-For this lesson, we will use the <code>Dipy</code> (Diffusion Imaging in
-Python) package for processing and analysing diffusion MRI.
+For this lesson, we will use the `DIPY` (Diffusion Imaging in Python) package
+for processing and analysing diffusion MRI.
 
-### Why <code>dipy</code>?
+### Why `DIPY`?
 
 - Fully free and open source
 - Implemented in Python. Easy to understand, and easy to use.
 - Implementations of many state-of-the art algorithms
-- High performance. Many algorithms implemented in [cython](http://cython.org/)
+- High performance. Many algorithms implemented in [Cython](http://cython.org/)
 
 ### Defining a measurement: <code>GradientTable</code>
 
-<code>Dipy</code> has a built-in function that allows us to read in
-<code>bval</code> and <code>bvec</code> files named
-<code>read_bvals_bvecs</code> under the <code>dipy.io.gradients</code> module.
-Let's first grab the path to our gradient directions and amplitude files and
-load them into memory.
+`DIPY` has a built-in function that allows us to read in <code>bval</code> and
+<code>bvec</code> files named <code>read_bvals_bvecs</code> under the
+<code>dipy.io.gradients</code> module. Let's first grab the path to our
+gradient directions and amplitude files and load them into memory.
 
 ~~~
 bvec = layout.get_bvec(dwi)
@@ -228,8 +227,8 @@ z_slice = data[:, :, 30, 0]
 slices = [x_slice, y_slice, z_slice]
 
 fig, axes = plt.subplots(1, len(slices))
-for i, slice in enumerate(slices):
-    axes[i].imshow(slice.T, cmap="gray", origin="lower")
+for i, _slice in enumerate(slices):
+    axes[i].imshow(_slice.T, cmap="gray", origin="lower")
 ~~~
 {: .language-python}
 
@@ -253,7 +252,7 @@ plt.show()
 ![Diffusion gradient sphere]({{ relative_root_path }}/fig/introduction/diffusion_gradient.png)
 
 The files associated with the diffusion gradients need to converted to a
-<code>GradientTable</code> object to be used with <code>Dipy</code>. A
+<code>GradientTable</code> object to be used with `DIPY`. A
 <code>GradientTable</code> object can be implemented using the
 <code>dipy.core.gradients</code> module. The input to the
 <code>GradientTable</code> should be our the values for our gradient directions
@@ -271,10 +270,10 @@ gtab = gradient_table(gt_bvals, gt_bvecs)
 We will need this gradient table later on to process our data and generate
 diffusion tensor images (DTI)!
 
-There is also a built in function for gradient tables, <code>b0s_mask</code>
+There is also a built-in function for gradient tables, <code>b0s_mask</code>
 that can be used to separate diffusion weighted measurements from non-diffusion
-weighted measurements (b=0s/mm^2). We will extract the vector corresponding to
-diffusion weighted measurements!
+weighted measurements ($b = 0 s/mm^2$). We will extract the vector
+corresponding to diffusion weighted measurements!
 
 ~~~
 gtab.bvecs[~gtab.b0s_mask]
@@ -347,7 +346,8 @@ array([[-2.51881e-02, -3.72268e-01,  9.27783e-01],
 
 It is also important to know where our diffusion weighting free measurements
 are as we need them for registration in our preprocessing, (our next notebook).
-The gtab.b0s_mask shows that this is our first volume of our dataset.
+<code>gtab.b0s_mask</code> shows that this is our first volume of our
+dataset.
 
 ~~~
 gtab.b0s_mask
