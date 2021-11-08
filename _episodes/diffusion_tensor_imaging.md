@@ -54,7 +54,7 @@ and eigenvectors (![Diffusivity matrix eigenvectors]({{ relative_root_path }}/fi
 from the previously described matrix. 
 The computed eigenvalues and eigenvectors are normally sorted in descending magnitude (i.e. 
 ![Diffusivity matrix eigenvalues magnitudes]({{ relative_root_path }}/fig/diffusion_tensor_imaging/inline_sortedeigvec.png){:class="inline"}).
-Eigenvalues are always strictly positive in the context of dMRI and are measured in mm^2/s. 
+Eigenvalues are always strictly positive in the context of dMRI and are measured in $mm^2/s$.
 In the DTI model, the largest eigenvalue gives the principal direction of the diffusion tensor, 
 and the other two eigenvectors span the orthogonal plane to the former direction.
 
@@ -62,7 +62,7 @@ and the other two eigenvectors span the orthogonal plane to the former direction
 _Adapted from Jelison et al., 2004_
 
 In the following example, we will walk through how to model a diffusion dataset. While there 
-are a number of diffusion models, many of which are implemented in <code>DIPY</code>. 
+are a number of diffusion models, many of which are implemented in `DIPY`.
 However, for the purposes of this lesson, we will focus on the tensor model described above.
 
 ### Reconstruction with the `dipy.reconst` module
@@ -132,7 +132,7 @@ gtab = gradient_table(gt_bvals, gt_bvecs)
 
 Next, we will need to create the tensor model using our gradient table, and then fit the model 
 using our data! We start by creating a mask from our data. We then apply this mask to avoid 
-calculating the tensors in the background of the image! This can be done using <code>DIPY</code>'s 
+calculating the tensors in the background of the image! This can be done using `DIPY`'s
 mask module. Then we will fit out data!
 
 ~~~
@@ -177,8 +177,8 @@ measure of "tissue integrity".
 Let's take a look at what the FA map looks like! An FA map is a gray-scale image, where higher 
 intensities reflect more anisotropic diffuse regions.
 
-_Note: we will have to first create the image from the array, making use of the reference 
-anatomical_
+We will create the FA image from the scalar data array using the anatomical
+reference image data as the reference image:
 
 ~~~
 import matplotlib.pyplot as plt # To enable plotting within notebook
@@ -202,14 +202,14 @@ multiple fiber crossings. Lowest FA values are indicative of non-white matter ti
 healthy brains (see, for example, Alexander et al.'s "Diffusion Tensor Imaging of the Brain". 
 Neurotherapeutics 4, 316-329 (2007), and Jeurissen et al.'s "Investigating the Prevalence of 
 Complex Fiber Configurations in White Matter Tissue with Diffusion Magnetic Resonance 
-maging". Hum. Brain Mapp. 2012, 34(11) pp. 2747-2766).
+Imaging". Hum. Brain Mapp. 2012, 34(11) pp. 2747-2766).
 
 ### Mean diffusivity (MD)
 
 An often used complimentary measure to FA is mean diffusivity (MD). MD is a measure of the 
 degree of diffusion, independent of direction. This is sometimes known as the apparent diffusion 
 coefficient (ADC). Mathematically, MD is computed as the mean eigenvalues of the tensor and 
-is measured in mm^2/s.
+is measured in $mm^2/s$.
 
 ![MD equation]({{ relative_root_path }}/fig/diffusion_tensor_imaging/md_eqn.png)
 
@@ -237,7 +237,7 @@ along the primary axis of diffusion, along
 On the other hand, RD reflects the average diffusivity along the other two minor axes 
 (being named as *perpendicular diffusivity* in some works) 
 (![Radial diffusivity eigenvalues]({{ relative_root_path }}/fig/diffusion_tensor_imaging/minor_axes.png)){:class="inline"}
-. Both are measured in mm^2/s.
+. Both are measured in $mm^2/s$.
 
 ![Axial and radial diffusivities]({{ relative_root_path }}/fig/diffusion_tensor_imaging/ax_rad_diff.png)
 
@@ -247,16 +247,19 @@ On the other hand, RD reflects the average diffusivity along the other two minor
 There are several ways of visualizing tensors. One way is using an RGB map, which overlays the 
 primary diffusion orientation on an FA map. The colours of this map encodes the diffusion 
 orientation. Note that this map provides no directional information (e.g. whether the diffusion 
-flows from right-to-left or vice-versa). To do this with <code>DIPY</code>, we can use the 
+flows from right-to-left or vice-versa). To do this with `DIPY`, we can use the
 <code>color_fa</code> function. The colours map to the following orientations:
 
 * Red = Left / Right
 * Green = Anterior / Posterior
 * Blue = Superior / Inferior
 
-_Note: The plotting functions in <code>nilearn</code> are unable to visualize these RGB maps. 
-However, we can use the <code>matplotlib</code> library to view these images._
-
+> ## Diffusion scalar map visualization
+>
+> The plotting functions in [Nilearn](https://nilearn.github.io/stable/index.html)
+> are unable to visualize these RGB maps. However, we can use the
+> [Matplotlib](https://matplotlib.org/) library to view these images.
+{: .callout}
 
 ~~~
 from dipy.reconst.dti import color_fa
@@ -274,13 +277,16 @@ ax[2].imshow(ndimage.rotate(RGB_map[:, :, RGB_map.shape[2]//2, :], 90, reshape=F
 ![RGB FA map]({{ relative_root_path }}/fig/diffusion_tensor_imaging/plot_fa_rgb.png)
 
 Another way of visualizing the tensors is to display the diffusion tensor in each imaging voxel 
-with colour encoding 
-(Please refer to the [<code>DIPY</code> documentation](https://dipy.org/tutorials/) for 
-the necessary steps to perform this type of visualization, as it can be memory intensive). 
-Below is an example of one such tensor visualization.
+with colour encoding. Below is an example of one such tensor visualization.
 
 ![Tensor visualization]({{ relative_root_path }}/fig/diffusion_tensor_imaging/TensorViz.png)
 
+> ## Tensor visualization
+>
+> Visualizing tensors can be memory intensive. Please refer to the
+> [DIPY documentation](https://dipy.org/tutorials/) for the necessary steps to
+> perform this type of visualization.
+{: .callout}
 
 ### Some notes on DTI
 
@@ -311,7 +317,6 @@ data!
 > > import dipy.reconst.dti as dti
 > > from dipy.segment.mask import median_otsu
 > > from nilearn import image as img
-> > import nibabel as nib
 > >
 > > deriv_layout = BIDSLayout("../data/ds000221/derivatives", validate=False)
 > > subj="010006"

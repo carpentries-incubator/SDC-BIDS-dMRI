@@ -22,12 +22,12 @@ depending on how the data is acquired. Some consensus has been reached for
 certain preprocessing steps, while others are still up for debate. The lesson
 will primarily focus on the preprocessing steps where consensus has been
 reached. Preprocessing is performed using a few well-known software packages
-(e.g. FSL, ANTs). For the purposes of these lessons, preprocessing steps
+(e.g. `FSL`, `ANTs`). For the purposes of these lessons, preprocessing steps
 requiring these software packages has already been performed for the dataset
 <code>ds000221</code> and the commands required for each step will be provided.
-This dataset contains single shell diffusion data with 7 b=0 s/mm^2 volumes
-(non-diffusion weighted) and 60 b=1000 s/mm^2 volumes. In addition, field maps
-(found in the <code>fmap</code> directory are acquired with opposite
+This dataset contains single shell diffusion data with 7 $b = 0 s/mm^2$ volumes
+(non-diffusion weighted) and 60 $b = 1000 s/mm^2$ volumes. In addition, field
+maps (found in the <code>fmap</code> directory are acquired with opposite
 phase-encoding directions).
 
 To illustrate what the preprocessing step may look like, here is an example
@@ -40,8 +40,8 @@ dMRI has some similar challenges to fMRI preprocessing, as well as some unique
 Our preprocesssing of this data will consist of following steps and will make
 use of sub-010006:
 1. Brainmasking the diffusion data
-2. Applying FSL `topup` to correct for susceptibility induced distortions
-3. FSL Eddy current distortion correction
+2. Applying `FSL` `topup` to correct for susceptibility induced distortions
+3. `FSL` Eddy current distortion correction
 4. Registration to T1w
 
 ### Brainmasking
@@ -80,7 +80,7 @@ dwi_data = dwi.get_fdata()
 ~~~
 {: .language-python}
 
-DIPY's <code>segment.mask</code> module will be used to create a brainmask
+`DIPY`'s <code>segment.mask</code> module will be used to create a brainmask
 from this. This module contains a function <code>median_otsu</code>, which can
 be used to segment the brain and provide a binary brainmask! Here, a brainmask
 will be created using the first non-diffusion volume of the data. We will save
@@ -106,9 +106,9 @@ nib.save(img, os.path.join(out_dir, "sub-%s_ses-01_brainmask.nii.gz" % subj))
 ~~~
 {: .language-python}
 
-![b0 brain mask]]({{ relative_root_path }}/fig/preprocessing/dwi_brainmask.png)
+![b0 brainmask]]({{ relative_root_path }}/fig/preprocessing/dwi_brainmask.png)
 
-### FSL [<code>topup</code>](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/topup)
+### `FSL` [<code>topup</code>](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/topup)
 
 Diffusion images, typically acquired using spin-echo echo planar imaging (EPI),
 are sensitive to non-zero off-resonance fields. One source of these fields is
@@ -119,18 +119,18 @@ volumes, the susceptibility-induced field will be consistent throughout. This
 is mainly a problem due to geometric mismatches with the anatomical images
 (e.g. T1w), which are typically unaffected by such distortions.
 
-<code>topup</code>, part of the FSL library, estimates and attempts to correct
-the susceptibility-induced off-resonance field by using 2 (or more)
+<code>topup</code>, part of the `FSL` library, estimates and attempts to
+correct the susceptibility-induced off-resonance field by using 2 (or more)
 acquisitions, where the acquisition parameters differ such that the distortion
 differs. Typically, this is done using two acquisitions acquired with opposite
 phase-encoding directions, which results in the same field creating distortions
 in opposing directions.
 
 Here, we will make use of the two opposite phase-encoded acquisitions found in
-the <code>fmap</code> directory of each subjet. These are acquired with a
-diffusion weighting of b = 0 s/mm^2. Alternatively, if these are not available,
-one can also extract and make use of the non-diffusion weighted images
-(assuming the data is also acquired with opposite phase encoding directions).
+the <code>fmap</code> directory of each subject. These are acquired with a
+diffusion weighting of $b = 0 s/mm^2$. Alternatively, if these are not
+available, one can also extract and make use of the non-diffusion weighted
+images (assuming the data is also acquired with opposite phase encoding directions).
 
 First, we will merge the two files so that all of the volumes are in 1 file.
 
@@ -170,7 +170,7 @@ are used. Briefly:
   regarding the acquisition.
 * <code>--config=b02b0.cnf</code> makes use of a predefined config file
   supplied with <code>topup</code>, which contains parameters useful to
-  registering with good b=0 s/mm^2 images.
+  registering with good $b = 0 s/mm^2$ images.
 * <code>--out</code> defines the output files containing the spline
   coefficients for the induced field, as well as subject movement parameters
 
@@ -199,14 +199,14 @@ applytopup --imain=../../data/ds000221/sub-010006/ses-01/dwi/sub-010006_ses-01_d
 
 ![Topup image]({{ relative_root_path }}/fig/preprocessing/dwi_topup.png)
 
-### FSL [`Eddy`](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/eddy)
+### `FSL` [`Eddy`](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/eddy)
 
 Another source of the non-zero off resonance fields is caused by the rapid
 switching of diffusion weighting gradients, otherwise known as eddy
 current-induced off-resonance fields. Additionally, the subject is likely to
 move during the diffusion protocol, which may be lengthy.
 
-<code>eddy</code>, also part of the FSL library, attempts to correct for both
+<code>eddy</code>, also part of the `FSL` library, attempts to correct for both
 eddy current-induced fields and subject movement by reading the gradient table
 and estimating the distortion volume by volume. This tool is also able to
 optionally detect and replace outlier slices.
@@ -252,7 +252,7 @@ eddy_openmp --imain=../../data/ds000221/sub-010006/ses-01/dwi/sub-010006_ses-01_
 ### Registration with T1w
 
 The final step to our diffusion processing is registration to an anatomical
-image (eg. T1-weighted). This is important because the diffusion data,
+image (e.g. T1-weighted). This is important because the diffusion data,
 typically acquired using echo planar imaging or EPI, enables faster
 acquisitions at the cost of lower resolution and introduction of distortions
 (as seen above). Registration with the anatomical image not only helps to
@@ -260,7 +260,7 @@ correct for some distortions, it also provides us with a higher resolution,
 anatomical reference.
 
 First, we will create a brainmask of the anatomical image using the second
-inversion. To do this, we will use FSL <code>bet</code> twice. The first call
+inversion. To do this, we will use `FSL` <code>bet</code> twice. The first call
 to <code>bet</code> will create a general skullstripped brain. Upon inspection,
 we can note that there is still some residual areas of the image which were
 included in the first pass. Calling <code>bet</code> a second time, we get a
@@ -277,11 +277,11 @@ mv ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006
 ~~~
 {: .language-bash}
 
-![T1w brain mask]({{ relative_root_path }}/fig/preprocessing/T1w_brainmask.png)
+![T1w brainmask]({{ relative_root_path }}/fig/preprocessing/T1w_brainmask.png)
 
 Note, we use <code>bet</code> here, as well as the second inversion of the
-anatomical image, as it provides us with a better brain mask. The
-<code>bet</code> command above is called to output only the binarymask and the
+anatomical image, as it provides us with a better brainmask. The
+<code>bet</code> command above is called to output only the binary mask and the
 fractional intensity threshold is also increased slightly (to 0.6) provide a
 smaller outline of the brain initially, and then decreased (to 0.4) to provide
 a larger outline. The flag <code>-m</code> indicates to the tool to create a
@@ -289,11 +289,11 @@ brainmask in addition to outputting the extracted brain volume. Both the mask
 and brain volume will be used in our registration step.
 
 Before we get to the registration, we will also update our DWI brainmask by
-performing a brain extraction using <code>dipy</code> on the eddy corrected
-image. Note that the output of <code>eddy</code> is not in BIDS format so we
-will include the path to the diffusion data manually. We will save both the
-brainmask and the extracted brain volume. Additionally, we will save a separate
-volume of only the first b0 to use for the registration.
+performing a brain extraction using `DIPY` on the eddy corrected image. Note
+that the output of <code>eddy</code> is not in BIDS format so we will include
+the path to the diffusion data manually. We will save both the brainmask and
+the extracted brain volume. Additionally, we will save a separate volume of
+only the first b0 to use for the registration.
 
 ~~~
 from dipy.segment.mask import median_otsu
@@ -327,11 +327,11 @@ nib.save(img, os.path.join(out_dir, "sub-010006_ses-01_dwi_proc-eddy_b0.nii.gz")
 {: .language-python}
 
 To perform the registration between the diffusion volumes and T1w, we will make
-use of ANTs, specifically the <code>antsRegistrationSyNQuick.sh</code> script
+use of `ANTs`, specifically the <code>antsRegistrationSyNQuick.sh</code> script
 and <code>antsApplyTransform</code>. We will begin by registering the diffusion
-b=0 s/mm^2 volume to get the appropriate transforms to align the two images. We
-will then apply the inverse transformation to the T1w volume such that it is
-aligned to the diffusion volume
+$b = 0 s/mm^2$ volume to get the appropriate transforms to align the two
+images. We will then apply the inverse transformation to the T1w volume such
+that it is aligned to the diffusion volume.
 
 Here, we will constrain <code>antsRegistrationSyNQuick.sh</code> to perform a
 rigid and affine transformation (we will explain why in the final step). There
@@ -340,7 +340,7 @@ are a few parameters that must be set:
 * <code>-d</code> - Image dimension (2/3D)
 * <code>-t</code> - Transformation type (<code>a</code> performs only rigid + affine transformation)
 * <code>-f</code> - Fixed image (anatomical T1w)
-* <code>-m</code> - Moving image (DWI b=0 s/mm^2)
+* <code>-m</code> - Moving image (b0 DWI volume)
 * <code>-o</code> - Output prefix (prefix to be appended to output files)
 
 ~~~
@@ -358,7 +358,7 @@ set:
 
 * <code>-d</code> - Image dimension (2/3/4D)
 * <code>-i</code> - Input volume to be transformed (T1w)
-* <code>-r</code> - Reference volume (b0 of DWI volume)
+* <code>-r</code> - Reference volume (b0 DWI volume)
 * <code>-t</code> - Transformation file (can be called more than once)
 * <code>-o</code> - Output volume in the transformed space.
 
@@ -377,7 +377,7 @@ antsApplyTransforms -d 3 -i ../../data/ds000221/derivatives/uncorrected/sub-0100
 Following the transformation of the T1w volume, we can see that anatomical and
 diffusion weighted volumes are now aligned. It should be highlighted that as
 part of the transformation step, the T1w volume is resampled based on the voxel
-size of the ference volume (e.g. DWI).
+size of the reference volume (i.e. the b0 DWI volume in this case).
 
 ### Preprocessing notes:
 
@@ -399,7 +399,7 @@ size of the ference volume (e.g. DWI).
    steps with certain caveats, which include denoising, unringing (to
    remove/minimize effects of Gibbs ringing artifacts), and gradient
    non-linearity correction (to unwarp distortions caused by gradient-field
-   inhomogeneities using a vendor acquired gradient coefficient file.
+   inhomogeneities using a vendor acquired gradient coefficient file).
 
 3. Depending on how the data is acquired, certain steps may not be possible.
    For example, if the data is not acquired in two directions,
@@ -409,7 +409,7 @@ size of the ference volume (e.g. DWI).
 
 4. There are also a number of tools available for preprocessing. In this
    lesson, we demonstrate some of the more commonly used tools alongside
-   <code>dipy</code>.
+   `DIPY`.
 
 ### References
 
