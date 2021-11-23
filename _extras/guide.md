@@ -99,6 +99,14 @@ limitations of current methods.
 lesson. Allow some time at the beginning of the day to provide an overview of
 how using the learned tools would be translated to a more formal dMRI data
 analysis setting once a research aspect or analysis has been consolidated.
+* dMRI datasets can have a relative large size (given that they consist of
+several 3D volumes). Also, dMRI analysis is a computationally heavy process,
+and thus, memory can  become a limitation. Note that [Binder] services are
+limited to between 1 and 2 GB of RAM [according to their official docs](https://mybinder.readthedocs.io/en/latest/about/about.html#how-much-memory-am-i-given-when-using-binder).
+`JupyterLab` does not shut down the associated kernel session when disposing
+(closing) a tab (usually containing a notebook) by default. Thus, the
+associated memory is not freed, and counts towards the `Binder` limit, until
+the associated kernel is shut down.
 * Provide a broad overview of the software tools and packages used throughout
 the lesson, and the convenience of each of them.
 * Be sure to link the tools with their corresponding documentation pages.
