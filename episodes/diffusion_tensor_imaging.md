@@ -11,6 +11,7 @@ objectives:
 keypoints:
 - "DTI is one of the simplest and most common models used"
 - "Provides information to infer characteristics of axonal fibres"
+math: true
 ---
 
 {% include base_path.html %}
