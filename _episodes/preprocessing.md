@@ -95,14 +95,14 @@ from dipy.segment.mask import median_otsu
 dwi_brain, dwi_mask = median_otsu(dwi_data, vol_idx=[0])
 
 # Create necessary folders to save mask
-out_dir = '../../data/ds000221/derivatives/uncorrected/sub-%s/ses-01/dwi/' % subj
+out_dir = f'../../data/ds000221/derivatives/uncorrected/sub-{subj}/ses-01/dwi/'
 
 # Check to see if directory exists, if not create one
 if not os.path.exists(out_dir):
     os.makedirs(out_dir)
 
 img = nib.Nifti1Image(dwi_mask.astype(np.float32), dwi_affine)
-nib.save(img, os.path.join(out_dir, "sub-%s_ses-01_brainmask.nii.gz" % subj))
+nib.save(img, os.path.join(out_dir, f"sub-{subj}_ses-01_brainmask.nii.gz"))
 ~~~
 {: .language-python}
 
