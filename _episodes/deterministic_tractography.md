@@ -87,7 +87,7 @@ using `numpy` to find and set these voxels to 0.
 ~~~
 # Create the directory to save the results
 
-out_dir = "../../data/ds000221/derivatives/dwi/tractography/sub-%s/ses-01/dwi/" % subj
+out_dir = f"../../data/ds000221/derivatives/dwi/tractography/sub-{subj}/ses-01/dwi/"
 
 if not os.path.exists(out_dir):
     os.makedirs(out_dir)
