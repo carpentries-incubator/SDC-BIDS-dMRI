@@ -119,9 +119,9 @@ subj="010006"
 t1 = deriv_layout.get(subject=subj, space="dwi", extension='nii.gz', return_type='file')[0]
 
 # Recall the preprocessed data is no longer in BIDS - we will directly grab these files
-dwi = "../data/ds000221/derivatives/uncorrected_topup_eddy/sub-%s/ses-01/dwi/dwi.nii.gz" % subj
-bval = "../data/ds000221/sub-%s/ses-01/dwi/sub-%s_ses-01_dwi.bval" % (subj, subj)
-bvec = "../data/ds000221/derivatives/uncorrected_topup_eddy/sub-%s/ses-01/dwi/dwi.eddy_rotated_bvecs" % subj
+dwi = f"../data/ds000221/derivatives/uncorrected_topup_eddy/sub-{subj}/ses-01/dwi/dwi.nii.gz"
+bval = f"../data/ds000221/sub-{subj}/ses-01/dwi/sub-{subj}_ses-01_dwi.bval"
+bvec = f"../data/ds000221/derivatives/uncorrected_topup_eddy/sub-{subj}/ses-01/dwi/dwi.eddy_rotated_bvecs"
 
 t1_data = img.load_img(t1)
 dwi_data = img.load_img(dwi)
@@ -323,9 +323,9 @@ data!
 > > subj="010006"
 > >
 > > t1 = deriv_layout.get(subject=subj, space="dwi", extension='nii.gz', return_type='file')[0]
-> > dwi = "../data/ds000221/derivatives/uncorrected_topup_eddy/sub-%s/ses-01/dwi/dwi.nii.gz" % subj
-> > bval = "../data/ds000221/sub-%s/ses-01/dwi/sub-%s_ses-01_dwi.bval" % (subj, subj)
-> > bvec = "../data/ds000221/derivatives/uncorrected_topup_eddy/sub-%s/ses-01/dwi/dwi.eddy_rotated_bvecs" % subj
+> > dwi = f"../data/ds000221/derivatives/uncorrected_topup_eddy/sub-{subj}/ses-01/dwi/dwi.nii.gz"
+> > bval = f"../data/ds000221/sub-{subj}/ses-01/dwi/sub-{subj}_ses-01_dwi.bval"
+> > bvec = f"../data/ds000221/derivatives/uncorrected_topup_eddy/sub-{subj}/ses-01/dwi/dwi.eddy_rotated_bvecs"
 > >
 > > t1_data = img.load_img(t1)
 > > dwi_data = img.load_img(dwi)
