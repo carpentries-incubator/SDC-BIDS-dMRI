@@ -86,6 +86,10 @@ jobs:
     - name: Checkout GitHub repository
       uses: actions/checkout@v2
 
+    - name: Install dependencies for headless display
+      run: |
+        ${{ github.workspace }}/.github/scripts/setup_headless.sh
+
     # Run with multiple Python versions
     - name: Setup Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
