@@ -101,7 +101,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pytest nbval
+        pip install ipython
+        pip install jupyter
+        pip install nbclient
 
     - name: Download data
       run: |
@@ -112,13 +114,13 @@ jobs:
         rm ds000221_sub-010006.zip
         popd
 
-    - name: Run pytest on Jupyter notebooks
+    - name: Run Jupyter notebooks
       run: |
         export PYTHONPATH=$PYTHONPATH:`realpath ${{ github.workspace }}`
         export PATH=/opt/fsl/bin:/opt/ants:$PATH
-        pytest --nbval-lax -v code/introduction.ipynb
-        pytest --nbval-lax -v code/preprocessing.ipynb
-        pytest --nbval-lax -v code/diffusion_tensor_imaging.ipynb
-        pytest --nbval-lax -v code/constrained_spherical_deconvolution.ipynb
-        pytest --nbval-lax -v code/deterministic_tractography.ipynb
-        pytest --nbval-lax -v code/probabilistic_tractography.ipynb
+        jupyter execute code/introduction.ipynb
+        jupyter execute --timeout=5400 code/preprocessing.ipynb
+        jupyter execute code/diffusion_tensor_imaging.ipynb
+        jupyter execute code/constrained_spherical_deconvolution.ipynb
+        jupyter execute code/deterministic_tractography.ipynb
+        jupyter execute code/probabilistic_tractography.ipynb
