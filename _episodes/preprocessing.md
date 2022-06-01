@@ -38,7 +38,7 @@ dMRI has some similar challenges to fMRI preprocessing, as well as some unique
 [ones](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3366862/).
 
 Our preprocesssing of this data will consist of following steps and will make
-use of sub-010006:
+use of `sub-010006`:
 1. Brainmasking the diffusion data
 2. Applying `FSL` `topup` to correct for susceptibility induced distortions
 3. `FSL` Eddy current distortion correction
@@ -144,9 +144,9 @@ single volume in the merged file. The first 3 values of each line refers to the
 acquisition direction, typically along the y-axis (or anterior-posterior). The
 final value is the total readout time (from center of first echo to center of
 final echo), which can be determined from values contained within the JSON
-sidecar. Each line will look similar to <code>[x y z TotalReadoutTime]</code>.
-In this case, the file, which we created, is contained within the
-<code>pedir.txt</code> file in the derivative directory.
+associated JSON metadata file. Each line will look similar to 
+<code>[x y z TotalReadoutTime]</code>. In this case, the file, which we created, 
+is contained within the <code>pedir.txt</code> file in the derivative directory.
 
 ~~~
 0 1 0 0.04914
