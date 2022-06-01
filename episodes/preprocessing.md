@@ -53,20 +53,17 @@ image to use later on, as well as the second inversion from the anatomical
 acquisition for brainmasking purposes.
 
 ~~~
-import bids
 from bids.layout import BIDSLayout
-
-bids.config.set_option('extension_initial_dot', True)
 
 layout = BIDSLayout("../../data/ds000221", validate=False)
 
 subj='010006'
 
 # Diffusion data
-dwi = layout.get(subject=subj, suffix='dwi', extension='nii.gz', return_type='file')[0]
+dwi = layout.get(subject=subj, suffix='dwi', extension='.nii.gz', return_type='file')[0]
 
 # Anatomical data
-t1w = layout.get(subject=subj, suffix='T1w', extension='nii.gz', return_type='file')[0]
+t1w = layout.get(subject=subj, suffix='T1w', extension='.nii.gz', return_type='file')[0]
 ~~~
 {: .language-python}
 

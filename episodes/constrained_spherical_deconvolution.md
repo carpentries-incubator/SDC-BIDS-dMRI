@@ -58,16 +58,12 @@ import os
 import nibabel as nib
 import numpy as np
 
-import bids
 from bids.layout import BIDSLayout
 
 from dipy.core.gradients import gradient_table
 from dipy.data import default_sphere
 from dipy.io.gradients import read_bvals_bvecs
 from dipy.io.image import load_nifti
-
-
-bids.config.set_option('extension_initial_dot', True)
 
 dwi_layout = BIDSLayout('../../data/ds000221/derivatives/uncorrected_topup_eddy/', validate=False)
 t1_layout = BIDSLayout('../../data/ds000221/derivatives/uncorrected_topup_eddy_regT1/', validate=False)
@@ -76,13 +72,13 @@ gradient_layout = BIDSLayout('../../data/ds000221/sub-010006/ses-01/dwi/', valid
 subj = '010006'
 
 # Get the diffusion files
-dwi_fname = dwi_layout.get(subject=subj, suffix='dwi', extension='nii.gz', return_type='file')[0]
-bvec_fname = dwi_layout.get(subject=subj, extension='eddy_rotated_bvecs', return_type='file')[0]
-bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bval', return_type='file')[0]
+dwi_fname = dwi_layout.get(subject=subj, suffix='dwi', extension='.nii.gz', return_type='file')[0]
+bvec_fname = dwi_layout.get(subject=subj, extension='.eddy_rotated_bvecs', return_type='file')[0]
+bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='.bval', return_type='file')[0]
 
 
 # Get the anatomical file
-t1w_fname = t1_layout.get(subject=subj, extension='nii.gz', return_type='file')[0]
+t1w_fname = t1_layout.get(subject=subj, extension='.nii.gz', return_type='file')[0]
 
 data, affine = load_nifti(dwi_fname)
 

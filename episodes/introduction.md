@@ -133,12 +133,9 @@ Let's first pull the metadata from its associated JSON file using the
 <code>get_metadata()</code> function for the first run.
 
 ~~~
-import bids
 from bids.layout import BIDSLayout
 
 ?BIDSLayout
-
-bids.config.set_option('extension_initial_dot', True)
 
 layout = BIDSLayout("../data/ds000221", validate=False)
 ~~~
@@ -148,7 +145,7 @@ Now that we have a layout object, we can work with a BIDS dataset! Let's
 extract the metadata from the dataset.
 
 ~~~
-dwi = layout.get(subject='010006', suffix='dwi', extension='nii.gz', return_type='file')[0]
+dwi = layout.get(subject='010006', suffix='dwi', extension='.nii.gz', return_type='file')[0]
 layout.get_metadata(dwi)
 ~~~
 {: .language-python}
@@ -377,7 +374,7 @@ axonal trajectories via tractography.
 > > ## Solution
 > >
 > > ~~~
-> > dwi_data = layout.get(suffix='dwi', extension='nii.gz', return_type='file')
+> > dwi_data = layout.get(suffix='dwi', extension='.nii.gz', return_type='file')
 > > ~~~
 > > {: .language-python}
 > {: .solution}
