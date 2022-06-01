@@ -55,7 +55,6 @@ import bids
 from bids.layout import BIDSLayout
 
 from dipy.core.gradients import gradient_table
-from dipy.data import get_fnames
 from dipy.io.gradients import read_bvals_bvecs
 
 
