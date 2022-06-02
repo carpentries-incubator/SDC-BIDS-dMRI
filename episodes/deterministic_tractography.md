@@ -28,23 +28,19 @@ import os
 import nibabel as nib
 import numpy as np
 
-import bids
 from bids.layout import BIDSLayout
 
 from dipy.io.gradients import read_bvals_bvecs
 from dipy.core.gradients import gradient_table
-
-
-bids.config.set_option('extension_initial_dot', True)
 
 dwi_layout = BIDSLayout("../../data/ds000221/derivatives/uncorrected_topup_eddy", validate=False)
 gradient_layout = BIDSLayout("../../data/ds000221/", validate=False)
 
 subj = '010006'
 
-dwi_fname = dwi_layout.get(subject=subj, suffix='dwi', extension='nii.gz', return_type='file')[0]
-bvec_fname = dwi_layout.get(subject=subj, extension='eddy_rotated_bvecs', return_type='file')[0]
-bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bval', return_type='file')[0]
+dwi_fname = dwi_layout.get(subject=subj, suffix='dwi', extension='.nii.gz', return_type='file')[0]
+bvec_fname = dwi_layout.get(subject=subj, extension='.eddy_rotated_bvecs', return_type='file')[0]
+bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='.bval', return_type='file')[0]
 
 dwi_img = nib.load(dwi_fname)
 affine = dwi_img.affine
@@ -274,9 +270,9 @@ plt.show()
 > > 
 > > # Get subject data
 > > subj = '010006'
-> > dwi_fname = dwi_layout.get(subject=subj, suffix='dwi', extension='nii.gz', return_type='file')[0]
-> > bvec_fname = dwi_layout.get(subject=subj, extension='eddy_rotated_bvecs', return_type='file')[0]
-> > bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='bval', return_type='file')[0]
+> > dwi_fname = dwi_layout.get(subject=subj, suffix='dwi', extension='.nii.gz', return_type='file')[0]
+> > bvec_fname = dwi_layout.get(subject=subj, extension='.eddy_rotated_bvecs', return_type='file')[0]
+> > bval_fname = gradient_layout.get(subject=subj, suffix='dwi', extension='.bval', return_type='file')[0]
 > > 
 > > dwi_img = nib.load(dwi_fname)
 > > affine = dwi_img.affine
