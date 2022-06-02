@@ -104,19 +104,16 @@ and load them! We will also load in the anatomical image to use as a reference
 later on.
 
 ~~~
-import bids
 from bids.layout import BIDSLayout
 from dipy.io.gradients import read_bvals_bvecs
 from dipy.core.gradients import gradient_table
 from nilearn import image as img
 
-bids.config.set_option('extension_initial_dot', True)
-
 deriv_layout = BIDSLayout("../data/ds000221/derivatives", validate=False)
 subj="010006"
 
 # Grab the transformed t1 file for reference
-t1 = deriv_layout.get(subject=subj, space="dwi", extension='nii.gz', return_type='file')[0]
+t1 = deriv_layout.get(subject=subj, space="dwi", extension='.nii.gz', return_type='file')[0]
 
 # Recall the preprocessed data is no longer in BIDS - we will directly grab these files
 dwi = f"../data/ds000221/derivatives/uncorrected_topup_eddy/sub-{subj}/ses-01/dwi/dwi.nii.gz"
@@ -322,7 +319,7 @@ data!
 > > deriv_layout = BIDSLayout("../data/ds000221/derivatives", validate=False)
 > > subj="010006"
 > >
-> > t1 = deriv_layout.get(subject=subj, space="dwi", extension='nii.gz', return_type='file')[0]
+> > t1 = deriv_layout.get(subject=subj, space="dwi", extension='.nii.gz', return_type='file')[0]
 > > dwi = f"../data/ds000221/derivatives/uncorrected_topup_eddy/sub-{subj}/ses-01/dwi/dwi.nii.gz"
 > > bval = f"../data/ds000221/sub-{subj}/ses-01/dwi/sub-{subj}_ses-01_dwi.bval"
 > > bvec = f"../data/ds000221/derivatives/uncorrected_topup_eddy/sub-{subj}/ses-01/dwi/dwi.eddy_rotated_bvecs"

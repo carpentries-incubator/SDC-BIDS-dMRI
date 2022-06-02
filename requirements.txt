@@ -3,4 +3,4 @@ fury==0.6.1
 matplotlib
 nilearn==0.7.0
 osfclient==0.0.5
-pybids==0.12.4
+pybids==0.14.0
