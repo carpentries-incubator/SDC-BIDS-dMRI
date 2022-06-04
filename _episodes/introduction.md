@@ -123,7 +123,7 @@ tree '../data/ds000221'
 
 ## Querying a BIDS Dataset
 
-[PyBIDS](https://bids-standard.github.io/pybids/) is a Python packageq for
+[PyBIDS](https://bids-standard.github.io/pybids/) is a Python package for
 querying, summarizing and manipulating the BIDS folder structure. We will make
 use of `PyBIDS` to query the necessary files.
 
