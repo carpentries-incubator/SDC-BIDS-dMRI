@@ -293,7 +293,7 @@ performing a brain extraction using `DIPY` on the eddy corrected image. Note
 that the output of <code>eddy</code> is not in BIDS format so we will include
 the path to the diffusion data manually. We will save both the brainmask and
 the extracted brain volume. Additionally, we will save a separate volume of
-only the first b0 to use for the registration.
+only the first B0 to use for the registration.
 
 ~~~
 from dipy.segment.mask import median_otsu
@@ -340,7 +340,7 @@ are a few parameters that must be set:
 * <code>-d</code> - Image dimension (2/3D)
 * <code>-t</code> - Transformation type (<code>a</code> performs only rigid + affine transformation)
 * <code>-f</code> - Fixed image (anatomical T1w)
-* <code>-m</code> - Moving image (b0 DWI volume)
+* <code>-m</code> - Moving image (B0 DWI volume)
 * <code>-o</code> - Output prefix (prefix to be appended to output files)
 
 ~~~
@@ -358,7 +358,7 @@ set:
 
 * <code>-d</code> - Image dimension (2/3/4D)
 * <code>-i</code> - Input volume to be transformed (T1w)
-* <code>-r</code> - Reference volume (b0 DWI volume)
+* <code>-r</code> - Reference volume (B0 DWI volume)
 * <code>-t</code> - Transformation file (can be called more than once)
 * <code>-o</code> - Output volume in the transformed space.
 
@@ -377,7 +377,7 @@ antsApplyTransforms -d 3 -i ../../data/ds000221/derivatives/uncorrected/sub-0100
 Following the transformation of the T1w volume, we can see that anatomical and
 diffusion weighted volumes are now aligned. It should be highlighted that as
 part of the transformation step, the T1w volume is resampled based on the voxel
-size of the reference volume (i.e. the b0 DWI volume in this case).
+size of the reference volume (i.e. the B0 DWI volume in this case).
 
 ### Preprocessing notes:
 
