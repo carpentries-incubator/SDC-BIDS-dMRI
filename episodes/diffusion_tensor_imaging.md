@@ -74,30 +74,29 @@ on the tensor model described above.
 
 The <code>reconst</code> module contains implementations of the following
 models:
-
-* Tensor (Basser et al., 1994)
-* Constrained Spherical Deconvolution (Tournier et al. 2007)
-* Diffusion Kurtosis (Jensen et al. 2005)
-* DSI (Wedeen et al. 2008)
-* DSI with deconvolution (Canales-Rodriguez et al. 2010)
-* Generalized Q Imaging (Yeh et al. 2010)
-* MAPMRI (Özarslan et al. 2013)
-* SHORE (Özarslan et al. 2008)
-* CSA (Aganj et al. 2009)
-* Q ball (Descoteaux et al. 2007)
-* OPDT (Tristan-Vega et al. 2010)
-* Sparse Fascicle Model (Rokem et al. 2015)
+- Tensor (Basser et al., 1994)
+- Constrained Spherical Deconvolution (Tournier et al. 2007)
+- Diffusion Kurtosis (Jensen et al. 2005)
+- DSI (Wedeen et al. 2008)
+- DSI with deconvolution (Canales-Rodriguez et al. 2010)
+- Generalized Q Imaging (Yeh et al. 2010)
+- MAPMRI (Özarslan et al. 2013)
+- SHORE (Özarslan et al. 2008)
+- CSA (Aganj et al. 2009)
+- Q ball (Descoteaux et al. 2007)
+- OPDT (Tristan-Vega et al. 2010)
+- Sparse Fascicle Model (Rokem et al. 2015)
 
 The different algorithms implemented in the module all share a similar
 conceptual structure:
 
-* <code>ReconstModel</code> objects (e.g. <code>TensorModel</code>) carry the
+- <code>ReconstModel</code> objects (e.g. <code>TensorModel</code>) carry the
 parameters that are required in order to fit a model. For example, the
 directions and magnitudes of the gradients that were applied in the experiment.
 <code>TensorModel</code> objects have a <code>fit</code> method, which takes
 in data, and returns a <code>ReconstFit</code> object. This is where a lot of
 the heavy lifting of the processing will take place.
-* <code>ReconstFit</code> objects carry the model that was used to generate the
+- <code>ReconstFit</code> objects carry the model that was used to generate the
 object. They also include the parameters that were estimated during fitting of
 the data. They have methods to calculate derived statistics, which can differ
 from model to model. All objects also have an orientation distribution function
@@ -262,10 +261,9 @@ this map encodes the diffusion orientation. Note that this map provides no
 directional information (e.g. whether the diffusion flows from right-to-left or
 vice-versa). To do this with `DIPY`, we can use the <code>color_fa</code>
 function. The colours map to the following orientations:
-
-* Red = Left / Right
-* Green = Anterior / Posterior
-* Blue = Superior / Inferior
+- Red = Left / Right
+- Green = Anterior / Posterior
+- Blue = Superior / Inferior
 
 > ## Diffusion scalar map visualization
 >
