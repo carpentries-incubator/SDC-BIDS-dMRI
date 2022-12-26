@@ -217,17 +217,18 @@ and hence it must be computed on a case basis.
 After estimating a response function, the fODF is reconstructed through the
 deconvolution operation. In order to obtain the spherical representation of the
 diffusion signal, the order of the Spherical Harmonics expansion must be
-specified. The order, $l$, corresponds to an angular frequency of the basis function. 
-While the series is infinite, it must be truncated to a maximum order in
-practice to be able to represent the diffusion signal. The maximum order will
-determine the number of SH coefficients used. The number of diffusion encoding
-gradient directions must be at least as large as the number of coefficients.
-Hence, the maximum order $l_{max}$ is determined by the equation $R = (l_{max}+1)(l_{max}+2)/2$,
-where $R$ is the number of coefficients. For example, an order $l_{max} = {4, 6, 8}$ SH
-series has $R = {15, 28, 45}$ coefficients, respectively. Note the use of even
-orders: even order SH functions allow to reconstruct symmetric spherical
-functions. Traditionally, even orders have been used motivated by the fact that
-the diffusion process is symmetric around the origin.
+specified. The order, $l$, corresponds to an angular frequency of the basis
+function. While the series is infinite, it must be truncated to a maximum order
+in practice to be able to represent the diffusion signal. The maximum order
+will determine the number of SH coefficients used. The number of diffusion
+encoding gradient directions must be at least as large as the number of
+coefficients. Hence, the maximum order $l_{max}$ is determined by the equation
+$R = (l_{max}+1)(l_{max}+2)/2$, where $R$ is the number of coefficients. For
+example, an order $l_{max} = {4, 6, 8}$ SH series has $R = {15, 28, 45}$
+coefficients, respectively. Note the use of even orders: even order SH
+functions allow to reconstruct symmetric spherical functions. Traditionally,
+even orders have been used motivated by the fact that the diffusion process is
+symmetric around the origin.
 
 The CSD is performed in `DIPY` by calling the `fit` method of the CSD model on
 the diffusion data:

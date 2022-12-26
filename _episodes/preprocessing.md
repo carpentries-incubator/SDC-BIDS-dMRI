@@ -17,8 +17,8 @@ start: true
 
 ## Diffusion Preprocessing
 
-Diffusion preprocessing typically comprises of a series of steps, which may vary
-depending on how the data is acquired. Some consensus has been reached for
+Diffusion preprocessing typically comprises of a series of steps, which may
+vary depending on how the data is acquired. Some consensus has been reached for
 certain preprocessing steps, while others are still up for debate. The lesson
 will primarily focus on the preprocessing steps where consensus has been
 reached. Preprocessing is performed using a few well-known software packages
@@ -129,7 +129,8 @@ Here, we will make use of the two opposite phase-encoded acquisitions found in
 the <code>fmap</code> directory of each subject. These are acquired with a
 diffusion weighting of $b = 0 s/mm^2$. Alternatively, if these are not
 available, one can also extract and make use of the non-diffusion weighted
-images (assuming the data is also acquired with opposite phase encoding directions).
+images (assuming the data is also acquired with opposite phase encoding
+directions).
 
 First, we will merge the two files so that all of the volumes are in 1 file.
 
@@ -338,7 +339,8 @@ rigid and affine transformation (we will explain why in the final step). There
 are a few parameters that must be set:
 
 * <code>-d</code> - Image dimension (2/3D)
-* <code>-t</code> - Transformation type (<code>a</code> performs only rigid + affine transformation)
+* <code>-t</code> - Transformation type (<code>a</code> performs only rigid +
+  affine transformation)
 * <code>-f</code> - Fixed image (anatomical T1w)
 * <code>-m</code> - Moving image (B0 DWI volume)
 * <code>-o</code> - Output prefix (prefix to be appended to output files)
