@@ -4,10 +4,12 @@ teaching: 30
 exercises: 5
 questions:
 - "Why do we need tractography algorithms beyond the deterministic ones?"
-- "How is probabilistic tractography different from deterministic tractography?"
+- "How is probabilistic tractography different from deterministic
+tractography?"
 objectives:
 - "Understand the principles behind a probabilistic tractography algorithm"
-- "Understand the aspects involved when analyzing the tractogram computed using a probabilistic algorithm"
+- "Understand the aspects involved when analyzing the tractogram computed using
+a probabilistic algorithm"
 keypoints:
 - "Probabilistic tractography incorporates uncertainty to the tracking process"
 - "Provides tractograms that explore more white matter axonal fibers"

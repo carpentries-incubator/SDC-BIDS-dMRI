@@ -17,10 +17,12 @@ keypoints:
 ## Deterministic tractography
 
 Deterministic tractography algorithms perform tracking of streamlines by
-following a predictable path, such as following the primary diffusion direction.
+following a predictable path, such as following the primary diffusion
+direction.
 
-In order to demonstrate how to perform deterministic tracking on a diffusion MRI dataset, we will 
-build from the preprocessing presented in a previous episode and compute the diffusion tensor.
+In order to demonstrate how to perform deterministic tracking on a diffusion
+MRI dataset, we will build from the preprocessing presented in a previous
+episode and compute the diffusion tensor.
 
 ~~~
 import os 
@@ -72,13 +74,15 @@ dti_fit = dti_model.fit(dwi_data, mask=dwi_mask)  # This step may take a while
 
 We will perform tracking using a deterministic algorithm on tensor fields via 
 `EuDX` [(Garyfallidis _et al._, 2012)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3518823/). 
-`EuDX` makes use of the primary direction of the diffusion tensor to propagate streamlines from 
-voxel to voxel and a stopping criteria from the fractional anisotropy (FA). 
+`EuDX` makes use of the primary direction of the diffusion tensor to propagate
+streamlines from voxel to voxel and a stopping criteria from the fractional
+anisotropy (FA).
 
-We will first get the FA map and eigenvectors from our tensor fitting. In the background of the 
-FA map, the fitting may not be accurate as all of the measured signal is primarily noise and it is 
-possible that values of NaNs (not a number) may be found in the FA map. We can remove these 
-using `numpy` to find and set these voxels to 0.
+We will first get the FA map and eigenvectors from our tensor fitting. In the
+background of the FA map, the fitting may not be accurate as all of the
+measured signal is primarily noise and it is possible that values of NaNs (not
+a number) may be found in the FA map. We can remove these using `numpy` to find
+and set these voxels to 0.
 
 ~~~
 # Create the directory to save the results
@@ -116,8 +120,8 @@ plt.show()
 
 One of the inputs of `EuDX` is the discretized voxel directions on a unit
 sphere. Therefore, it is necessary to discretize the eigenvectors before
-providing them to `EuDX`. We will use an evenly distributed sphere of 362 points
-using the `get_sphere` function.
+providing them to `EuDX`. We will use an evenly distributed sphere of 362
+points using the `get_sphere` function.
 
 ~~~
 from dipy.data import get_sphere
@@ -172,9 +176,10 @@ seeds = utils.seeds_from_mask(seed_mask, affine=affine, density=1)
 Now, we can apply the tracking algorithm!
 
 As mentioned previously, `EuDX` is the fiber tracking algorithm that we will be
-using. The most important parameters to include are the indices representing the
-discretized directions of the peaks (`peak_indices`), the stopping criterion,
-the seeds, the affine transformation, and the step sizes to take when tracking!
+using. The most important parameters to include are the indices representing
+the discretized directions of the peaks (`peak_indices`), the stopping
+criterion, the seeds, the affine transformation, and the step sizes to take
+when tracking!
 
 ~~~
 from dipy.tracking.local_tracking import LocalTracking
@@ -189,11 +194,12 @@ streamlines = Streamlines(streamlines_generator)
 ~~~
 {: .language-python}
 
-We just created a deterministic set of streamlines using the `EuDX` algorithm mapping the 
-human brain connectome (tractography). We can save the streamlines as a `Trackvis` file so it can be
-loaded into other software for visualization or further analysis. To do so, we need to save the 
-tractogram state using `StatefulTractogram` and `save_tractogram` to save the file. 
-Note that we will have to specify the space to save the tractogram in.
+We just created a deterministic set of streamlines using the `EuDX` algorithm
+mapping the human brain connectome (tractography). We can save the streamlines
+as a `Trackvis` file so it can be loaded into other software for visualization
+or further analysis. To do so, we need to save the tractogram state using
+`StatefulTractogram` and `save_tractogram` to save the file. Note that we will
+have to specify the space to save the tractogram in.
 
 ~~~
 from dipy.io.stateful_tractogram import Space, StatefulTractogram

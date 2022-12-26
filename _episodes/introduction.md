@@ -9,8 +9,11 @@ objectives:
 - "Representation of diffusion data and associated gradients"
 - "Learn about diffusion gradients"
 keypoints:
-- "dMRI data is represented as a 4-dimensional image (x,y,z,diffusion directional sensitivity)"
-- "dMRI data is sensitive to a particular direction of diffusion motion. Due to this sensitivity, each volume of the 4D image is sensitive to a particular direction"
+- "dMRI data is represented as a 4-dimensional image (x,y,z,diffusion
+directional sensitivity)"
+- "dMRI data is sensitive to a particular direction of diffusion motion. Due to 
+this sensitivity, each volume of the 4D image is sensitive to a particular
+direction"
 start: true
 ---
 
@@ -18,17 +21,18 @@ start: true
 
 ## Diffusion Weighted Imaging (DWI)
 
-Diffusion MRI is a popular technique to study the brain's white matter. To do so, 
-sequences sensitive to random, microscropic motion of water protons are applied. 
-The diffusion within biological structures, such as the brain, are often restricted 
-due to barriers (e.g. cell membranes), resulting in a preferred direction of diffusion 
-(anisotropy). A typical diffusion MRI scan will acquire multiple volumes that are 
-sensitive to a particular diffusion direction and result in diffusion-weighted images 
-(DWI). Diffusion that exhibits directionality in the same direction result in an 
-attenuated signal. With further processing (to be discussed later in the lesson), the 
-acquired images can provide measurements which are related to the microscopic changes 
-and estimate white matter trajectories. Images with no diffusion weighting are also 
-acquired as part of the acquisition protocol.
+Diffusion MRI is a popular technique to study the brain's white matter. To do
+so,  sequences sensitive to random, microscropic motion of water protons are
+applied. The diffusion within biological structures, such as the brain, are
+often restricted due to barriers (e.g. cell membranes), resulting in a
+preferred direction of diffusion (anisotropy). A typical diffusion MRI scan
+will acquire multiple volumes that are sensitive to a particular diffusion
+direction and result in diffusion-weighted images (DWI). Diffusion that
+exhibits directionality in the same direction result in an attenuated signal.
+With further processing (to be discussed later in the lesson), the acquired
+images can provide measurements which are related to the microscopic changes
+and estimate white matter trajectories. Images with no diffusion weighting are
+also acquired as part of the acquisition protocol.
 
 ![Diffusion along X, Y, and Z directions]({{ relative_root_path }}/fig/introduction/DiffusionDirections.png) \
 Diffusion along X, Y, and Z directions
@@ -173,10 +177,10 @@ for processing and analysing diffusion MRI.
 
 ### Why `DIPY`?
 
-- Fully free and open source
+- Fully free and open source.
 - Implemented in Python. Easy to understand, and easy to use.
-- Implementations of many state-of-the art algorithms
-- High performance. Many algorithms implemented in [Cython](http://cython.org/)
+- Implementations of many state-of-the art algorithms.
+- High performance. Many algorithms implemented in [Cython](http://cython.org/).
 
 ### Defining a measurement: <code>GradientTable</code>
 
