@@ -18,19 +18,17 @@ start: true
 
 ## Diffusion Weighted Imaging (DWI)
 
-Diffusion imaging probes the random, microscopic motion of water protons by
-employing MRI sequences which are sensitive to the geometry and environmental
-organization surrounding the water protons. This is a popular technique for
-studying the white matter of the brain. The diffusion within biological
-structures, such as the brain, are often restricted due to barriers (e.g. cell
-membranes), resulting in a preferred direction of diffusion (anisotropy). A
-typical diffusion MRI scan will acquire multiple volumes that are sensitive to
-a particular diffusion direction and result in diffusion-weighted images (DWI).
-Diffusion that exhibits directionality in the same direction result in an
-attenuated signal. With further processing (to be discussed later in the
-lesson), the acquired images can provide measurements which are related to the
-microscopic changes and estimate white matter trajectories. Images with no
-diffusion weighting are also acquired as part of the acquisition protocol.
+Diffusion MRI is a popular technique to study the brain's white matter. To do so, 
+sequences sensitive to random, microscropic motion of water protons are applied. 
+The diffusion within biological structures, such as the brain, are often restricted 
+due to barriers (e.g. cell membranes), resulting in a preferred direction of diffusion 
+(anisotropy). A typical diffusion MRI scan will acquire multiple volumes that are 
+sensitive to a particular diffusion direction and result in diffusion-weighted images 
+(DWI). Diffusion that exhibits directionality in the same direction result in an 
+attenuated signal. With further processing (to be discussed later in the lesson), the 
+acquired images can provide measurements which are related to the microscopic changes 
+and estimate white matter trajectories. Images with no diffusion weighting are also 
+acquired as part of the acquisition protocol.
 
 ![Diffusion along X, Y, and Z directions]({{ relative_root_path }}/fig/introduction/DiffusionDirections.png) \
 Diffusion along X, Y, and Z directions
@@ -125,7 +123,7 @@ tree '../data/ds000221'
 
 ## Querying a BIDS Dataset
 
-[PyBIDS](https://bids-standard.github.io/pybids/) is a Python API for
+[PyBIDS](https://bids-standard.github.io/pybids/) is a Python package for
 querying, summarizing and manipulating the BIDS folder structure. We will make
 use of `PyBIDS` to query the necessary files.
 
@@ -269,8 +267,9 @@ diffusion tensor images (DTI)!
 
 There is also a built-in function for gradient tables, <code>b0s_mask</code>
 that can be used to separate diffusion weighted measurements from non-diffusion
-weighted measurements ($b = 0 s/mm^2$). We will extract the vector
-corresponding to diffusion weighted measurements!
+weighted measurements ($b = 0 s/mm^2$, commonly referred to as the B0 volume or
+image). We will extract the vector  corresponding to diffusion weighted
+measurements!
 
 ~~~
 gtab.bvecs[~gtab.b0s_mask]
