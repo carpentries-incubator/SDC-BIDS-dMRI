@@ -38,10 +38,10 @@ dMRI has some similar challenges to fMRI preprocessing, as well as some unique
 [ones](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3366862/).
 
 Our preprocesssing of this data will consist of following steps:
-1. Brainmasking the diffusion data
-2. Applying `FSL` `topup` to correct for susceptibility induced distortions
-3. `FSL` Eddy current distortion correction
-4. Registration to T1w
+1. Brainmasking the diffusion data.
+1. Applying `FSL` `topup` to correct for susceptibility induced distortions.
+1. `FSL` Eddy current distortion correction.
+1. Registration to T1w.
 
 The same subject (`sub-010006`) will be used throughout the remainder of the
 lesson.
@@ -166,14 +166,14 @@ In this case, the file, which we created, is contained within the
 With these two inputs, the next step is to make the call to <code>topup</code>
 to estimate the susceptibility-induced field. Within the call, a few parameters
 are used. Briefly:
-* <code>--imain</code> specifies the previously merged volume.
-* <code>--datain</code> specifies the text file containing the information
-  regarding the acquisition.
-* <code>--config=b02b0.cnf</code> makes use of a predefined config file
-  supplied with <code>topup</code>, which contains parameters useful to
-  registering with good $b = 0 s/mm^2$ images.
-* <code>--out</code> defines the output files containing the spline
-  coefficients for the induced field, as well as subject movement parameters.
+- <code>--imain</code> specifies the previously merged volume.
+- <code>--datain</code> specifies the text file containing the information
+regarding the acquisition.
+- <code>--config=b02b0.cnf</code> makes use of a predefined config file.
+supplied with <code>topup</code>, which contains parameters useful to
+registering with good $b = 0 s/mm^2$ images.
+- <code>--out</code> defines the output files containing the spline.
+coefficients for the induced field, as well as subject movement parameters.
 
 ~~~
 topup --imain=../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/sub-010006_ses-01_acq-SEfmapDWI_epi.nii.gz --datain=../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/pedir.txt --config=b02b0.cnf --out=../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/topup
@@ -183,15 +183,15 @@ topup --imain=../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/s
 Next, we can apply the correction to the entire diffusion weighted volume by
 using <code>applytopup</code> Similar to <code>topup</code>, a few parameters
 are used. Briefly:
-  * <code>--imain</code> specifies the input diffusion weighted volume
-* <code>--datain</code> again specifies the text file containing information
-  regarding the acquisition - same file previously used
-* <code>--inindex</code> specifies the index (comma separated list) of the
-  input image to be corrected
-* <code>--topup</code> name of field/movements (from previous topup step
-* <code>--out</code> basename for the corrected output image
-* <code>--method</code> (optional) jacobian modulation (jac) or least-squares
-  resampling (lsr)
+- <code>--imain</code> specifies the input diffusion weighted volume.
+- <code>--datain</code> again specifies the text file containing information
+regarding the acquisition - same file previously used.
+- <code>--inindex</code> specifies the index (comma separated list) of the
+input image to be corrected.
+- <code>--topup</code> name of field/movements (from previous topup step.
+- <code>--out</code> basename for the corrected output image.
+- <code>--method</code> (optional) jacobian modulation (jac) or least-squares
+resampling (lsr).
 
 ~~~
 applytopup --imain=../../data/ds000221/sub-010006/ses-01/dwi/sub-010006_ses-01_dwi.nii.gz --datain=../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/pedir.txt --inindex=1 --topup=../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/topup --out=../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/dwi --method=jac
@@ -219,22 +219,21 @@ a text file, which maps each of the volumes to one of the corresponding
 acquisition directions from the <code>pedir.txt</code> file will have to be
 created. Finally, similar to <code>topup</code>, there are also a number of
 input parameters which have to be specified:
-
-* <code>--imain</code> specifies the undistorted diffusion weighted volume
-* <code>--mask</code> specifies the brainmask for the undistorted diffusion
-  weighted volume
-* <code>--acqp</code> specifies the the text file containing information
-  regarding the acquisition that was previously used in <code>topup</code>
-* <code>--index</code> is the text file which maps each diffusion volume to the
-   corresponding acquisition direction
-* <code>--bvecs</code> specifies the bvec file to the undistorted dwi
-* <code>--bvals</code> similarily specifies the bval file to the undistorted
-  dwi
-* <code>--topup</code> specifies the directory and distortion correction files
-  previously estimated by <code>topup</code>
-* <code>--out</code> specifies the prefix of the output files following eddy
-  correction
-* <code>--repol</code> is a flag, which specifies replacement of outliers
+- <code>--imain</code> specifies the undistorted diffusion weighted volume.
+- <code>--mask</code> specifies the brainmask for the undistorted diffusion
+weighted volume.
+- <code>--acqp</code> specifies the the text file containing information
+regarding the acquisition that was previously used in <code>topup</code>.
+- <code>--index</code> is the text file which maps each diffusion volume to the
+corresponding acquisition direction.
+- <code>--bvecs</code> specifies the bvec file to the undistorted dwi.
+- <code>--bvals</code> similarily specifies the bval file to the undistorted
+dwi.
+- <code>--topup</code> specifies the directory and distortion correction files
+previously estimated by <code>topup</code>.
+- <code>--out</code> specifies the prefix of the output files following eddy
+correction.
+- <code>--repol</code> is a flag, which specifies replacement of outliers.
 
 ~~~
 mkdir -p ../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi/work
@@ -337,13 +336,12 @@ that it is aligned to the diffusion volume.
 Here, we will constrain <code>antsRegistrationSyNQuick.sh</code> to perform a
 rigid and affine transformation (we will explain why in the final step). There
 are a few parameters that must be set:
-
-* <code>-d</code> - Image dimension (2/3D)
-* <code>-t</code> - Transformation type (<code>a</code> performs only rigid +
-  affine transformation)
-* <code>-f</code> - Fixed image (anatomical T1w)
-* <code>-m</code> - Moving image (B0 DWI volume)
-* <code>-o</code> - Output prefix (prefix to be appended to output files)
+- <code>-d</code> - Image dimension (2/3D).
+- <code>-t</code> - Transformation type (<code>a</code> performs only rigid +
+affine transformation).
+- <code>-f</code> - Fixed image (anatomical T1w).
+- <code>-m</code> - Moving image (B0 DWI volume).
+- <code>-o</code> - Output prefix (prefix to be appended to output files).
 
 ~~~
 mkdir -p ../../data/ds000221/derivatives/uncorrected_topup_eddy_regT1/sub-010006/ses-01/transforms
@@ -357,12 +355,11 @@ The transformation file should be created which we will use to apply the
 inverse transform with <code>antsApplyTransform</code> to the T1w volume.
 Similar to the previous command, there are few parameters that will need to be
 set:
-
-* <code>-d</code> - Image dimension (2/3/4D)
-* <code>-i</code> - Input volume to be transformed (T1w)
-* <code>-r</code> - Reference volume (B0 DWI volume)
-* <code>-t</code> - Transformation file (can be called more than once)
-* <code>-o</code> - Output volume in the transformed space.
+- <code>-d</code> - Image dimension (2/3/4D).
+- <code>-i</code> - Input volume to be transformed (T1w).
+- <code>-r</code> - Reference volume (B0 DWI volume).
+- <code>-t</code> - Transformation file (can be called more than once).
+- <code>-o</code> - Output volume in the transformed space.
 
 Note that if more than 1 transformation file is provided, the order in which
 the transforms are applied to the volume is in reverse order of how it is
@@ -384,34 +381,29 @@ size of the reference volume (i.e. the B0 DWI volume in this case).
 ### Preprocessing notes:
 
 1. In this lesson, the T1w volume is registered to the DWI volume. This method
-   minimizes the manipulation of the diffusion data. It is also possible to
-   register the DWI volume to the T1w volume and would require the associated
-   diffusion gradient vectors (bvec) to also be similarly rotated. If this step
-   is not performed, one would have incorrect diffusion gradient directions
-   relative to the registered DWI volumes. This also highlights a reason behind
-   not performing a non-linear transformation for registration, as each
-   individual diffusion gradient direction would also have to be subsequently
-   warped. Rotation of the diffusion gradient vectors can be done by applying
-   the affine transformation to each row of the file. Luckily, there are
-   existing scripts that can do this. One such Python script was created by
-   Michael Paquette: [<code>rot_bvecs_ants.py</code>](https://gist.github.com/mpaquette/5d59ad195778f9d984c5def42f53de6e).
-
-2. We have only demonstrated the preprocessing steps where there is general
-   consensus on how DWI data should be processed. There are also additional
-   steps with certain caveats, which include denoising, unringing (to
-   remove/minimize effects of Gibbs ringing artifacts), and gradient
-   non-linearity correction (to unwarp distortions caused by gradient-field
-   inhomogeneities using a vendor acquired gradient coefficient file).
-
-3. Depending on how the data is acquired, certain steps may not be possible.
-   For example, if the data is not acquired in two directions,
-   <code>topup</code> may not be possible (in this situation, distortion
-   correction may be better handled by registering with a T1w anatomical image
-   directly.
-
-4. There are also a number of tools available for preprocessing. In this
-   lesson, we demonstrate some of the more commonly used tools alongside
-   `DIPY`.
+minimizes the manipulation of the diffusion data. It is also possible to
+register the DWI volume to the T1w volume and would require the associated
+diffusion gradient vectors (bvec) to also be similarly rotated. If this step is
+not performed, one would have incorrect diffusion gradient directions relative
+to the registered DWI volumes. This also highlights a reason behind not
+performing a non-linear transformation for registration, as each individual
+diffusion gradient direction would also have to be subsequently warped.
+Rotation of the diffusion gradient vectors can be done by applying the affine
+transformation to each row of the file. Luckily, there are existing scripts
+that can do this. One such Python script was created by Michael Paquette:
+[<code>rot_bvecs_ants.py</code>](https://gist.github.com/mpaquette/5d59ad195778f9d984c5def42f53de6e).
+1. We have only demonstrated the preprocessing steps where there is general
+consensus on how DWI data should be processed. There are also additional steps
+with certain caveats, which include denoising, unringing (to remove/minimize
+effects of Gibbs ringing artifacts), and gradient non-linearity correction (to
+unwarp distortions caused by gradient-field inhomogeneities using a vendor
+acquired gradient coefficient file).
+1. Depending on how the data is acquired, certain steps may not be possible.
+For example, if the data is not acquired in two directions, <code>topup</code>
+may not be possible (in this situation, distortion correction may be better
+handled by registering with a T1w anatomical image directly.
+1. There are also a number of tools available for preprocessing. In this
+lesson, we demonstrate some of the more commonly used tools alongside `DIPY`.
 
 ### References
 

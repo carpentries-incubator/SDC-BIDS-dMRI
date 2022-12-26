@@ -177,10 +177,10 @@ for processing and analysing diffusion MRI.
 
 ### Why `DIPY`?
 
-- Fully free and open source
+- Fully free and open source.
 - Implemented in Python. Easy to understand, and easy to use.
-- Implementations of many state-of-the art algorithms
-- High performance. Many algorithms implemented in [Cython](http://cython.org/)
+- Implementations of many state-of-the art algorithms.
+- High performance. Many algorithms implemented in [Cython](http://cython.org/).
 
 ### Defining a measurement: <code>GradientTable</code>
 
