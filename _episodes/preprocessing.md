@@ -37,12 +37,14 @@ preprocessing workflow from QSIPrep (Cieslak _et al_, 2020):
 dMRI has some similar challenges to fMRI preprocessing, as well as some unique
 [ones](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3366862/).
 
-Our preprocesssing of this data will consist of following steps and will make
-use of sub-010006:
+Our preprocesssing of this data will consist of following steps:
 1. Brainmasking the diffusion data
 2. Applying `FSL` `topup` to correct for susceptibility induced distortions
 3. `FSL` Eddy current distortion correction
 4. Registration to T1w
+
+The same subject (`sub-010006`) will be used throughout the remainder of the
+lesson.
 
 ### Brainmasking
 
@@ -143,8 +145,9 @@ about how the volumes were acquired. Each line in this file will pertain to a
 single volume in the merged file. The first 3 values of each line refers to the
 acquisition direction, typically along the y-axis (or anterior-posterior). The
 final value is the total readout time (from center of first echo to center of
-final echo), which can be determined from values contained within the JSON
-sidecar. Each line will look similar to <code>[x y z TotalReadoutTime]</code>.
+final echo), which can be determined from values contained within the
+associated JSON metadata file (named "JSON sidecar file" within the BIDS
+specification). Each line will look similar to <code>[x y z TotalReadoutTime]</code>.
 In this case, the file, which we created, is contained within the
 <code>pedir.txt</code> file in the derivative directory.
 
@@ -162,14 +165,14 @@ In this case, the file, which we created, is contained within the
 With these two inputs, the next step is to make the call to <code>topup</code>
 to estimate the susceptibility-induced field. Within the call, a few parameters
 are used. Briefly:
-* <code>--imain</code> specifies the previously merged volume
+* <code>--imain</code> specifies the previously merged volume.
 * <code>--datain</code> specifies the text file containing the information
   regarding the acquisition.
 * <code>--config=b02b0.cnf</code> makes use of a predefined config file
   supplied with <code>topup</code>, which contains parameters useful to
   registering with good $b = 0 s/mm^2$ images.
 * <code>--out</code> defines the output files containing the spline
-  coefficients for the induced field, as well as subject movement parameters
+  coefficients for the induced field, as well as subject movement parameters.
 
 ~~~
 topup --imain=../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/sub-010006_ses-01_acq-SEfmapDWI_epi.nii.gz --datain=../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/pedir.txt --config=b02b0.cnf --out=../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/topup
@@ -210,11 +213,11 @@ optionally detect and replace outlier slices.
 
 Here, we will demonstrate the application of <code>eddy</code> following the
 <code>topup</code> correction step, by making use of both the uncorrected
-diffusion data, as well as distortion corrections from the previous step.
-Additionally, a text file, which maps each of the volumes to one of the
-corresponding acquisition directions from the <code>pedir.txt</code> file will
-have to be created. Finally, similar to <code>topup</code>, there are also a
-number of input parameters which have to be specified:
+diffusion data, as well as estimated warpfield from the `topup`. Additionally,
+a text file, which maps each of the volumes to one of the corresponding
+acquisition directions from the <code>pedir.txt</code> file will have to be
+created. Finally, similar to <code>topup</code>, there are also a number of
+input parameters which have to be specified:
 
 * <code>--imain</code> specifies the undistorted diffusion weighted volume
 * <code>--mask</code> specifies the brainmask for the undistorted diffusion
@@ -256,13 +259,13 @@ acquisitions at the cost of lower resolution and introduction of distortions
 correct for some distortions, it also provides us with a higher resolution,
 anatomical reference.
 
-First, we will create a brainmask of the anatomical image using the second
-inversion. To do this, we will use `FSL` <code>bet</code> twice. The first call
-to <code>bet</code> will create a general skullstripped brain. Upon inspection,
-we can note that there is still some residual areas of the image which were
-included in the first pass. Calling <code>bet</code> a second time, we get a
-better outline of the brain and brainmask, which we can use for further
-processing.
+First, we will create a brainmask of the anatomical image using the anatomical
+acquisition (e.g. T1-weighted). To do this, we will use `FSL` <code>bet</code>
+twice. The first call to <code>bet</code> will create a general skullstripped
+brain. Upon inspection, we can note that there is still some residual areas of
+the image which were included in the first pass. Calling <code>bet</code> a
+second time, we get a better outline of the brain and brainmask, which we can
+use for further processing.
 
 ~~~
 mkdir -p ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat
@@ -290,7 +293,7 @@ performing a brain extraction using `DIPY` on the eddy corrected image. Note
 that the output of <code>eddy</code> is not in BIDS format so we will include
 the path to the diffusion data manually. We will save both the brainmask and
 the extracted brain volume. Additionally, we will save a separate volume of
-only the first b0 to use for the registration.
+only the first B0 to use for the registration.
 
 ~~~
 from dipy.segment.mask import median_otsu
@@ -337,7 +340,7 @@ are a few parameters that must be set:
 * <code>-d</code> - Image dimension (2/3D)
 * <code>-t</code> - Transformation type (<code>a</code> performs only rigid + affine transformation)
 * <code>-f</code> - Fixed image (anatomical T1w)
-* <code>-m</code> - Moving image (b0 DWI volume)
+* <code>-m</code> - Moving image (B0 DWI volume)
 * <code>-o</code> - Output prefix (prefix to be appended to output files)
 
 ~~~
@@ -355,7 +358,7 @@ set:
 
 * <code>-d</code> - Image dimension (2/3/4D)
 * <code>-i</code> - Input volume to be transformed (T1w)
-* <code>-r</code> - Reference volume (b0 DWI volume)
+* <code>-r</code> - Reference volume (B0 DWI volume)
 * <code>-t</code> - Transformation file (can be called more than once)
 * <code>-o</code> - Output volume in the transformed space.
 
@@ -374,7 +377,7 @@ antsApplyTransforms -d 3 -i ../../data/ds000221/derivatives/uncorrected/sub-0100
 Following the transformation of the T1w volume, we can see that anatomical and
 diffusion weighted volumes are now aligned. It should be highlighted that as
 part of the transformation step, the T1w volume is resampled based on the voxel
-size of the reference volume (i.e. the b0 DWI volume in this case).
+size of the reference volume (i.e. the B0 DWI volume in this case).
 
 ### Preprocessing notes:
 
