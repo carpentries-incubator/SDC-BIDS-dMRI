@@ -22,32 +22,45 @@ start: true
 ## Diffusion Weighted Imaging (DWI)
 
 Diffusion MRI is a popular technique to study the brain's white matter. To do
-so,  sequences sensitive to random, microscropic motion of water protons are
-applied. The diffusion within biological structures, such as the brain, are
-often restricted due to barriers (e.g. cell membranes), resulting in a
+so, MRI sequences which are sensitive to the random, microscropic motion (i.e. diffusion) 
+of water protons are used. The diffusion of water within biological structures, such as 
+the brain, are often restricted due to barriers (e.g. cell membranes), resulting in a
 preferred direction of diffusion (anisotropy). A typical diffusion MRI scan
-will acquire multiple volumes that are sensitive to a particular diffusion
-direction and result in diffusion-weighted images (DWI). Diffusion that
-exhibits directionality in the same direction result in an attenuated signal.
-With further processing (to be discussed later in the lesson), the acquired
-images can provide measurements which are related to the microscopic changes
-and estimate white matter trajectories. Images with no diffusion weighting are
-also acquired as part of the acquisition protocol.
+will acquire multiple volumes with varying magnetic fields (i.e. diffusion gradients) 
+which are sensitive to diffusion along a particular direction and result in 
+diffusion-weighted images (DWI). Water diffusion that is occuring along the same 
+direction as the diffusion gradient results in an attenuated signal. Images 
+with no diffusion weighting (i.e. no diffusion gradient) are also acquired 
+as part of the acquisition protocol. With further processing (to be discussed later in the lesson), 
+the acquired images can provide measurements which are related to the microscopic properties
+of brain tissue. DWI has been used extensively to diagnose stroke, assess white matter
+damage in many different kinds of diseases, provide insights into the white matter
+connectivity, and much more!
 
-![Diffusion along X, Y, and Z directions]({{ relative_root_path }}/fig/introduction/DiffusionDirections.png) \
-Diffusion along X, Y, and Z directions
+![Diffusion along X, Y, and Z directions. The signal in the left-right oriented corpus callosum 
+is lowest when measured along X, while the signal in the inferior-superior oriented corticospinal 
+tract is lowest when measured along Z.]({{ relative_root_path }}/fig/introduction/diffusion_direction_new.png) \
+Diffusion along X, Y, and Z directions. The signal in the left-right oriented corpus callosum 
+is lowest when measured along X, while the signal in the inferior-superior oriented corticospinal 
+tract is lowest when measured along Z.
 
 ## b-values & b-vectors
 
 In addition to the acquired diffusion images, two files are collected as part
-of the diffusion dataset. These files correspond to the gradient amplitude
-(b-values) and directions (b-vectors) of the diffusion measurement and are
-named with the extensions <code>.bval</code> and <code>.bvec</code>
-respectively. The b-value is the diffusion-sensitizing factor, and reflects the
-timing & strength of the gradients used to acquire the diffusion-weighted
-images. The b-vector corresponds to the direction of the diffusion sensitivity.
-Together these two files define the diffusion MRI measurement as a set of
-gradient directions and corresponding amplitudes.
+of the diffusion dataset, known as the b-vectors and b-values. The b-value 
+(extension <code>.bval</code>) is the diffusion-sensitizing factor, and reflects the
+timing & strength of the diffusion gradients. A larger b-value means our DWI signal 
+will be more sensitive to the diffusion of water. The b-vector (extension <code>.bvec</code>) 
+corresponds to the direction with which diffusion was measured. Together these two 
+files define the diffusion MRI measurement as a set of gradient directions and 
+corresponding amplitudes, and are necessary to calculate useful measures of 
+the microscopic properties. The DWI acquisiton process is thus:
+1. Pick a direction to measure diffusion along (i.e. pick the diffusion gradient direction). 
+   This is recorded in the <code>.bvec</code> file.
+2. Pick a strength of the magnetic gradient. This is recorded in the <code>.bval</code> file.
+3. Acquire the MRI with these settings to examine water diffusion along the chosen direction. This is the
+   DWI volume. 
+4. Thus for every DWI volume we have an associated b-value and b-vector which tells us how we measured the diffusion.
 
 ## Dataset
 
@@ -127,12 +140,13 @@ tree '../data/ds000221'
 
 ## Querying a BIDS Dataset
 
-[PyBIDS](https://bids-standard.github.io/pybids/) is a Python package for
+[pybids](https://bids-standard.github.io/pybids/) is a Python package for
 querying, summarizing and manipulating the BIDS folder structure. We will make
-use of `PyBIDS` to query the necessary files.
+use of `pybids` to query the necessary files.
 
-Let's first pull the metadata from its associated JSON file using the
-<code>get_metadata()</code> function for the first run.
+Let's first pull the metadata from its associated JSON file 
+(dictionary-like data storage) using the <code>get_metadata()</code> 
+function for the first run.
 
 ~~~
 from bids.layout import BIDSLayout
@@ -266,15 +280,36 @@ gtab = gradient_table(gt_bvals, gt_bvecs)
 ~~~
 {: .language-python}
 
-We will need this gradient table later on to process our data and generate
-diffusion tensor images (DTI)!
+We will need this gradient table later on to process and model our data!
 
 There is also a built-in function for gradient tables, <code>b0s_mask</code>
 that can be used to separate diffusion weighted measurements from non-diffusion
-weighted measurements ($b = 0 s/mm^2$, commonly referred to as the B0 volume or
-image). We will extract the vector  corresponding to diffusion weighted
-measurements!
+weighted measurements (b = 0 s/mm^2, commonly referred to as the B0 volume or
+image). It is important to know where our diffusion weighted free measurements
+are as we need them for registration in our preprocessing, (our next notebook).
+<code>gtab.b0s_mask</code> shows that this is our first volume of our
+dataset.
 
+~~~
+gtab.b0s_mask
+~~~
+{: .language-python}
+
+~~~
+array([ True, False, False, False, False, False, False, False, False,
+       False, False,  True, False, False, False, False, False, False,
+       False, False, False, False,  True, False, False, False, False,
+       False, False, False, False, False, False,  True, False, False,
+       False, False, False, False, False, False, False, False,  True,
+       False, False, False, False, False, False, False, False, False,
+       False,  True, False, False, False, False, False, False, False,
+       False, False, False,  True])
+~~~
+{: .output}
+  
+We will also extract the vector corresponding to only diffusion weighted
+measurements (or equivalently return everything that is not a b = 0 s/mm^2)!
+  
 ~~~
 gtab.bvecs[~gtab.b0s_mask]
 ~~~
@@ -344,27 +379,6 @@ array([[-2.51881e-02, -3.72268e-01,  9.27783e-01],
 ~~~
 {: .output}
 
-It is also important to know where our diffusion weighting free measurements
-are as we need them for registration in our preprocessing, (our next notebook).
-<code>gtab.b0s_mask</code> shows that this is our first volume of our
-dataset.
-
-~~~
-gtab.b0s_mask
-~~~
-{: .language-python}
-
-~~~
-array([ True, False, False, False, False, False, False, False, False,
-       False, False,  True, False, False, False, False, False, False,
-       False, False, False, False,  True, False, False, False, False,
-       False, False, False, False, False, False,  True, False, False,
-       False, False, False, False, False, False, False, False,  True,
-       False, False, False, False, False, False, False, False, False,
-       False,  True, False, False, False, False, False, False, False,
-       False, False, False,  True])
-~~~
-{: .output}
 
 In the next few notebooks, we will talk more about preprocessing the diffusion
 weighted images, reconstructing the diffusion tensor model, and reconstruction
