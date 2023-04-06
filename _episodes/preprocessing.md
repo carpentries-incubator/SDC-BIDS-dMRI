@@ -17,17 +17,19 @@ start: true
 
 ## Diffusion Preprocessing
 
-Diffusion preprocessing typically comprises of a series of steps, which may
-vary depending on how the data is acquired. Some consensus has been reached for
-certain preprocessing steps, while others are still up for debate. The lesson
-will primarily focus on the preprocessing steps where consensus has been
-reached. Preprocessing is performed using a few well-known software packages
-(e.g. `FSL`, `ANTs`). For the purposes of these lessons, preprocessing steps
-requiring these software packages has already been performed for the dataset
-<code>ds000221</code> and the commands required for each step will be provided.
-This dataset contains single shell diffusion data with 7 $b = 0 s/mm^2$ volumes
-(non-diffusion weighted) and 60 $b = 1000 s/mm^2$ volumes. In addition, field
-maps (found in the <code>fmap</code> directory are acquired with opposite
+Diffusion MRI data does not typically come off the scanner ready to be analyzed,
+and there can be many things that might need to be corrected before analysis. 
+Diffusion preprocessing typically comprises of a series of steps to perform the 
+necessary corrections to the data. These steps may vary depending on how the data 
+is acquired. Some consensus has been reached for certain preprocessing steps, 
+while others are still up for debate. The lesson will primarily focus on the 
+preprocessing steps where consensus has been reached. Preprocessing is performed 
+using a few well-known software packages (e.g. [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki), [ANTs](https://github.com/ANTsX/ANTs). For the purposes 
+of these lessons, preprocessing steps requiring these software packages has already 
+been performed for the dataset <code>ds000221</code> and the commands required for 
+each step will be provided. This dataset contains single shell diffusion data with 
+7 b = 0 s/mm^2 volumes (non-diffusion weighted) and 60 b = 1000 s/mm^2 volumes. 
+In addition, field maps (found in the <code>fmap</code> directory are acquired with opposite
 phase-encoding directions).
 
 To illustrate what the preprocessing step may look like, here is an example
@@ -49,10 +51,10 @@ lesson.
 ### Brainmasking
 
 The first step to the preprocessing workflow is to create an appropriate
-brainmask from the diffusion data! Start, by first importing the necessary
-modules. and reading the diffusion data! We will also grab the anatomical T1w
-image to use later on, as well as the second inversion from the anatomical
-acquisition for brainmasking purposes.
+brainmask from the diffusion data along with the coordinate system (the affine)!
+Start, by first importing the necessary modules. and reading the diffusion data! 
+We will also grab the anatomical T1w image to use later on, as well as the second 
+inversion from the anatomical acquisition for brainmasking purposes.
 
 ~~~
 from bids.layout import BIDSLayout
@@ -111,7 +113,7 @@ nib.save(img, os.path.join(out_dir, f"sub-{subj}_ses-01_brainmask.nii.gz"))
 
 Diffusion images, typically acquired using spin-echo echo planar imaging (EPI),
 are sensitive to non-zero off-resonance fields. One source of these fields is
-from the susceptibilitiy distribution of the subjects head, otherwise known as
+from the susceptibility distribution of the subjects head, otherwise known as
 susceptibility-induced off-resonance field. This field is approximately
 constant for all acquired diffusion images. As such, for a set of diffusion
 volumes, the susceptibility-induced field will be consistent throughout. This
@@ -125,9 +127,12 @@ differs. Typically, this is done using two acquisitions acquired with opposite
 phase-encoding directions, which results in the same field creating distortions
 in opposing directions.
 
+![blips]({{ relative_root_path }}/fig/preprocessing/blip_up_blip_down.png)
+Opposie phase-encodings from two DWI
+
 Here, we will make use of the two opposite phase-encoded acquisitions found in
 the <code>fmap</code> directory of each subject. These are acquired with a
-diffusion weighting of $b = 0 s/mm^2$. Alternatively, if these are not
+diffusion weighting of b = 0 s/mm^2. Alternatively, if these are not
 available, one can also extract and make use of the non-diffusion weighted
 images (assuming the data is also acquired with opposite phase encoding
 directions).
@@ -171,7 +176,7 @@ are used. Briefly:
 regarding the acquisition.
 - <code>--config=b02b0.cnf</code> makes use of a predefined config file.
 supplied with <code>topup</code>, which contains parameters useful to
-registering with good $b = 0 s/mm^2$ images.
+registering with good b = 0 s/mm^2 images.
 - <code>--out</code> defines the output files containing the spline.
 coefficients for the induced field, as well as subject movement parameters.
 
@@ -329,7 +334,7 @@ nib.save(img, os.path.join(out_dir, "sub-010006_ses-01_dwi_proc-eddy_b0.nii.gz")
 To perform the registration between the diffusion volumes and T1w, we will make
 use of `ANTs`, specifically the <code>antsRegistrationSyNQuick.sh</code> script
 and <code>antsApplyTransform</code>. We will begin by registering the diffusion
-$b = 0 s/mm^2$ volume to get the appropriate transforms to align the two
+b = 0 s/mm^2 volume to get the appropriate transforms to align the two
 images. We will then apply the inverse transformation to the T1w volume such
 that it is aligned to the diffusion volume.
 
