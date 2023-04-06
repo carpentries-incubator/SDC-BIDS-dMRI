@@ -51,10 +51,10 @@ lesson.
 ### Brainmasking
 
 The first step to the preprocessing workflow is to create an appropriate
-brainmask from the diffusion data along with the coordinate system (the affine)!
-Start, by first importing the necessary modules. and reading the diffusion data! 
-We will also grab the anatomical T1w image to use later on, as well as the second 
-inversion from the anatomical acquisition for brainmasking purposes.
+brainmask from the diffusion data! Start by first importing the necessary modules and 
+reading the diffusion data along with the coordinate system (the affine)! We will also grab 
+the anatomical T1w image to use later on, as well as the second inversion from the anatomical 
+acquisition for brainmasking purposes.
 
 ~~~
 from bids.layout import BIDSLayout
@@ -128,7 +128,7 @@ phase-encoding directions, which results in the same field creating distortions
 in opposing directions.
 
 ![blips]({{ relative_root_path }}/fig/preprocessing/blip_up_blip_down.png)
-Opposie phase-encodings from two DWI
+Opposite phase-encodings from two DWI
 
 Here, we will make use of the two opposite phase-encoded acquisitions found in
 the <code>fmap</code> directory of each subject. These are acquired with a
