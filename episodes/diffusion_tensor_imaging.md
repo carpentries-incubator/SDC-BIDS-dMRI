@@ -247,7 +247,7 @@ of diffusion, along ![Axial diffusivity eigenvalue]({{ relative_root_path }}/fig
 or parallel to the axon (and hence, some works refer to it as the
 *parallel diffusivity*). On the other hand, RD reflects the average diffusivity
 along the other two minor axes (being named as *perpendicular diffusivity* in
-some works) (![Radial diffusivity eigenvalues]({{ relative_root_path }}/fig/diffusion_tensor_imaging/minor_axes.png)){:class="inline"}.
+some works) (![Radial diffusivity eigenvalues]({{ relative_root_path }}/fig/diffusion_tensor_imaging/minor_axes.png){:class="inline"}).
 Both are measured in $mm^2/s$.
 
 ![Axial and radial diffusivities]({{ relative_root_path }}/fig/diffusion_tensor_imaging/ax_rad_diff.png)
