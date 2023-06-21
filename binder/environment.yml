@@ -20,4 +20,4 @@ dependencies:
   - seaborn
 
   - pip:
-      - pybids=0.14.0
+      - pybids==0.14.0
