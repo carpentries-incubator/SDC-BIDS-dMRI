@@ -8,16 +8,16 @@ dependencies:
   - python=3.8.*
   - pip
   - git
-  - dipy=1.3.0
-  - fury=0.6.1
+  - dipy=1.5.0
+  - fury=0.7.1
   - jupyter_contrib_nbextensions
-  - matplotlib
+  - matplotlib=3.5.3
   - nibabel
   - nilearn=0.7.0
   - numpy
-  - osfclient
+  - osfclient=0.0.5
   - pandas
   - seaborn
 
   - pip:
-      - pybids
+      - pybids=0.14.0
