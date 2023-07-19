@@ -22,6 +22,7 @@ jobs:
       FSLPATH: /opt/fsl
       FSLDIR: /opt/fsl
       FSLOUTPUTTYPE: NIFTI_GZ
+      FSLVERSION: 6.0.6.5
 
     steps:
     - name: Cache Ubuntu dependencies
@@ -79,12 +80,18 @@ jobs:
         restore-keys: |
           fsl-v2
 
+    # Run with multiple Python versions
+    - name: Setup Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
     - name: Install FSL
       run: |
         if [[ ! -d "${FSLPATH}" ]]; then
           sudo mkdir -p $FSLPATH
-          curl -sSL "https://fsl.fmrib.ox.ac.uk/fsldownloads/fsl-6.0.2-centos6_64.tar.gz" | sudo tar -xzC $FSLPATH --strip-components 1
-          sudo bash ${FSLPATH}/etc/fslconf/fslpython_install.sh -f $FSLPATH
+          curl https://fsl.fmrib.ox.ac.uk/fsldownloads/fslconda/releases/fslinstaller.py -o ${{ github.workspace }}/../fslinstaller.py -s
+          python ${{ github.workspace }}/../fslinstaller.py -d ${FSLPATH} -V ${FSLVERSION} -o
           sudo rm -rf ${FSLPATH}/data/atlases
         fi
 
@@ -94,12 +101,6 @@ jobs:
     - name: Install dependencies for headless display
       run: |
         ${{ github.workspace }}/.github/scripts/setup_headless.sh
-
-    # Run with multiple Python versions
-    - name: Setup Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
 
     - name: Install Python requirements
       if: steps.cache.outputs.cache-hit != 'true'
