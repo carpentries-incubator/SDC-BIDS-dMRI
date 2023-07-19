@@ -8,7 +8,7 @@ dependencies:
   - python=3.8.*
   - pip
   - git
-  - dipy=1.5.0
+  - dipy=1.7.0
   - fury=0.7.1
   - jupyter_contrib_nbextensions
   - matplotlib=3.5.3
