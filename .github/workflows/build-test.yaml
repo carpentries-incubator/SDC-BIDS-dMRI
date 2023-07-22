@@ -90,9 +90,10 @@ jobs:
       run: |
         if [[ ! -d "${FSLPATH}" ]]; then
           sudo mkdir -p $FSLPATH
-          curl https://fsl.fmrib.ox.ac.uk/fsldownloads/fslconda/releases/fslinstaller.py -o ${{ github.workspace }}/../fslinstaller.py -s
-          python ${{ github.workspace }}/../fslinstaller.py -d ${FSLPATH} -V ${FSLVERSION} -o
+          curl https://fsl.fmrib.ox.ac.uk/fsldownloads/fslconda/releases/fslinstaller.py -o /tmp/fslinstaller.py -s
+          python /tmp/fslinstaller.py -d ${FSLPATH} -V ${FSLVERSION} -o
           sudo rm -rf ${FSLPATH}/data/atlases
+          rm /tmp/fslinstaller.py
         fi
 
     - name: Checkout GitHub repository
