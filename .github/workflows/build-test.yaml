@@ -108,7 +108,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pytest nbval
+        pip install ipython
+        pip install jupyter
+        pip install nbconvert
 
     - name: Download data
       run: |
@@ -119,13 +121,15 @@ jobs:
         rm ds000221_sub-010006.zip
         popd
 
-    - name: Run pytest on Jupyter notebooks
+    - name: Run Jupyter notebooks
       run: |
+        pip list
+        jupyter kernelspec list
         export PYTHONPATH=$PYTHONPATH:`realpath ${{ github.workspace }}`
         export PATH=/opt/fsl/bin:/opt/ants:$PATH
-        pytest --nbval-lax -v code/introduction.ipynb
-        pytest --nbval-lax -v code/preprocessing.ipynb
-        pytest --nbval-lax -v code/diffusion_tensor_imaging.ipynb
-        pytest --nbval-lax -v code/constrained_spherical_deconvolution.ipynb
-        pytest --nbval-lax -v code/deterministic_tractography.ipynb
-        pytest --nbval-lax -v code/probabilistic_tractography.ipynb
+        jupyter nbconvert --ExecutePreprocessor.kernel_name=python3 --to notebook --execute code/introduction.ipynb
+        jupyter nbconvert --ExecutePreprocessor.kernel_name=python3 --ExecutePreprocessor.timeout=None --to notebook --execute code/preprocessing.ipynb
+        jupyter nbconvert --to notebook --execute code/diffusion_tensor_imaging.ipynb
+        jupyter nbconvert --ExecutePreprocessor.kernel_name=python3 --to notebook --execute code/constrained_spherical_deconvolution.ipynb
+        jupyter nbconvert --ExecutePreprocessor.kernel_name=python3 --to notebook --execute code/deterministic_tractography.ipynb
+        jupyter nbconvert --ExecutePreprocessor.kernel_name=python3 --to notebook --execute code/probabilistic_tractography.ipynb
