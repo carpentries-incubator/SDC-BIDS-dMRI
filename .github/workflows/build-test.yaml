@@ -56,6 +56,7 @@ jobs:
                              libxrandr2 \
                              libxrender1 \
                              libxt6
+        sudo apt-get clean
 
     - name: Cache ANTs install
       uses: actions/cache@v3
