@@ -28,7 +28,10 @@ jobs:
     - name: Cache Ubuntu dependencies
       uses: actions/cache@v3
       with:
-        path: /var/lib/apt
+        path: |
+          /var/lib/apt
+          !/var/cache/apt/archives/partial
+          !/var/cache/apt/archives/lock
         key: apt-cache-v1
         restore-keys: |
           apt-cache-v1
