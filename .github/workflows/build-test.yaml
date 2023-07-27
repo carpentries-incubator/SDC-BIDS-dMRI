@@ -28,7 +28,10 @@ jobs:
     - name: Cache Ubuntu dependencies
       uses: actions/cache@v3
       with:
-        path: /var/lib/apt
+        path: |
+          /var/lib/apt
+          !/var/cache/apt/archives/partial
+          !/var/cache/apt/archives/lock
         key: apt-cache-v1
         restore-keys: |
           apt-cache-v1
@@ -56,6 +59,7 @@ jobs:
                              libxrandr2 \
                              libxrender1 \
                              libxt6
+        sudo apt-get clean
 
     - name: Cache ANTs install
       uses: actions/cache@v3
@@ -75,7 +79,7 @@ jobs:
     - name: Cache FSL install
       uses: actions/cache@v3
       with:
-        path: /opt/fsl
+        path: $FSLPATH
         key: fsl-v2
         restore-keys: |
           fsl-v2
@@ -122,7 +126,7 @@ jobs:
     - name: Run pytest on Jupyter notebooks
       run: |
         export PYTHONPATH=$PYTHONPATH:`realpath ${{ github.workspace }}`
-        export PATH=/opt/fsl/bin:/opt/ants:$PATH
+        export PATH=$FSLPATH/bin:$ANTSPATH:$PATH
         pytest --nbval-lax -v code/introduction.ipynb
         pytest --nbval-lax -v code/preprocessing.ipynb
         pytest --nbval-lax -v code/diffusion_tensor_imaging.ipynb
