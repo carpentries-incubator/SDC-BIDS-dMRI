@@ -30,8 +30,8 @@ jobs:
       with:
         path: |
           /var/lib/apt
-          !/var/cache/apt/archives/partial
-          !/var/cache/apt/archives/lock
+          !/var/lib/apt/lists/partial
+          !/var/lib/apt/lists/lock
         key: apt-cache-v1
         restore-keys: |
           apt-cache-v1
