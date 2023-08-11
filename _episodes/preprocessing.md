@@ -105,7 +105,7 @@ nib.save(img, os.path.join(out_dir, f"sub-{subj}_ses-01_brainmask.nii.gz"))
 ~~~
 {: .language-python}
 
-![b0 brainmask]]({{ relative_root_path }}/fig/preprocessing/dwi_brainmask.png)
+![b0 brainmask]({{ relative_root_path }}/fig/preprocessing/dwi_brainmask.png)
 
 ### `FSL` [<code>topup</code>](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/topup)
 
