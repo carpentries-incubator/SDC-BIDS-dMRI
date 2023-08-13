@@ -11,6 +11,7 @@ objectives:
 keypoints:
 - "Many different preprocessing pipelines, dependent on how data is acquired"
 start: true
+math: true
 ---
 
 {% include base_path.html %}
