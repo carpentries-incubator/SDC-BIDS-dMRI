@@ -15,6 +15,7 @@ directional sensitivity)"
 this sensitivity, each volume of the 4D image is sensitive to a particular
 direction"
 start: true
+math: true
 ---
 
 {% include base_path.html %}
