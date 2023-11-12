@@ -18,18 +18,20 @@ math: true
 
 ## Diffusion Preprocessing
 
-Diffusion preprocessing typically comprises of a series of steps, which may
-vary depending on how the data is acquired. Some consensus has been reached for
-certain preprocessing steps, while others are still up for debate. The lesson
-will primarily focus on the preprocessing steps where consensus has been
-reached. Preprocessing is performed using a few well-known software packages
-(e.g. `FSL`, `ANTs`). For the purposes of these lessons, preprocessing steps
-requiring these software packages has already been performed for the dataset
-<code>ds000221</code> and the commands required for each step will be provided.
-This dataset contains single shell diffusion data with 7 $b = 0 s/mm^2$ volumes
-(non-diffusion weighted) and 60 $b = 1000 s/mm^2$ volumes. In addition, field
-maps (found in the <code>fmap</code> directory are acquired with opposite
-phase-encoding directions).
+Diffusion MRI data does not typically come off the scanner ready to be analyzed,
+and there can be many things that might need to be corrected before analysis. 
+Diffusion preprocessing typically comprises of a series of steps to perform the 
+necessary corrections to the data. These steps may vary depending on how the data 
+is acquired. Some consensus has been reached for certain preprocessing steps, 
+while others are still up for debate. The lesson will primarily focus on the 
+preprocessing steps where consensus has been reached. Preprocessing is performed 
+using a few well-known software packages (e.g. [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki), [ANTs](https://github.com/ANTsX/ANTs). For the purposes 
+of these lessons, preprocessing steps requiring these software packages has already 
+been performed for the dataset <code>ds000221</code> and the commands required for 
+each step will be provided. This dataset contains single shell diffusion data with 
+7 $b = 0 s/mm^2$ volumes (non-diffusion weighted) and 60 $b = 1000 s/mm^2$ volumes. 
+In addition, field maps (found in the <code>fmap</code> directory are acquired 
+with opposite phase-encoding directions).
 
 To illustrate what the preprocessing step may look like, here is an example
 preprocessing workflow from QSIPrep (Cieslak _et al_, 2020):
@@ -50,9 +52,9 @@ lesson.
 ### Brainmasking
 
 The first step to the preprocessing workflow is to create an appropriate
-brainmask from the diffusion data! Start, by first importing the necessary
-modules. and reading the diffusion data! We will also grab the anatomical T1w
-image to use later on, as well as the second inversion from the anatomical
+brainmask from the diffusion data! Start by first importing the necessary modules and 
+reading the diffusion data along with the coordinate system (the affine)! We will also grab 
+the anatomical T1w image to use later on, as well as the second inversion from the anatomical 
 acquisition for brainmasking purposes.
 
 ~~~
@@ -112,7 +114,7 @@ nib.save(img, os.path.join(out_dir, f"sub-{subj}_ses-01_brainmask.nii.gz"))
 
 Diffusion images, typically acquired using spin-echo echo planar imaging (EPI),
 are sensitive to non-zero off-resonance fields. One source of these fields is
-from the susceptibilitiy distribution of the subjects head, otherwise known as
+from the susceptibility distribution of the subjects head, otherwise known as
 susceptibility-induced off-resonance field. This field is approximately
 constant for all acquired diffusion images. As such, for a set of diffusion
 volumes, the susceptibility-induced field will be consistent throughout. This
@@ -125,6 +127,9 @@ acquisitions, where the acquisition parameters differ such that the distortion
 differs. Typically, this is done using two acquisitions acquired with opposite
 phase-encoding directions, which results in the same field creating distortions
 in opposing directions.
+
+![blips]({{ relative_root_path }}/fig/preprocessing/blip_up_blip_down.png)
+Opposite phase-encodings from two DWI
 
 Here, we will make use of the two opposite phase-encoded acquisitions found in
 the <code>fmap</code> directory of each subject. These are acquired with a
