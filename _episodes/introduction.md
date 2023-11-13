@@ -39,10 +39,9 @@ brain tissue. DWI has been used extensively to diagnose stroke, assess white
 matter damage in many different kinds of diseases, provide insights into the 
 white matter connectivity, and much more!
 
-![fiber_configurations]
-({{ relative_root_path }}/fig/introduction/diffusion_direction_new.png) 
-\Diffusion along X, Y, and Z directions. The signal in the left/right oriented 
-corpus callosum is lowest when measured along X, while the signal in the 
++![Diffusion along different directions]({{ relative_root_path }}/fig/introduction/diffusion_directions.png) \
+\Diffusion along X, Y, and Z directions. The signal in the left/right oriented
+corpus callosum is lowest when measured along X, while the signal in the
 inferior/superior oriented corticospinal tract is lowest when measured along Z.
 
 ## b-values & b-vectors
@@ -71,8 +70,7 @@ properties. The DWI acquisition process is thus:
 For the rest of this lesson, we will make use of a subset of a publicly
 available dataset, ds000221, originally hosted at [openneuro.org](https://openneuro.org/datasets/ds000221/versions/1.0.0).
 The dataset is structured according to the Brain Imaging Data Structure
-([BIDS](https://bids-specification.readthedocs.io/en/etable/)). Please check
-the [the BIDS-dMRI Setup page](https://carpentries-incubator.github.io/SDC-BIDS-dMRI/setup.html)
+([BIDS](https://bids-specification.readthedocs.io/en/etable/)). Please check the [BIDS-dMRI Setup page](https://carpentries-incubator.github.io/SDC-BIDS-dMRI/setup.html)
 to download the dataset.
 
 Below is a tree diagram showing the folder structure of a single MR subject and
