@@ -2,7 +2,7 @@ name: Build, test
 
 on:
   push:
-    branch: main
+    branches: ['main']
   pull_request:
 
 # Allow a subsequently queued workflow run to interrupt previous runs
