@@ -6,3 +6,7 @@ jupyter nbextension enable exercise2/main
 osf -p cmq8a fetch ds000221_subject/ds000221_sub-010006.zip data/ds000221_sub-010006.zip
 unzip data/ds000221_sub-010006.zip -d data
 rm data/ds000221_sub-010006.zip
+
+# export pythonpath
+export PYTHONPATH=utils/:$PYTHONPATH
+export PATH=utils/:$PATH
