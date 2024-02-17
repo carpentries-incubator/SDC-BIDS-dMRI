@@ -26,7 +26,7 @@ jobs:
 
     steps:
     - name: Cache Ubuntu dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           /var/lib/apt
@@ -62,7 +62,7 @@ jobs:
         sudo apt-get clean
 
     - name: Cache ANTs install
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: /opt/ants
         key: ants-v1
@@ -77,7 +77,7 @@ jobs:
         fi
 
     - name: Cache FSL install
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: $FSLPATH
         key: fsl-v2
@@ -86,7 +86,7 @@ jobs:
 
     # Run with multiple Python versions
     - name: Setup Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
 
@@ -101,7 +101,7 @@ jobs:
         fi
 
     - name: Checkout GitHub repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Install dependencies for headless display
       run: |
