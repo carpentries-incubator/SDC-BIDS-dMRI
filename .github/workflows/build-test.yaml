@@ -1,0 +1,135 @@
+name: Build, test
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+
+# Allow a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }}-${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  build:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.9', '3.10', '3.11']
+    env:
+      ANTSPATH: /opt/ants
+      FSLPATH: /opt/fsl
+      FSLDIR: /opt/fsl
+      FSLOUTPUTTYPE: NIFTI_GZ
+      FSLVERSION: 6.0.6.5
+
+    steps:
+    - name: Cache Ubuntu dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          /var/lib/apt
+          !/var/lib/apt/lists/partial
+          !/var/lib/apt/lists/lock
+        key: apt-cache-v1
+        restore-keys: |
+          apt-cache-v1
+
+    - name: Install Ubuntu dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends \
+                             bc \
+                             bzip2 \
+                             ca-certificates \
+                             curl \
+                             dc \
+                             file \
+                             libfontconfig1 \
+                             libfreetype6 \
+                             libgl1-mesa-dev \
+                             libgl1-mesa-dri \
+                             libglu1-mesa-dev \
+                             libgomp1 \
+                             libice6 \
+                             libxcursor1 \
+                             libxft2 \
+                             libxinerama1 \
+                             libxrandr2 \
+                             libxrender1 \
+                             libxt6
+        sudo apt-get clean
+
+    - name: Cache ANTs install
+      uses: actions/cache@v3
+      with:
+        path: /opt/ants
+        key: ants-v1
+        restore-keys: |
+          ants-v1
+
+    - name: Install ANTs
+      run: |
+        if [[ ! -d "${ANTSPATH}" ]]; then
+          sudo mkdir -p $ANTSPATH
+          curl -sSL "https://dl.dropbox.com/s/gwf51ykkk5bifyj/ants-Linux-centos6_x86_64-v2.3.4.tar.gz" | sudo tar -xzC $ANTSPATH --strip-components 1
+        fi
+
+    - name: Cache FSL install
+      uses: actions/cache@v3
+      with:
+        path: $FSLPATH
+        key: fsl-v2
+        restore-keys: |
+          fsl-v2
+
+    # Run with multiple Python versions
+    - name: Setup Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install FSL
+      run: |
+        if [[ ! -d "${FSLPATH}" ]]; then
+          sudo mkdir -p $FSLPATH
+          curl https://fsl.fmrib.ox.ac.uk/fsldownloads/fslconda/releases/fslinstaller.py -o /tmp/fslinstaller.py -s
+          python /tmp/fslinstaller.py -d ${FSLPATH} -V ${FSLVERSION} -o
+          sudo rm -rf ${FSLPATH}/data/atlases
+          rm /tmp/fslinstaller.py
+        fi
+
+    - name: Checkout GitHub repository
+      uses: actions/checkout@v3
+
+    - name: Install dependencies for headless display
+      run: |
+        ${{ github.workspace }}/.github/scripts/setup_headless.sh
+
+    - name: Install Python requirements
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest nbval
+
+    - name: Download data
+      run: |
+        pushd `pwd`
+        cd ${{ github.workspace }}/data
+        osf -p cmq8a fetch ds000221_subject/ds000221_sub-010006.zip
+        unzip ds000221_sub-010006.zip
+        rm ds000221_sub-010006.zip
+        popd
+
+    - name: Run pytest on Jupyter notebooks
+      run: |
+        export PYTHONPATH=$PYTHONPATH:`realpath ${{ github.workspace }}`
+        export PATH=$FSLPATH/bin:$ANTSPATH:$PATH
+        pytest --nbval-lax -v code/introduction.ipynb
+        pytest --nbval-lax -v code/preprocessing.ipynb
+        pytest --nbval-lax -v code/diffusion_tensor_imaging.ipynb
+        pytest --nbval-lax -v code/constrained_spherical_deconvolution.ipynb
+        pytest --nbval-lax -v code/deterministic_tractography.ipynb
+        pytest --nbval-lax -v code/probabilistic_tractography.ipynb
