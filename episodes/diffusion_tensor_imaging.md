@@ -32,15 +32,12 @@ The tensor models the diffusion signal mathematically as:
 
 ![Diffusion signal equation]({{ relative_root_path }}/fig/diffusion_tensor_imaging/diffusion_eqn.png)
 
-Where ![Diffusion unit vector]({{ relative_root_path }}/fig/diffusion_tensor_imaging/inline_unitvector.png){:class="inline"}
-is a unit vector in 3D space indicating the direction of measurement and b are
-the parameters of the measurement, such as the strength and duration of
-diffusion-weighting gradient. ![Diffusion signal]({{ relative_root_path }}/fig/diffusion_tensor_imaging/inline_diffusionsignal.png){:class="inline"}
-is the diffusion-weighted signal measured and 
-![Non-weighted diffusion signal]({{ relative_root_path }}/fig/diffusion_tensor_imaging/inline_nondiffsignal.png){:class="inline"}
-is the signal conducted in a measurement with no diffusion weighting. 
-![Diffusivity]({{ relative_root_path }}/fig/diffusion_tensor_imaging/inline_diffusionmatrix.png){:class="inline"}
-is a positive-definite quadratic form, which contains six free parameters to be
+Where $\boldsymbol{g}$ is a unit vector in 3D space indicating the direction
+of measurement and $b$ are the parameters of the measurement, such as the
+strength and duration of diffusion-weighting gradient. $S(\boldsymbol{g}, b)$
+is the diffusion-weighted signal measured and $S_{0}$ is the signal conducted
+in a measurement with no diffusion weighting. $\boldsymbol{D}$ is a
+positive-definite quadratic form, which contains six free parameters to be
 fit. These six parameters are:
 
 ![Diffusivity matrix]({{ relative_root_path }}/fig/diffusion_tensor_imaging/diffusion_matrix.png)
@@ -48,15 +45,14 @@ fit. These six parameters are:
 The diffusion matrix is a variance-covariance matrix of the diffusivity along
 the three spatial dimensions. Note that we can assume that the diffusivity has
 antipodal symmetry, so elements across the diagonal of the matrix are equal.
-For example: ![Symmetry in the diffusivity matrix]({{ relative_root_path }}/fig/diffusion_tensor_imaging/inline_diagelements.png){:class="inline"}.
-This is why there are only 6 free parameters to estimate here.
+For example: $D_{xy} = D_{yx}$. This is why there are only 6 free parameters
+to estimate here.
 
-Tensors are represented by ellipsoids characterized by calculated eigenvalues 
-(![Diffusivity matrix eigenvalues]({{ relative_root_path }}/fig/diffusion_tensor_imaging/inline_eigval.png){:class="inline"})
-and eigenvectors (![Diffusivity matrix eigenvectors]({{ relative_root_path }}/fig/diffusion_tensor_imaging/inline_eigvec.png){:class="inline"})
-from the previously described matrix. 
-The computed eigenvalues and eigenvectors are normally sorted in descending
-magnitude (i.e. ![Diffusivity matrix eigenvalues magnitudes]({{ relative_root_path }}/fig/diffusion_tensor_imaging/inline_sortedeigvec.png){:class="inline"}).
+Tensors are represented by ellipsoids characterized by calculated eigenvalues
+($\lambda_{1}, \lambda_{2}, \lambda_{3}$) and
+($\epsilon_{1}, \epsilon_{2}, \epsilon_{3}$) eigenvectors from the previously
+described matrix. The computed eigenvalues and eigenvectors are normally
+sorted in descending magnitude (i.e. $\lambda_{1} \geq \lambda_{2}$).
 Eigenvalues are always strictly positive in the context of dMRI and are
 measured in $mm^2/s$. In the DTI model, the largest eigenvalue gives the
 principal direction of the diffusion tensor, and the other two eigenvectors
@@ -173,15 +169,15 @@ the tensor:
 ![FA equation]({{ relative_root_path }}/fig/diffusion_tensor_imaging/fa_eqn.png)
 
 Values of FA vary between 0 and 1 (unitless). In the cases of perfect,
-isotropic diffusion, ![Isotropic diffusion eigenvalues]({{ relative_root_path }}/fig/diffusion_tensor_imaging/fa_iso.png){:class="inline"},
-the diffusion tensor is a sphere and FA = 0. If the first two eigenvalues are
-equal the tensor will be oblate or planar, whereas if the first eigenvalue is
-larger than the other two, it will have the mentioned ellipsoid shape: as
-diffusion progressively becomes more anisotropic, eigenvalues become more
-unequal, causing the tensor to be elongated, with FA approaching 1. Note that
-FA should be interpreted carefully. It may be an indication of the density of
-packing fibers in a voxel and the amount of myelin wrapped around those axons,
-but it is not always a measure of "tissue integrity".
+isotropic diffusion, $\lambda_{1} = \lambda_{2} = \lambda_{3}$, the diffusion
+tensor is a sphere and FA = 0. If the first two eigenvalues are equal the
+tensor will be oblate or planar, whereas if the first eigenvalue is larger
+than the other two, it will have the mentioned ellipsoid shape: as diffusion
+progressively becomes more anisotropic, eigenvalues become more unequal,
+causing the tensor to be elongated, with FA approaching 1. Note that FA should
+be interpreted carefully. It may be an indication of the density of packing
+fibers in a voxel and the amount of myelin wrapped around those axons, but it
+is not always a measure of "tissue integrity".
 
 Let's take a look at what the FA map looks like! An FA map is a gray-scale
 image, where higher intensities reflect more anisotropic diffuse regions.
@@ -243,11 +239,10 @@ The final two metrics we will discuss are axial diffusivity (AD) and radial
 diffusivity (RD). Two tensors with different shapes may yield the same FA
 values, and additional measures such as AD and RD are required to further
 characterize the tensor. AD describes the diffusion rate along the primary axis
-of diffusion, along ![Axial diffusivity eigenvalue]({{ relative_root_path }}/fig/diffusion_tensor_imaging/primary_diffusion.png){:class="inline"},
-or parallel to the axon (and hence, some works refer to it as the
-*parallel diffusivity*). On the other hand, RD reflects the average diffusivity
-along the other two minor axes (being named as *perpendicular diffusivity* in
-some works) (![Radial diffusivity eigenvalues]({{ relative_root_path }}/fig/diffusion_tensor_imaging/minor_axes.png){:class="inline"}).
+of diffusion, along $\lambda_{1}$, or parallel to the axon (and hence, some
+works refer to it as the *parallel diffusivity*). On the other hand, RD
+reflects the average diffusivity along the other two minor axes (being named
+as *perpendicular diffusivity* in some works) ($\lambda_{2}, \lambda_{3}$).
 Both are measured in $mm^2/s$.
 
 ![Axial and radial diffusivities]({{ relative_root_path }}/fig/diffusion_tensor_imaging/ax_rad_diff.png)
