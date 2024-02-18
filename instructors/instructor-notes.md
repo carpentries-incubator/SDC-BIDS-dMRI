@@ -25,7 +25,7 @@ neither does it focus on the importance of visualization for that purpose.
 
 ## Lesson design
 
-### [Introduction to Diffusion MRI data](../episodes/introduction.md)
+### [Introduction to Diffusion MRI data](episodes/introduction.md)
 
 - If your workshop includes the [Introduction to MRI and BIDS](https://carpentries-incubator.github.io/SDC-BIDS-IntroMRI/) lesson,
   learners will have the necessary knowledge to better understand how diffusion
@@ -38,7 +38,7 @@ neither does it focus on the importance of visualization for that purpose.
   [DSI Studio], [ExploreDTI], [MRtrix], or [TrackVis], to analyze or visualize
   diffusion MRI data.
 
-### [Preprocessing dMRI data](../episodes/preprocessing.md)
+### [Preprocessing dMRI data](episodes/preprocessing.md)
 
 - Pre-processing in dMRI depends on the available data (acquisition) and the
   quality of the data, so learners should be encouraged to look at their data to
@@ -50,7 +50,7 @@ neither does it focus on the importance of visualization for that purpose.
   [ANTs]) that are used as command-line tools, so learners should be encouraged
   to check their documentation, and adjust the arguments as necessary.
 
-### [Diffusion Tensor Imaging (DTI)](../episodes/diffusion_tensor_imaging.md)
+### [Diffusion Tensor Imaging (DTI)](episodes/diffusion_tensor_imaging.md)
 
 - Learners should be able to understand the use, relevance and limitations of
   the DTI model, both from the a clinical point of view, and a research setting.
@@ -65,7 +65,7 @@ neither does it focus on the importance of visualization for that purpose.
   DTI mistakenly being used interchangeably, partially due to the extensive use
   of the DTI model in clinical practice).
 
-### [Tractography](../episodes/tractography.md)
+### [Tractography](episodes/tractography.md)
 
 - Make sure to explain the difference between the actual biological white matter
   fibers and streamlines in tractograms, and why tractography is not quantitative
