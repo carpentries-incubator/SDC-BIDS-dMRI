@@ -1,19 +1,23 @@
 ---
-title: "Tractography"
+title: Tractography
 teaching: 120
 exercises: 20
-questions:
-- "What information can dMRI provide at the long range level?"
-objectives:
-- "Present different long range orientation reconstruction methods"
-keypoints:
-- "Provides an estimation of the long range underlying fiber arrangement"
-- "Tractography is central to estimate and provide measures of the white matter
-  neuroanatomy"
-start: true
+start: yes
 ---
 
-{% include base_path.html %}
+::::::::::::::::::::::::::::::::::::::: objectives
+
+- Present different long range orientation reconstruction methods
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- What information can dMRI provide at the long range level?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
 
 ## Tractography
 
@@ -33,23 +37,24 @@ usually saved into files called *tractograms*.
 The following is a list of the main families of tractography methods in
 chronological order:
 
-* Local tractography (Conturo et al. 1999, Mori et al. 1999, Basser et al.
-2000).
-* Global tracking (Mangin et al. 2002)
-* Particle Filtering Tractography (PFT) (Girard et al. 2014)
-* Parallel Transport Tractography (PTT) (Aydogan et al., 2019)
+- Local tractography (Conturo et al. 1999, Mori et al. 1999, Basser et al.
+  2000\).
+- Global tracking (Mangin et al. 2002)
+- Particle Filtering Tractography (PFT) (Girard et al. 2014)
+- Parallel Transport Tractography (PTT) (Aydogan et al., 2019)
 
 Local tractography methods and PFT can use two approaches to propagate the
 streamlines:
+
 - Deterministic: propagates streamlines consistently using the same propagation
-direction.
+  direction.
 - Probabilistic: uses a distribution function to sample from in order to decide
-on the next propagation direction at each step.
+  on the next propagation direction at each step.
 
 Several algorithms exist to perform local tracking, depending on the
 local orientation construct used or the order of the integration being
 performed, among others: FACT (Mori et al. 1999), EuDX (Garyfallidis 2012),
-iFOD1 (Tournier et al. 2012) / iFOD2 (Tournier et al. 2010), and SD_STREAM
+iFOD1 (Tournier et al. 2012) / iFOD2 (Tournier et al. 2010), and SD\_STREAM
 (Tournier et al. 2012) are some of those. Different strategies to reduce the
 uncertainty (or missed configurations) on the tracking results have also been
 proposed (e.g. Ensemble Tractography (Takemura et al. 2016), Bootstrap
@@ -71,3 +76,12 @@ Tractography (SET) (St-Onge et al. 2018), Bundle-Specific Tractography (BST)
 In the recent years, many deep learning methods have been proposed to map the
 local orientation reconstruction (or directly the diffusion MRI data) to long
 range white matter connectivity.
+
+:::::::::::::::::::::::::::::::::::::::: keypoints
+
+- Provides an estimation of the long range underlying fiber arrangement
+- Tractography is central to estimate and provide measures of the white matter neuroanatomy
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+

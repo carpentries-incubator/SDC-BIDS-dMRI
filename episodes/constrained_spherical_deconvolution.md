@@ -1,20 +1,25 @@
 ---
-title: "Constrained Spherical Deconvolution (CSD)"
+title: Constrained Spherical Deconvolution (CSD)
 teaching: 30
 exercises: 5
-questions:
-- "What is Constrained Spherical Deconvolution (CSD)?"
-- "What does CSD offer compared to DTI?"
-objectives:
-- "Understand Spherical Deconvolution"
-- "Visualizing the fiber Orientation Distribution Function"
-keypoints:
-- "CSD uses the information along more gradient encoding directions"
-- "It allows to resolve complex fiber configurations, such as crossings"
-math: true
+math: yes
 ---
 
-{% include base_path.html %}
+::::::::::::::::::::::::::::::::::::::: objectives
+
+- Understand Spherical Deconvolution
+- Visualizing the fiber Orientation Distribution Function
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- What is Constrained Spherical Deconvolution (CSD)?
+- What does CSD offer compared to DTI?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
 
 ## Constrained Spherical Deconvolution (CSD)
 
@@ -31,7 +36,7 @@ recovered as a deconvolution problem by solving a system of linear equations.
 These methods can work on both single-shell and multi-shell data.
 
 The basic equations of an SD method can be summarized as
-![Spherical deconvolution equation]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/spherical_deconvolution_equation.png) \
+![](fig/constrained_spherical_deconvolution/spherical_deconvolution_equation.png){alt='Spherical deconvolution equation'}   
 Spherical deconvolution
 
 There are a number of variants to the general SD framework that differ, among
@@ -52,7 +57,7 @@ simplicity, single-shell data will be used in this episode.
 Let's start by loading the necessary data. For simplicity, we will assume that
 the gradient table is the same across all voxels after the pre-processing.
 
-~~~
+```python
 import os
 
 import nibabel as nib
@@ -84,8 +89,7 @@ data, affine = load_nifti(dwi_fname)
 
 bvals, bvecs = read_bvals_bvecs(bval_fname, bvec_fname)
 gtab = gradient_table(bvals, bvecs)
-~~~
-{: .language-python}
+```
 
 You can verify the b-values of the dataset by looking at the attribute
 `gtab.bvals`. Now that a datasets with multiple gradient directions is loaded,
@@ -104,15 +108,19 @@ function will calculate the FA for an ROI of radius equal to `roi_radii` in
 the center of the volume, and return the response function estimated in that
 region for the voxels with FA higher than a given threshold.
 
-> ## The fiber response function and the diffusion model
->
-> The `auto_response_ssst` method is relevant within a Single-Shell
-> Single-Tissue (SSST) context/model; e.g. Multi-Shell Multi-Tissue (MSMT)
-> context/models require the fiber response function to be computed
-> differently.
-{: .callout}
+:::::::::::::::::::::::::::::::::::::::::  callout
 
-~~~
+## The fiber response function and the diffusion model
+
+The `auto_response_ssst` method is relevant within a Single-Shell
+Single-Tissue (SSST) context/model; e.g. Multi-Shell Multi-Tissue (MSMT)
+context/models require the fiber response function to be computed
+differently.
+
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+```python
 from dipy.reconst.csdeconv import auto_response_ssst
 
 response, ratio = auto_response_ssst(gtab, data, roi_radii=10, fa_thr=0.7)
@@ -125,8 +133,7 @@ if not os.path.exists(out_dir):
 
 # Save the FRF
 np.savetxt(os.path.join(out_dir, 'frf.txt'), np.hstack([response[0], response[1]]))
-~~~
-{: .language-python}
+```
 
 The `response` tuple contains two elements. The first is an array with
 the eigenvalues of the response function and the second is the average `S0`
@@ -136,15 +143,13 @@ Validating the numerical value of the response function is recommended to
 ensure that the FA-based strategy provides a good result. To this end, the
 elements of the `response` tuple can be printed and their values be studied.
 
-~~~
+```python
 print(response)
-~~~
-{: .language-python}
+```
 
-~~~
+```output
 (array([0.00160273, 0.00034256, 0.00034256]), 209.55229)
-~~~
-{: .output}
+```
 
 The tensor generated belonging to the response function must be prolate (two
 smaller eigenvalues should be equal), and look anisotropic with a ratio of
@@ -153,21 +158,19 @@ diffusivity of this tensor should be around 5 times larger than the radial
 diffusivity. It is generally accepted that a response function with the
 mentioned features is representative of a coherently oriented fiber population.
 
-~~~
+```python
 print(ratio)
-~~~
-{: .language-python}
+```
 
-~~~
+```output
 0.2137331138364376
-~~~
-{: .output}
+```
 
 It is good practice to visualize the response function's ODF, which also gives
 an insightful idea around the SD framework. The response function's ODF should
 have sharp lobes, as the anisotropy of its diffusivity indicates:
 
-~~~
+```python
 import matplotlib.pyplot as plt
 from dipy.sims.voxel import single_tensor_odf
 from fury import window, actor
@@ -192,25 +195,20 @@ fig, axes = plt.subplots()
 axes.imshow(response_scene_arr, cmap="plasma", origin="lower")
 axes.axis("off")
 plt.show()
-~~~
-{: .language-python}
+```
 
-![Fiber Response Function (FRF)]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/frf.png) \
+![](fig/constrained_spherical_deconvolution/frf.png){alt='Fiber Response Function (FRF)'}   
 Estimated response function
 
-
-~~~
+```python
 scene.rm(response_actor)
-~~~
-{: .language-python}
-
+```
 
 Note that, although fast, the FA threshold might not always be the best way to
 find the response function, since it depends on the diffusion tensor, which has
 a number of limitations. Similarly, different bundles are known to have
 different response functions. More importantly, it also varies across subjects,
 and hence it must be computed on a case basis.
-
 
 ## Step 2. fODF reconstruction
 
@@ -222,9 +220,9 @@ function. While the series is infinite, it must be truncated to a maximum order
 in practice to be able to represent the diffusion signal. The maximum order
 will determine the number of SH coefficients used. The number of diffusion
 encoding gradient directions must be at least as large as the number of
-coefficients. Hence, the maximum order $l_{max}$ is determined by the equation
-$R = (l_{max}+1)(l_{max}+2)/2$, where $R$ is the number of coefficients. For
-example, an order $l_{max} = {4, 6, 8}$ SH series has $R = {15, 28, 45}$
+coefficients. Hence, the maximum order $l\_{max}$ is determined by the equation
+$R = (l\_{max}+1)(l\_{max}+2)/2$, where $R$ is the number of coefficients. For
+example, an order $l\_{max} = {4, 6, 8}$ SH series has $R = {15, 28, 45}$
 coefficients, respectively. Note the use of even orders: even order SH
 functions allow to reconstruct symmetric spherical functions. Traditionally,
 even orders have been used motivated by the fact that the diffusion process is
@@ -233,18 +231,17 @@ symmetric around the origin.
 The CSD is performed in `DIPY` by calling the `fit` method of the CSD model on
 the diffusion data:
 
-~~~
+```python
 from dipy.reconst.csdeconv import ConstrainedSphericalDeconvModel
 
 sh_order = 8
 csd_model = ConstrainedSphericalDeconvModel(gtab, response, sh_order=sh_order, convergence=50)
-~~~
-{: .language-python}
+```
 
 For illustration purposes we will fit only a small portion of the data
 representing the splenium of the corpus callosum.
 
-~~~
+```python
 data_small = data[40:80, 40:80, 45:55]
 csd_fit = csd_model.fit(data_small)
 
@@ -253,8 +250,7 @@ sh_coeffs = csd_fit.shm_coeff
 # Save the SH coefficients
 nib.save(nib.Nifti1Image(sh_coeffs.astype(np.float32), affine),
          os.path.join(out_dir, 'sh_coeffs.nii.gz'))
-~~~
-{: .language-python}
+```
 
 Getting the fODFs from the model fit is straightforward in `DIPY`. As a side
 note, it is worthwhile mentioning that the orientation distribution recovered
@@ -263,10 +259,9 @@ by SD methods is also named fODFs to distinguish from the diffusion ODFs
 be a sharper version of the latter. At times, they are also called Fiber
 Orientation Distribution (FOD).
 
-~~~
+```python
 csd_odf = csd_fit.odf(default_sphere)
-~~~
-{: .language-python}
+```
 
 We will now use the `generate_anatomical_slice_figure` utility function that
 allows us to generate three anatomical views (axial superior, sagittal right
@@ -275,7 +270,7 @@ and coronal anterior) of the data.
 Here we visualize only the central slices of the 40x40x10 region (i.e. the
 `[40:80, 40:80, 45:55]` volume data region) that has been used.
 
-~~~
+```python
 from utils.visualization_utils import generate_anatomical_slice_figure
 
 colormap = "plasma"
@@ -293,16 +288,15 @@ fig = generate_anatomical_slice_figure(slices, fodf_actor, cmap=colormap)
 fig.savefig(os.path.join(out_dir, "csd_odfs.png"), dpi=300,
             bbox_inches="tight")
 plt.show()
-~~~
-{: .language-python}
+```
 
-![CSD ODFs]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/csd_odfs.png) \
+![](fig/constrained_spherical_deconvolution/csd_odfs.png){alt='CSD ODFs'}   
 CSD ODFs.
 
 The peak directions (maxima) of the fODFs can be found from the fODFs. For this
 purpose, `DIPY` offers the `peaks_from_model` method.
 
-~~~
+```python
 from dipy.direction import peaks_from_model
 from dipy.io.peaks import reshape_peaks_for_visualization
 
@@ -321,12 +315,11 @@ peak_indices = csd_peaks.peak_indices
 nib.save(nib.Nifti1Image(peak_indices, affine), os.path.join(out_dir,
     'peaks_indices.nii.gz'))
 
-~~~
-{: .language-python}
+```
 
 We can visualize them as usual using `FURY`:
 
-~~~
+```python
 # Build the representation of the data
 peaks_actor = actor.peak_slicer(csd_peaks.peak_dirs, csd_peaks.peak_values)
 
@@ -336,15 +329,14 @@ fig = generate_anatomical_slice_figure(slices, peaks_actor, cmap=colormap)
 fig.savefig(os.path.join(out_dir, "csd_peaks.png"), dpi=300,
     bbox_inches="tight")
 plt.show()
-~~~
-{: .language-python}
+```
 
-![CSD peaks]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/csd_peaks.png) \
+![](fig/constrained_spherical_deconvolution/csd_peaks.png){alt='CSD peaks'}   
 CSD Peaks.
 
 We can finally visualize both the fODFs and peaks in the same space.
 
-~~~
+```python
 fodf_actor.GetProperty().SetOpacity(0.4)
 
 # Generate the figure
@@ -354,120 +346,128 @@ fig = generate_anatomical_slice_figure(slices, peaks_actor, fodf_actor,
 fig.savefig(os.path.join(out_dir, "csd_peaks_fodfs.png"), dpi=300,
             bbox_inches="tight")
 plt.show()
-~~~
-{: .language-python}
+```
 
-![CSD peaks and fODFs]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/csd_peaks_fodfs.png) \
+![](fig/constrained_spherical_deconvolution/csd_peaks_fodfs.png){alt='CSD peaks and fODFs'}   
 CSD Peaks and ODFs.
 
-
-
-References
-----------
+## References
 
 .. [Tournier2007] J-D. Tournier, F. Calamante and A. Connelly, "Robust
-   determination of the fibre orientation distribution in diffusion MRI:
-   Non-negativity constrained super-resolved spherical deconvolution",
-   Neuroimage, vol. 35, no. 4, pp. 1459-1472, 2007.
+determination of the fibre orientation distribution in diffusion MRI:
+Non-negativity constrained super-resolved spherical deconvolution",
+Neuroimage, vol. 35, no. 4, pp. 1459-1472, 2007.
 
-> ## Exercise 1
->
-> Simulate the ODF for two fibre populations with crossing angles of 
-> 90, 60, 45, 30, and 20 degrees. We have included helpful hints and 
-> code below to help you get started.
->
-> Helpful hints: 
-> - To set the angle between tensors, use `[(0, 0), (angle, 0)]`.
-> - You may need to use a higher resolution sphere than `default_sphere`.
-> - You may need to rotate the scene to visualize the ODFs.
-> - Below is some code to simulate multiple fibre orientations:
->
-> ~~~
-> from dipy.sims.voxel import multi_tensor_odf
-> 
-> # Eigenvalues for multiple orientations
-> mevals = np.array(([0.0015, 0.00015, 0.00015], [0.0015, 0.00015, 0.00015]))
->
-> # Set fractional value of each tensor
-> fractions = [50, 50]
-> ~~~
-> {: .language-python}
->
-> > ## Solution
-> > 
-> > We will first simulate the ODFs for the different crossing angles:
-> >
-> > ~~~
-> > import numpy as np
-> > 
-> > from dipy.data import get_sphere
-> > from dipy.sims.voxel import multi_tensor_odf
-> >
-> > # Set eigenvalues for tensors
-> > mevals = np.array(([0.0015, 0.00015, 0.00015], [0.0015, 0.00015, 0.00015]))
-> >
-> > # Set fraction for each tensor 
-> > fractions = [50, 50]
-> >
-> > # Create a list of the crossing angles to be simulated
-> > angles = [90, 60, 45, 30, 20]
-> >
-> > odf = []
-> >
-> > # Simulate ODFs of different angles
-> > for angle in angles:
-> >     _angles = [(0, 0), (angle, 0)]
-> >     _odf = multi_tensor_odf(get_sphere(
-> >         "repulsion724").vertices, mevals, _angles, fractions)
-> >     odf.append(_odf)
-> > ~~~
-> > {: .language-python}
-> >
-> > We are now able to visualize and save to disk a screenshot of each ODF
-> > crossing. As it can be seen, as the crossing angle becomes smaller,
-> > distinguishing the underlying fiber orientations becomes harder: an ODF
-> > might be unable to resolve different fiber populations at such crossings,
-> > and be only able to indicate a single orientation. This has an impact on
-> > tractography, since the tracking procedure will only be able to propagate
-> > streamlines according to peaks retrieved by the ODFs. Also, note that thi
-> > problem is worsened by the presence of noise in real diffusion data.
-> >
-> > ~~~
-> > import matplotlib.pyplot as plt
-> >
-> > from fury import window, actor
-> >
-> > # Create the output directory to store the image
-> > out_dir = '../../data/ds000221/derivatives/dwi/reconstruction/exercise/dwi/'
-> >
-> > if not os.path.exists(out_dir):
-> >     os.makedirs(out_dir)
-> >
-> > fig, axes = plt.subplots(1, len(angles), figsize=(10, 2))
-> >
-> > # Visualize the simulated ODFs of different angles
-> > for ix, (_odf, angle) in enumerate(zip(odf, angles)):
-> >     scene = window.Scene()
-> >     odf_actor = actor.odf_slicer(_odf[None, None, None, :], sphere=get_sphere("repulsion724"),
-> >                                  colormap='plasma')
-> >     odf_actor.RotateX(90)
-> >     scene.add(odf_actor)
-> >     odf_scene_arr = window.snapshot(
-> >         scene, fname=os.path.join(out_dir, 'odf_%d_angle.png' % angle), size=(200, 200),
-> >         offscreen=True)
-> > 
-> >     axes[ix].imshow(odf_scene_arr, cmap="plasma", origin="lower")
-> >     axes[ix].set_title("%d deg" % angle)
-> >     axes[ix].axis("off")
-> > 
-> > plt.show()
-> > ~~~
-> > {: .language-python}
-> > 
-> > ![ODFs of differing crossing angles]({{ relative_root_path }}/fig/constrained_spherical_deconvolution/odf_multiple_angles.png) \
+:::::::::::::::::::::::::::::::::::::::  challenge
+
+## Exercise 1
+
+Simulate the ODF for two fibre populations with crossing angles of
+90, 60, 45, 30, and 20 degrees. We have included helpful hints and
+code below to help you get started.
+
+Helpful hints:
+
+- To set the angle between tensors, use `[(0, 0), (angle, 0)]`.
+- You may need to use a higher resolution sphere than `default_sphere`.
+- You may need to rotate the scene to visualize the ODFs.
+- Below is some code to simulate multiple fibre orientations:
+
+```python
+from dipy.sims.voxel import multi_tensor_odf
+
+# Eigenvalues for multiple orientations
+mevals = np.array(([0.0015, 0.00015, 0.00015], [0.0015, 0.00015, 0.00015]))
+
+# Set fractional value of each tensor
+fractions = [50, 50]
+```
+
+:::::::::::::::  solution
+
+## Solution
+
+We will first simulate the ODFs for the different crossing angles:
+
+```python
+import numpy as np
+
+from dipy.data import get_sphere
+from dipy.sims.voxel import multi_tensor_odf
+
+# Set eigenvalues for tensors
+mevals = np.array(([0.0015, 0.00015, 0.00015], [0.0015, 0.00015, 0.00015]))
+
+# Set fraction for each tensor 
+fractions = [50, 50]
+
+# Create a list of the crossing angles to be simulated
+angles = [90, 60, 45, 30, 20]
+
+odf = []
+
+# Simulate ODFs of different angles
+for angle in angles:
+    _angles = [(0, 0), (angle, 0)]
+    _odf = multi_tensor_odf(get_sphere(
+        "repulsion724").vertices, mevals, _angles, fractions)
+    odf.append(_odf)
+```
+
+We are now able to visualize and save to disk a screenshot of each ODF
+crossing. As it can be seen, as the crossing angle becomes smaller,
+distinguishing the underlying fiber orientations becomes harder: an ODF
+might be unable to resolve different fiber populations at such crossings,
+and be only able to indicate a single orientation. This has an impact on
+tractography, since the tracking procedure will only be able to propagate
+streamlines according to peaks retrieved by the ODFs. Also, note that thi
+problem is worsened by the presence of noise in real diffusion data.
+
+```python
+import matplotlib.pyplot as plt
+
+from fury import window, actor
+
+# Create the output directory to store the image
+out_dir = '../../data/ds000221/derivatives/dwi/reconstruction/exercise/dwi/'
+
+if not os.path.exists(out_dir):
+    os.makedirs(out_dir)
+
+fig, axes = plt.subplots(1, len(angles), figsize=(10, 2))
+
+# Visualize the simulated ODFs of different angles
+for ix, (_odf, angle) in enumerate(zip(odf, angles)):
+    scene = window.Scene()
+    odf_actor = actor.odf_slicer(_odf[None, None, None, :], sphere=get_sphere("repulsion724"),
+                                 colormap='plasma')
+    odf_actor.RotateX(90)
+    scene.add(odf_actor)
+    odf_scene_arr = window.snapshot(
+        scene, fname=os.path.join(out_dir, 'odf_%d_angle.png' % angle), size=(200, 200),
+        offscreen=True)
+
+    axes[ix].imshow(odf_scene_arr, cmap="plasma", origin="lower")
+    axes[ix].set_title("%d deg" % angle)
+    axes[ix].axis("off")
+
+plt.show()
+```
+
+![](fig/constrained_spherical_deconvolution/odf_multiple_angles.png){alt='ODFs of differing crossing angles'}   
 ODFs of different crossing angles.
-> >
-> {: .solution}
-{: .challenge}
 
-{% include links.md %}
+:::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+
+:::::::::::::::::::::::::::::::::::::::: keypoints
+
+- CSD uses the information along more gradient encoding directions
+- It allows to resolve complex fiber configurations, such as crossings
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+

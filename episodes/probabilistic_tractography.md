@@ -1,22 +1,25 @@
 ---
-title: "Probabilistic tractography"
+title: Probabilistic tractography
 teaching: 30
 exercises: 5
-questions:
-- "Why do we need tractography algorithms beyond the deterministic ones?"
-- "How is probabilistic tractography different from deterministic
-tractography?"
-objectives:
-- "Understand the principles behind a probabilistic tractography algorithm"
-- "Understand the aspects involved when analyzing the tractogram computed using
-a probabilistic algorithm"
-keypoints:
-- "Probabilistic tractography incorporates uncertainty to the tracking process"
-- "Provides tractograms that explore more white matter axonal fibers"
-math: true
+math: yes
 ---
 
-{% include base_path.html %}
+::::::::::::::::::::::::::::::::::::::: objectives
+
+- Understand the principles behind a probabilistic tractography algorithm
+- Understand the aspects involved when analyzing the tractogram computed using a probabilistic algorithm
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- Why do we need tractography algorithms beyond the deterministic ones?
+- How is probabilistic tractography different from deterministic tractography?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
 
 ## Probabilistic tractography
 
@@ -47,7 +50,7 @@ reconstruction method presented in a previous episode.
 We will first get the necessary diffusion data, and compute the local
 orientation information using the CSD method:
 
-~~~
+```python
 import os
 
 import nibabel as nib
@@ -72,13 +75,12 @@ affine = dwi_img.affine
 
 gt_bvals, gt_bvecs = read_bvals_bvecs(bval, bvec)
 gtab = gradient_table(gt_bvals, gt_bvecs)
-~~~
-{: .language-python}
+```
 
 We will now create the seeding mask and the seeds using an estimate of the
 white matter tissue based on the FA values obtained from the diffusion tensor:
 
-~~~
+```python
 from dipy.reconst import dti
 from dipy.segment.mask import median_otsu
 from dipy.tracking import utils
@@ -97,13 +99,12 @@ seed_mask[seed_mask < 0.2] = 0
 
 # Create the seeds
 seeds = utils.seeds_from_mask(seed_mask, affine=affine, density=1)
-~~~
-{: .language-python}
+```
 
 We will now estimate the FRF and set the CSD model to feed the local orientation
 information to the streamline propagation object:
 
-~~~
+```python
 from dipy.reconst.csdeconv import (ConstrainedSphericalDeconvModel,
                                    auto_response_ssst)
 
@@ -111,8 +112,7 @@ response, ratio = auto_response_ssst(gtab, dwi_data, roi_radii=10, fa_thr=0.7)
 sh_order = 2
 csd_model = ConstrainedSphericalDeconvModel(gtab, response, sh_order=sh_order)
 csd_fit = csd_model.fit(dwi_data, mask=seed_mask)
-~~~
-{: .language-python}
+```
 
 Tracking methods are provided with a criterion to stop propagating streamlines
 beyond non-white matter tissues. One way to do this is to use the Generalized
@@ -121,7 +121,7 @@ DTI model measures anisotropy, the GFA uses samples of the ODF to quantify the
 anisotropy of tissues, and hence, it provides an estimation of the underlying
 tissue type.
 
-~~~
+```python
 from scipy import ndimage  # To rotate image for visualization purposes
 import matplotlib.pyplot as plt
 from dipy.reconst.shm import CsaOdfModel
@@ -150,8 +150,7 @@ ax[1].imshow(ndimage.rotate(gfa[gfa.shape[0]//2, :, :], 90, reshape=False))
 ax[2].imshow(ndimage.rotate(gfa[:, :, gfa.shape[-1]//2], 90, reshape=False))
 fig.savefig(os.path.join(out_dir, "gfa.png"), dpi=300, bbox_inches="tight")
 plt.show()
-~~~
-{: .language-python}
+```
 
 The GFA threshold stopping criterion value must be adjusted to the data in
 order to avoid creating a mask that will exclude white matter areas (which
@@ -159,14 +158,14 @@ would result in streamlines being unable to propagate to other white matter
 areas). Visually inspecting the GFA map might provide with a sufficient
 guarantee about the goodness of the value.
 
-![GFA]({{ relative_root_path }}/fig/probabilistic_tractography/gfa.png) \
+![](fig/probabilistic_tractography/gfa.png){alt='GFA'}   
 GFA
 
 The Fiber Orientation Distribution (FOD) of the CSD model estimates the
 distribution of small fiber bundles within each voxel. We can use this
 distribution for probabilistic fiber tracking. One way to do this is to
 represent the FOD using a discrete sphere. This discrete FOD can be used by the
-``ProbabilisticDirectionGetter`` as a PMF for sampling tracking directions. We
+`ProbabilisticDirectionGetter` as a PMF for sampling tracking directions. We
 need to clip the FOD to use it as a PMF because the latter cannot have negative
 values. Ideally, the FOD should be strictly positive, but because of noise
 and/or model failures sometimes it can have negative values.
@@ -184,7 +183,7 @@ instance as its second argument, and thus a different criterion can be used if
 the GFA criterion does not fit into our framework, or if different data is
 available in our workflow.
 
-~~~
+```python
 from dipy.direction import ProbabilisticDirectionGetter
 from dipy.data import small_sphere
 from dipy.io.stateful_tractogram import Space, StatefulTractogram
@@ -203,13 +202,12 @@ sft = StatefulTractogram(streamlines, dwi_img, Space.RASMM)
 
 # Save the tractogram
 save_tractogram(sft, "tractogram_probabilistic_dg_pmf.trk")
-~~~
-{: .language-python}
+```
 
 We will easily generate the anatomical views on the generated tractogram using
 the `generate_anatomical_volume_figure` helper function:
 
-~~~
+```python
 from fury import actor, colormap
 
 from utils.visualization_utils import generate_anatomical_volume_figure
@@ -225,10 +223,9 @@ fig = generate_anatomical_volume_figure(streamlines_actor)
 fig.savefig(os.path.join(out_dir, "tractogram_probabilistic_dg_pmf.png"),
             dpi=300, bbox_inches="tight")
 plt.show()
-~~~
-{: .language-python}
+```
 
-![PMF direction getter-derived probabilistic tractogram]({{ relative_root_path }}/fig/probabilistic_tractography/tractogram_probabilistic_dg_pmf.png) \
+![](fig/probabilistic_tractography/tractogram_probabilistic_dg_pmf.png){alt='PMF direction getter-derived probabilistic tractogram'}   
 Streamlines representing white matter using probabilistic direction getter from
 PMF
 
@@ -236,14 +233,14 @@ One disadvantage of using a discrete PMF to represent possible tracking
 directions is that it tends to take up a lot of RAM memory. The size of the
 PMF, the FOD in this case, must be equal to the number of possible tracking
 directions on the hemisphere, and every voxel has a unique PMF. In this case
-the data is ``(81, 106, 76)`` and ``small_sphere`` has 181 directions so the
-FOD is ``(81, 106, 76, 181)``. One way to avoid sampling the PMF and holding it
+the data is `(81, 106, 76)` and `small_sphere` has 181 directions so the
+FOD is `(81, 106, 76, 181)`. One way to avoid sampling the PMF and holding it
 in memory is to build the direction getter directly from the spherical harmonic
 (SH) representation of the FOD. By using this approach, we can also use a
-larger sphere, like ``default_sphere`` which has 362 directions on the
+larger sphere, like `default_sphere` which has 362 directions on the
 hemisphere, without having to worry about memory limitations.
 
-~~~
+```python
 from dipy.data import default_sphere
 
 prob_dg = ProbabilisticDirectionGetter.from_shcoeff(csd_fit.shm_coeff,
@@ -256,13 +253,11 @@ sft = StatefulTractogram(streamlines, dwi_img, Space.RASMM)
 
 # Save the tractogram
 save_tractogram(sft, "tractogram_probabilistic_dg_sh.trk")
-~~~
-{: .language-python}
-
+```
 
 We will visualize the tractogram using the three usual anatomical views:
 
-~~~
+```python
 # Plot the tractogram
 
 # Build the representation of the data
@@ -274,41 +269,36 @@ fig = generate_anatomical_volume_figure(streamlines_actor)
 fig.savefig(os.path.join(out_dir, "tractogram_probabilistic_dg_sh.png"),
             dpi=300, bbox_inches="tight")
 plt.show()
-~~~
-{: .language-python}
+```
 
-
-![SH direction getter-derived probabilistic tractogram]({{ relative_root_path }}/fig/probabilistic_tractography/tractogram_probabilistic_dg_sh.png) \
+![](fig/probabilistic_tractography/tractogram_probabilistic_dg_sh.png){alt='SH direction getter-derived probabilistic tractogram'}   
 Streamlines representing white matter using probabilistic direction getter from
 SH
 
-Not all model fits have the ``shm_coeff`` attribute because not all models use
+Not all model fits have the `shm_coeff` attribute because not all models use
 this basis to represent the data internally. However we can fit the ODF of any
-model to the spherical harmonic basis using the ``peaks_from_model`` function.
+model to the spherical harmonic basis using the `peaks_from_model` function.
 
-~~~
+```python
 from dipy.direction import peaks_from_model
 
 peaks = peaks_from_model(csd_model, dwi_data, default_sphere, .5, 25,
                          mask=seed_mask, return_sh=True, parallel=True)
-~~~
-{: .language-python}
-
+```
 
 It is always good practice to (save and) visualize the peaks as a check towards
 ensuring that the orientation information conforms to what is expected as input
 to the tracking process.
 
-~~~
+```python
 # Save the peaks
 nib.save(nib.Nifti1Image(reshape_peaks_for_visualization(peaks),
                          affine), os.path.join(out_dir, 'peaks.nii.gz'))
-~~~
-{: .language-python}
+```
 
 As usual, we will use `FURY` to visualize the peaks:
 
-~~~
+```python
 from utils.visualization_utils import generate_anatomical_slice_figure
 
 # Visualize the peaks
@@ -324,16 +314,15 @@ fig = generate_anatomical_slice_figure(slices, peaks_actor)
 
 fig.savefig(os.path.join(out_dir, "peaks.png"), dpi=300, bbox_inches="tight")
 plt.show()
-~~~
-{: .language-python}
+```
 
-![CSD model peaks for tracking]({{ relative_root_path }}/fig/probabilistic_tractography/peaks.png) \
+![](fig/probabilistic_tractography/peaks.png){alt='CSD model peaks for tracking'}   
 Peaks obtained from the CSD model for tracking purposes
 
 We will now perform the tracking process using the local orientation
 information provided by the peaks:
 
-~~~
+```python
 fod_coeff = peaks.shm_coeff
 
 prob_dg = ProbabilisticDirectionGetter.from_shcoeff(fod_coeff, max_angle=30.,
@@ -345,12 +334,11 @@ sft = StatefulTractogram(streamlines, dwi_img, Space.RASMM)
 
 # Save the tractogram
 save_tractogram(sft, "tractogram_probabilistic_dg_sh_pmf.trk")
-~~~
-{: .language-python}
+```
 
 We will again visualize the tractogram using the three usual anatomical views:
 
-~~~
+```python
 # Plot the tractogram
 
 # Build the representation of the data
@@ -362,106 +350,107 @@ fig = generate_anatomical_volume_figure(streamlines_actor)
 fig.savefig(os.path.join(out_dir, "tractogram_probabilistic_dg_sh_pmf.png"),
             dpi=300, bbox_inches="tight")
 plt.show()
-~~~
-{: .language-python}
+```
 
-
-![PMF SH direction getter-derived probabilistic tractogram]({{ relative_root_path }}/fig/probabilistic_tractography/tractogram_probabilistic_dg_sh_pmf.png) \
+![](fig/probabilistic_tractography/tractogram_probabilistic_dg_sh_pmf.png){alt='PMF SH direction getter-derived probabilistic tractogram'}   
 Streamlines representing white matter using probabilistic direction getter from
-SH (peaks_from_model)
+SH (peaks\_from\_model)
+
+:::::::::::::::::::::::::::::::::::::::::  callout
+
+## Tip: Making sure your tractogram is well aligned with the data
+
+If for whatever reason the anatomical and diffusion images were not correctly
+aligned, you may find that your tractogram is not well aligned with the
+anatomical data. This may also happen derived from the different formats in
+which a tractogram is saved/loaded, some conventions specifying the origin at
+the voxel corner and other specifying it at the center of the voxel.
+Visualizing the computed features is always recommended. There are some tools
+that allow to ensure that the matrices specifying the orientation and
+positioning of the data should be correct.
+
+`MRtrix`'s `mrinfo` command can be used to visualize the affine matrix of a
+`NIfTI` file as:
+
+```bash
+mrinfo dwi.nii.gz
+```
+
+which would output something like:
+
+```output
+************************************************
+Image:               "/data/dwi.nii.gz"
+************************************************
+  Dimensions:        90 x 108 x 90 x 33
+  Voxel size:        2 x 2 x 2 x 1
+  Data strides:      [ -1 -2 3 4 ]
+  Format:            NIfTI-1.1 (GZip compressed)
+  Data type:         signed 16 bit integer (little endian)
+  Intensity scaling: offset = 0, multiplier = 1
+  Transform:                    1          -0           0      -178
+                               -0           1           0      -214
+                               -0          -0           1        -0
+```
+
+Similarly, for your tractograms, you may use the command `track_info` from
+`TrackVis`' `Diffusion Toolkit` set of command-line tools:
+
+```bash
+track_info tractogram.trk
+```
+
+which would output something like:
+
+```output
+ID string:            TRACK
+Version:              2
+Dimension:            180 216 180
+Voxel size:           1 1 1
+Voxel order:          LPS
+Voxel order original: LPS
+Voxel to RAS matrix:
+     -1.0000     0.0000     0.0000     0.5000
+      0.0000    -1.0000     0.0000     0.5000
+      0.0000     0.0000     1.0000    -0.5000
+      0.0000     0.0000     0.0000     1.0000
+
+Image Orientation:  1.0000/0.0000/0.0000/0.0000/1.0000/0.0000
+Orientation patches:  none
+Number of scalars:  0
+Number of properties: 0
+Number of tracks: 200433
+```
+
+Note that, a `TRK` file contains orientational and positional information. If
+you choose to store your tractograms using the `TCK` format, this information
+will not be contained in the file. To see the file header information you may
+use the `MRtrix` `tckinfo` command:
+
+```bash
+tckinfo tractogram.tck
+```
+
+which would output something like:
+
+```output
+***********************************
+ Tracks file: "/data/tractogram.tck"
+   count:                0000200433
+   dimensions:           (180, 216, 180)
+   voxel_order:          LPS
+   voxel_sizes:          (1.0, 1.0, 1.0)
+```
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-> ## Tip: Making sure your tractogram is well aligned with the data
->
-> If for whatever reason the anatomical and diffusion images were not correctly
-> aligned, you may find that your tractogram is not well aligned with the
-> anatomical data. This may also happen derived from the different formats in
-> which a tractogram is saved/loaded, some conventions specifying the origin at
-> the voxel corner and other specifying it at the center of the voxel.
-> Visualizing the computed features is always recommended. There are some tools
-> that allow to ensure that the matrices specifying the orientation and
-> positioning of the data should be correct.
->
-> `MRtrix`'s `mrinfo` command can be used to visualize the affine matrix of a
-> `NIfTI` file as:
->
-> ~~~
-> mrinfo dwi.nii.gz
-> ~~~
-> {: .language-bash}
->
-> which would output something like:
->
-> ~~~
-> ************************************************
-> Image:               "/data/dwi.nii.gz"
-> ************************************************
->   Dimensions:        90 x 108 x 90 x 33
->   Voxel size:        2 x 2 x 2 x 1
->   Data strides:      [ -1 -2 3 4 ]
->   Format:            NIfTI-1.1 (GZip compressed)
->   Data type:         signed 16 bit integer (little endian)
->   Intensity scaling: offset = 0, multiplier = 1
->   Transform:                    1          -0           0      -178
->                                -0           1           0      -214
->                                -0          -0           1        -0
-> ~~~
-> {: .output}
->
-> Similarly, for your tractograms, you may use the command `track_info` from
-> `TrackVis`' `Diffusion Toolkit` set of command-line tools:
->
-> ~~~
-> track_info tractogram.trk
-> ~~~
-> {: .language-bash}
->
-> which would output something like:
->
-> ~~~
-> ID string:            TRACK
-> Version:              2
-> Dimension:            180 216 180
-> Voxel size:           1 1 1
-> Voxel order:          LPS
-> Voxel order original: LPS
-> Voxel to RAS matrix:
->      -1.0000     0.0000     0.0000     0.5000
->       0.0000    -1.0000     0.0000     0.5000
->       0.0000     0.0000     1.0000    -0.5000
->       0.0000     0.0000     0.0000     1.0000
->
-> Image Orientation:  1.0000/0.0000/0.0000/0.0000/1.0000/0.0000
-> Orientation patches:  none
-> Number of scalars:  0
-> Number of properties: 0
-> Number of tracks: 200433
-> ~~~
-> {: .output}
->
-> Note that, a `TRK` file contains orientational and positional information. If
-> you choose to store your tractograms using the `TCK` format, this information
-> will not be contained in the file. To see the file header information you may
-> use the `MRtrix` `tckinfo` command:
->
-> ~~~
-> tckinfo tractogram.tck
-> ~~~
-> {: .language-bash}
->
-> which would output something like:
->
-> ~~~
-> ***********************************
->  Tracks file: "/data/tractogram.tck"
->    count:                0000200433
->    dimensions:           (180, 216, 180)
->    voxel_order:          LPS
->    voxel_sizes:          (1.0, 1.0, 1.0)
-> ~~~
-> {: .output}
->
-{: .callout}
+
+:::::::::::::::::::::::::::::::::::::::: keypoints
+
+- Probabilistic tractography incorporates uncertainty to the tracking process
+- Provides tractograms that explore more white matter axonal fibers
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-{% include links.md %}

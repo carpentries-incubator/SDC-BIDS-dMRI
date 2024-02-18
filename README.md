@@ -28,6 +28,7 @@ tools, to advanced machine learning and multivariate methods!
 ## About the Lesson
 
 This lesson teaches:
+
 - What diffusion Magnetic Resonance Imaging is
 - How dMRI data is organized within the BIDS framework
 - What the standard preprocessing steps in dMRI are
@@ -36,17 +37,17 @@ This lesson teaches:
 
 ## Episodes
 
-|   Topic  | Time | Episode | Question(s) |
-|:---------|:----:|:--------|:------------|
-| **Introduction to Diffusion MRI data** | 30 | [1 Introduction to Diffusion MRI data][episode01] | How is dMRI data represented?<br />What is diffusion weighting? |
-| **Preprocessing dMRI data** | 30 | [2 Preprocessing dMRI data][episode02] | What are the standard preprocessing steps?<br />How do we register with an anatomical image? |
-| **Local fiber orientation reconstruction** | 30 | [3 Local fiber orientation reconstruction][episode03] | What information can dMRI provide at the voxel level? |
-| | 30 | [3.1 Diffusion Tensor Imaging (DTI)][episode04] | What is diffusion tensor imaging?<br />What metrics can be derived from DTI? |
-| | 30 | [3.2 Constrained Spherical Deconvolution (CSD)][episode05] | What is Constrained Spherical Deconvolution (CSD)?<br />What does CSD offer compared to DTI? |
-| **Tractography** | 30 | [4 Tractography][episode06] | What information can dMRI provide at the long range level? |
-| | 30 | [4.1 Local tractography][episode07] | FIXME |
-| | 30 | [4.1.1 Deterministic tractography][episode08] | FIXME |
-| | 30 | [4.1.2 Probabilistic tractography][episode09] | Why do we need tractography algorithms beyond the deterministic ones?<br />How is probabilistic tractography different from deterministic tractography? |
+| Topic | Time | Episode | Question(s)                                                                  | 
+| :---- | :--: | :------ | :--------------------------------------------------------------------------- |
+| **Introduction to Diffusion MRI data**      | 30   | [1 Introduction to Diffusion MRI data][episode01]        | How is dMRI data represented?<br />What is diffusion weighting?                                                | 
+| **Preprocessing dMRI data**      | 30   | [2 Preprocessing dMRI data][episode02]        | What are the standard preprocessing steps?<br />How do we register with an anatomical image?                                   | 
+| **Local fiber orientation reconstruction**      | 30   | [3 Local fiber orientation reconstruction][episode03]        | What information can dMRI provide at the voxel level?                        | 
+|       | 30   | [3\.1 Diffusion Tensor Imaging (DTI)][episode04]        | What is diffusion tensor imaging?<br />What metrics can be derived from DTI?                                            | 
+|       | 30   | [3\.2 Constrained Spherical Deconvolution (CSD)][episode05]        | What is Constrained Spherical Deconvolution (CSD)?<br />What does CSD offer compared to DTI?                           | 
+| **Tractography**      | 30   | [4 Tractography][episode06]        | What information can dMRI provide at the long range level?                   | 
+|       | 30   | [4\.1 Local tractography][episode07]        | FIXME                                                                        | 
+|       | 30   | [4\.1.1 Deterministic tractography][episode08]        | FIXME                                                                        | 
+|       | 30   | [4\.1.2 Probabilistic tractography][episode09]        | Why do we need tractography algorithms beyond the deterministic ones?<br />How is probabilistic tractography different from deterministic tractography?        | 
 
 ## Contributing
 
@@ -59,18 +60,18 @@ how to write new episodes.
 
 Please see the current list of [issues][link_issues] for ideas for contributing to this
 repository. For making your contribution, we use the GitHub flow, which is
-nicely explained in the chapter [Contributing to a Project](http://git-scm.com/book/en/v2/GitHub-Contributing-to-a-Project) in Pro Git
+nicely explained in the chapter [Contributing to a Project](https://git-scm.com/book/en/v2/GitHub-Contributing-to-a-Project) in Pro Git
 by Scott Chacon.
-Look for the tag ![good_first_issue](https://img.shields.io/badge/-good%20first%20issue-gold.svg). This indicates that the maintainers will welcome a pull request fixing this issue.
+Look for the tag ![good\_first\_issue](https://img.shields.io/badge/-good%20first%20issue-gold.svg). This indicates that the maintainers will welcome a pull request fixing this issue.
 
 ## Maintainer(s)
 
 Current maintainers of this lesson are
 
-* [Jason Kai][jason_kai]
-* [Olivia Stanley][olivia_stanley]
-* [Michael Joseph][michael_joseph]
-* [Jon Haitz Legarreta Gorroño][jon_legarreta]
+- [Jason Kai][jason_kai]
+- [Olivia Stanley][olivia_stanley]
+- [Michael Joseph][michael_joseph]
+- [Jon Haitz Legarreta Gorroño][jon_legarreta]
 
 ## Authors
 
@@ -87,12 +88,12 @@ the MIT license. For more information, see [LICENSE](LICENSE.md).
 
 To cite this lesson, please consult with [CITATION](CITATION)
 
-[create_slack_svg]: https://img.shields.io/badge/Create_Slack_Account-The_Carpentries-071159.svg
 [slack_heroku_invite]: https://swc-slack-invite.herokuapp.com
-[slack_channel_status]: https://img.shields.io/badge/Slack_Channel-neuroimaging-E01563.svg
+[create_slack_svg]: https://img.shields.io/badge/Create_Slack_Account-The_Carpentries-071159.svg
 [slack_channel_url]: https://swcarpentry.slack.com/messages/CCJBHKCHZ
-[binder_svg]: https://mybinder.org/badge_logo.svg
+[slack_channel_status]: https://img.shields.io/badge/Slack_Channel-neuroimaging-E01563.svg
 [binder_url]: https://mybinder.org/v2/gh/carpentries-incubator/SDC-BIDS-dMRI/main?urlpath=lab/tree/code
+[binder_svg]: https://mybinder.org/badge_logo.svg
 [episode01]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/introduction/index.html
 [episode02]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/preprocessing/index.html
 [episode03]: https://carpentries-incubator.github.io/SDC-BIDS-dMRI/local_orientation_reconstruction/index.html
@@ -108,3 +109,6 @@ To cite this lesson, please consult with [CITATION](CITATION)
 [olivia_stanley]: https://github.com/ostanley
 [michael_joseph]: https://github.com/josephmje
 [jon_legarreta]: https://github.com/jhlegarreta
+
+
+

@@ -2,7 +2,7 @@
 title: Discussion
 ---
 
-{% include base_path.html %}
+
 
 ## Setting up the camera viewpoint
 
@@ -21,13 +21,13 @@ applied to the focal point. These rotations are then defined according to the
 following perpendicular axes:
 
 - **pitch** (transverse axis): an axis running from right to left, allowing
-rotations in the sagittal plane.
+  rotations in the sagittal plane.
 - **roll** (longitudinal axis): an axis directed forward, allowing rotations in
-the coronal plane.
+  the coronal plane.
 - **yaw** (vertical axis): an axis running bottom to top, allowing rotations in
-the axial plane.
+  the axial plane.
 
-![Camera Orientations]({{ relative_root_path }}/fig/discuss/camera_viewpoint_concepts_anatomy.png) \
+![](fig/discuss/camera_viewpoint_concepts_anatomy.png){alt='Camera Orientations'}   
 Camera axis orientations
 
 We can visualize the different axis with reference to neuroanatomy and the rotations around them.
@@ -72,7 +72,8 @@ MRI machines and other new acquisition sequences), it still does not allow us
 to reach the level of detail that invasive methods, such as chemical tracers or
 anatomical sectioning, offer.
 
+[Constrained Spherical Deconvolution]: {{relative\_root\_path}}/{% link \_episodes/constrained\_spherical\_deconvolution.md %}
 
-[Constrained Spherical Deconvolution]: {{ relative_root_path }}/{% link _episodes/constrained_spherical_deconvolution.md %}
 
-{% include links.md %}
+
+
