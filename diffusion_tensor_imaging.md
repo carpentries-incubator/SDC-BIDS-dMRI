@@ -57,7 +57,7 @@ Tensors are represented by ellipsoids characterized by calculated eigenvalues
 ($\lambda_{1}, \lambda_{2}, \lambda_{3}$) and
 ($\epsilon_{1}, \epsilon_{2}, \epsilon_{3}$) eigenvectors from the previously
 described matrix. The computed eigenvalues and eigenvectors are normally
-sorted in descending magnitude (i.e. $\lambda_{1} \\geq \lambda_{2}$).
+sorted in descending magnitude (i.e. $\lambda_{1} \geq \lambda_{2}$).
 Eigenvalues are always strictly positive in the context of dMRI and are
 measured in $mm^2/s$. In the DTI model, the largest eigenvalue gives the
 principal direction of the diffusion tensor, and the other two eigenvectors
