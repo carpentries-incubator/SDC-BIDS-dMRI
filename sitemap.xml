@@ -10,6 +10,9 @@
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/aio.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/constrained_spherical_deconvolution.html</loc>
   </url>
   <url>
@@ -20,6 +23,9 @@
   </url>
   <url>
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/discuss.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/images.html</loc>
   </url>
   <url>
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/index.html</loc>
@@ -34,6 +40,9 @@
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/instructor/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/instructor/aio.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/instructor/constrained_spherical_deconvolution.html</loc>
   </url>
   <url>
@@ -46,10 +55,19 @@
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/instructor/discuss.html</loc>
   </url>
   <url>
+    <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/instructor/images.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/instructor/index.html</loc>
   </url>
   <url>
+    <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/instructor/instructor-notes.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/instructor/introduction.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/instructor/key-points.html</loc>
   </url>
   <url>
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/instructor/local_orientation_reconstruction.html</loc>
@@ -73,7 +91,13 @@
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/instructor/tractography.html</loc>
   </url>
   <url>
+    <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/instructor-notes.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/introduction.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/key-points.html</loc>
   </url>
   <url>
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/local_orientation_reconstruction.html</loc>
