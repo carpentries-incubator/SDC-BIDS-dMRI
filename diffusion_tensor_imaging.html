@@ -414,27 +414,27 @@ in the anatomical image to use as a reference later on.</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bids.layout <span class="im">import</span> BIDSLayout</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.io.gradients <span class="im">import</span> read_bvals_bvecs</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.core.gradients <span class="im">import</span> gradient_table</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nilearn <span class="im">import</span> image <span class="im">as</span> img</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>deriv_layout <span class="op">=</span> BIDSLayout(<span class="st">"../data/ds000221/derivatives"</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>subj<span class="op">=</span><span class="st">"010006"</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Grab the transformed t1 file for reference</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>t1 <span class="op">=</span> deriv_layout.get(subject<span class="op">=</span>subj, space<span class="op">=</span><span class="st">"dwi"</span>, extension<span class="op">=</span><span class="st">'.nii.gz'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Recall the preprocessed data is no longer in BIDS - we will directly grab these files</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>dwi <span class="op">=</span> <span class="ss">f"../data/ds000221/derivatives/uncorrected_topup_eddy/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">/ses-01/dwi/dwi.nii.gz"</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>bval <span class="op">=</span> <span class="ss">f"../data/ds000221/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">/ses-01/dwi/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">_ses-01_dwi.bval"</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>bvec <span class="op">=</span> <span class="ss">f"../data/ds000221/derivatives/uncorrected_topup_eddy/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">/ses-01/dwi/dwi.eddy_rotated_bvecs"</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>t1_data <span class="op">=</span> img.load_img(t1)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>dwi_data <span class="op">=</span> img.load_img(dwi)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>gt_bvals, gt_bvecs <span class="op">=</span> read_bvals_bvecs(bval, bvec)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>gtab <span class="op">=</span> gradient_table(gt_bvals, gt_bvecs)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="im">from</span> bids.layout <span class="im">import</span> BIDSLayout</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="im">from</span> dipy.io.gradients <span class="im">import</span> read_bvals_bvecs</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="im">from</span> dipy.core.gradients <span class="im">import</span> gradient_table</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="im">from</span> nilearn <span class="im">import</span> image <span class="im">as</span> img</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>deriv_layout <span class="op">=</span> BIDSLayout(<span class="st">"../data/ds000221/derivatives"</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>subj<span class="op">=</span><span class="st">"010006"</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co"># Grab the transformed t1 file for reference</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>t1 <span class="op">=</span> deriv_layout.get(subject<span class="op">=</span>subj, space<span class="op">=</span><span class="st">"dwi"</span>, extension<span class="op">=</span><span class="st">'.nii.gz'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co"># Recall the preprocessed data is no longer in BIDS - we will directly grab these files</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>dwi <span class="op">=</span> <span class="ss">f"../data/ds000221/derivatives/uncorrected_topup_eddy/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">/ses-01/dwi/dwi.nii.gz"</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>bval <span class="op">=</span> <span class="ss">f"../data/ds000221/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">/ses-01/dwi/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">_ses-01_dwi.bval"</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>bvec <span class="op">=</span> <span class="ss">f"../data/ds000221/derivatives/uncorrected_topup_eddy/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">/ses-01/dwi/dwi.eddy_rotated_bvecs"</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>t1_data <span class="op">=</span> img.load_img(t1)</span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>dwi_data <span class="op">=</span> img.load_img(dwi)</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>gt_bvals, gt_bvecs <span class="op">=</span> read_bvals_bvecs(bval, bvec)</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>gtab <span class="op">=</span> gradient_table(gt_bvals, gt_bvecs)</span></code></pre>
 </div>
 <p>Next, we will need to create the tensor model using our gradient
 table, and then fit the model using our data! We start by creating a
@@ -444,14 +444,14 @@ tensors in the background of the image! This can be done using
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dipy.reconst.dti <span class="im">as</span> dti</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.segment.mask <span class="im">import</span> median_otsu</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>dwi_data <span class="op">=</span> dwi_data.get_fdata()</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dwi_data, dwi_mask <span class="op">=</span> median_otsu(dwi_data, vol_idx<span class="op">=</span>[<span class="dv">0</span>], numpass<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>dti_model <span class="op">=</span> dti.TensorModel(gtab)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>dti_fit <span class="op">=</span> dti_model.fit(dwi_data, mask<span class="op">=</span>dwi_mask)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="im">import</span> dipy.reconst.dti <span class="im">as</span> dti</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="im">from</span> dipy.segment.mask <span class="im">import</span> median_otsu</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>dwi_data <span class="op">=</span> dwi_data.get_fdata()</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>dwi_data, dwi_mask <span class="op">=</span> median_otsu(dwi_data, vol_idx<span class="op">=</span>[<span class="dv">0</span>], numpass<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>dti_model <span class="op">=</span> dti.TensorModel(gtab)</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>dti_fit <span class="op">=</span> dti_model.fit(dwi_data, mask<span class="op">=</span>dwi_mask)</span></code></pre>
 </div>
 <p>The fit method creates a <code>TensorFit</code> object which contains
 the fitting parameters and other attributes of the model. A number of
@@ -487,11 +487,11 @@ anatomical reference image data as the reference image:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt <span class="co"># To enable plotting within notebook</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nilearn <span class="im">import</span> plotting <span class="im">as</span> plot</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>fa_img <span class="op">=</span> img.new_img_like(ref_niimg<span class="op">=</span>t1_data, data<span class="op">=</span>dti_fit.fa)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plot.plot_anat(fa_img)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt <span class="co"># To enable plotting within notebook</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="im">from</span> nilearn <span class="im">import</span> plotting <span class="im">as</span> plot</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>fa_img <span class="op">=</span> img.new_img_like(ref_niimg<span class="op">=</span>t1_data, data<span class="op">=</span>dti_fit.fa)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>plot.plot_anat(fa_img)</span></code></pre>
 </div>
 <figure><img src="fig/diffusion_tensor_imaging/plot_fa.png" alt="FA plot" class="figure mx-auto d-block"></figure><p>Derived from partial volume effects in imaging voxels due to the
 presence of different tissues, noise in the measurements and numerical
@@ -521,9 +521,9 @@ diffusivity!</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>md_img <span class="op">=</span> img.new_img_like(ref_niimg<span class="op">=</span>t1_data, data<span class="op">=</span>dti_fit.md)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Arbitrarily set min and max of color bar</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plot.plot_anat(md_img, cut_coords<span class="op">=</span>(<span class="dv">0</span>, <span class="op">-</span><span class="dv">29</span>, <span class="dv">20</span>), vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="fl">0.01</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>md_img <span class="op">=</span> img.new_img_like(ref_niimg<span class="op">=</span>t1_data, data<span class="op">=</span>dti_fit.md)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co"># Arbitrarily set min and max of color bar</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>plot.plot_anat(md_img, cut_coords<span class="op">=</span>(<span class="dv">0</span>, <span class="op">-</span><span class="dv">29</span>, <span class="dv">20</span>), vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="fl">0.01</span>)</span></code></pre>
 </div>
 <figure><img src="fig/diffusion_tensor_imaging/plot_md.png" alt="MD plot" class="figure mx-auto d-block"></figure></div>
 <div class="section level3">
@@ -551,13 +551,12 @@ colours map to the following orientations:</p>
 <ul><li>Red = Left / Right</li>
 <li>Green = Anterior / Posterior</li>
 <li>Blue = Superior / Inferior</li>
-</ul><div id="diffusion-scalar-map-visualization" class="callout callout">
+</ul><div id="callout1" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="diffusion-scalar-map-visualization" class="callout-inner">
-<h3 class="callout-title">Diffusion scalar map visualization<a class="anchor" aria-label="anchor" href="#diffusion-scalar-map-visualization"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="diffusion-scalar-map-visualization">Diffusion scalar map visualization<a class="anchor" aria-label="anchor" href="#diffusion-scalar-map-visualization"></a></h3>
 <div class="callout-content">
 <p>The plotting functions in <a href="https://nilearn.github.io/stable/index.html" class="external-link">Nilearn</a> are
 unable to visualize these RGB maps. However, we can use the <a href="https://matplotlib.org/" class="external-link">Matplotlib</a> library to view these
@@ -568,26 +567,25 @@ images.</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.reconst.dti <span class="im">import</span> color_fa</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>RGB_map <span class="op">=</span> color_fa(dti_fit.fa, dti_fit.evecs)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> ndimage</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">10</span>))</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].imshow(ndimage.rotate(RGB_map[:, RGB_map.shape[<span class="dv">1</span>]<span class="op">//</span><span class="dv">2</span>, :, :], <span class="dv">90</span>, reshape<span class="op">=</span><span class="va">False</span>))</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].imshow(ndimage.rotate(RGB_map[RGB_map.shape[<span class="dv">0</span>]<span class="op">//</span><span class="dv">2</span>, :, :, :], <span class="dv">90</span>, reshape<span class="op">=</span><span class="va">False</span>))</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">2</span>].imshow(ndimage.rotate(RGB_map[:, :, RGB_map.shape[<span class="dv">2</span>]<span class="op">//</span><span class="dv">2</span>, :], <span class="dv">90</span>, reshape<span class="op">=</span><span class="va">False</span>))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="im">from</span> dipy.reconst.dti <span class="im">import</span> color_fa</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>RGB_map <span class="op">=</span> color_fa(dti_fit.fa, dti_fit.evecs)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> ndimage</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">10</span>))</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>ax[<span class="dv">0</span>].imshow(ndimage.rotate(RGB_map[:, RGB_map.shape[<span class="dv">1</span>]<span class="op">//</span><span class="dv">2</span>, :, :], <span class="dv">90</span>, reshape<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>ax[<span class="dv">1</span>].imshow(ndimage.rotate(RGB_map[RGB_map.shape[<span class="dv">0</span>]<span class="op">//</span><span class="dv">2</span>, :, :, :], <span class="dv">90</span>, reshape<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>ax[<span class="dv">2</span>].imshow(ndimage.rotate(RGB_map[:, :, RGB_map.shape[<span class="dv">2</span>]<span class="op">//</span><span class="dv">2</span>, :], <span class="dv">90</span>, reshape<span class="op">=</span><span class="va">False</span>))</span></code></pre>
 </div>
 <figure><img src="fig/diffusion_tensor_imaging/plot_fa_rgb.png" alt="RGB FA map" class="figure mx-auto d-block"></figure><p>Another way of visualizing the tensors is to display the diffusion
 tensor in each imaging voxel with colour encoding. Below is an example
 of one such tensor visualization.</p>
-<figure><img src="fig/diffusion_tensor_imaging/TensorViz.png" alt="Tensor visualization" class="figure mx-auto d-block"></figure><div id="tensor-visualization" class="callout callout">
+<figure><img src="fig/diffusion_tensor_imaging/TensorViz.png" alt="Tensor visualization" class="figure mx-auto d-block"></figure><div id="callout2" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="tensor-visualization" class="callout-inner">
-<h3 class="callout-title">Tensor visualization<a class="anchor" aria-label="anchor" href="#tensor-visualization"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="tensor-visualization">Tensor visualization<a class="anchor" aria-label="anchor" href="#tensor-visualization"></a></h3>
 <div class="callout-content">
 <p>Visualizing tensors can be memory intensive. Please refer to the <a href="https://dipy.org/tutorials/" class="external-link">DIPY documentation</a> for the
 necessary steps to perform this type of visualization.</p>
@@ -631,41 +629,41 @@ Start from fitting the preprocessed diffusion image.</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bids.layout <span class="im">import</span> BIDSLayout</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.io.gradients <span class="im">import</span> read_bvals_bvecs</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.core.gradients <span class="im">import</span> gradient_table</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dipy.reconst.dti <span class="im">as</span> dti</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.segment.mask <span class="im">import</span> median_otsu</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nilearn <span class="im">import</span> image <span class="im">as</span> img</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>deriv_layout <span class="op">=</span> BIDSLayout(<span class="st">"../data/ds000221/derivatives"</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>subj<span class="op">=</span><span class="st">"010006"</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>t1 <span class="op">=</span> deriv_layout.get(subject<span class="op">=</span>subj, space<span class="op">=</span><span class="st">"dwi"</span>, extension<span class="op">=</span><span class="st">'.nii.gz'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>dwi <span class="op">=</span> <span class="ss">f"../data/ds000221/derivatives/uncorrected_topup_eddy/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">/ses-01/dwi/dwi.nii.gz"</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>bval <span class="op">=</span> <span class="ss">f"../data/ds000221/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">/ses-01/dwi/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">_ses-01_dwi.bval"</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>bvec <span class="op">=</span> <span class="ss">f"../data/ds000221/derivatives/uncorrected_topup_eddy/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">/ses-01/dwi/dwi.eddy_rotated_bvecs"</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>t1_data <span class="op">=</span> img.load_img(t1)</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>dwi_data <span class="op">=</span> img.load_img(dwi)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>gt_bvals, gt_bvecs <span class="op">=</span> read_bvals_bvecs(bval, bvec)</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>gtab <span class="op">=</span> gradient_table(gt_bvals, gt_bvecs)</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>dwi_data <span class="op">=</span> dwi_data.get_fdata()</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>dwi_data, dwi_mask <span class="op">=</span> median_otsu(dwi_data, vol_idx<span class="op">=</span>[<span class="dv">0</span>], numpass<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit dti model</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>dti_model <span class="op">=</span> dti.TensorModel(gtab)</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>dti_fit <span class="op">=</span> dti_model.fit(dwi_data, mask<span class="op">=</span>dwi_mask) <span class="co"># This step may take a while</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot axial diffusivity map</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>ad_img <span class="op">=</span> img.new_img_like(ref_niimg<span class="op">=</span>t1_data, data<span class="op">=</span>dti_fit.ad)</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>plot.plot_anat(ad_img, cut_coords<span class="op">=</span>(<span class="dv">0</span>, <span class="op">-</span><span class="dv">29</span>, <span class="dv">20</span>), vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="fl">0.01</span>)</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot radial diffusivity map</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>rd_img <span class="op">=</span> img.new_img_like(ref_niimg<span class="op">=</span>t1_data, data<span class="op">=</span>dti_fit.rd)</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>plot.plot_anat(rd_img, cut_coords<span class="op">=</span>(<span class="dv">0</span>, <span class="op">-</span><span class="dv">29</span>, <span class="dv">20</span>), vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="fl">0.01</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="im">from</span> bids.layout <span class="im">import</span> BIDSLayout</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="im">from</span> dipy.io.gradients <span class="im">import</span> read_bvals_bvecs</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="im">from</span> dipy.core.gradients <span class="im">import</span> gradient_table</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="im">import</span> dipy.reconst.dti <span class="im">as</span> dti</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="im">from</span> dipy.segment.mask <span class="im">import</span> median_otsu</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="im">from</span> nilearn <span class="im">import</span> image <span class="im">as</span> img</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>deriv_layout <span class="op">=</span> BIDSLayout(<span class="st">"../data/ds000221/derivatives"</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>subj<span class="op">=</span><span class="st">"010006"</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>t1 <span class="op">=</span> deriv_layout.get(subject<span class="op">=</span>subj, space<span class="op">=</span><span class="st">"dwi"</span>, extension<span class="op">=</span><span class="st">'.nii.gz'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>dwi <span class="op">=</span> <span class="ss">f"../data/ds000221/derivatives/uncorrected_topup_eddy/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">/ses-01/dwi/dwi.nii.gz"</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>bval <span class="op">=</span> <span class="ss">f"../data/ds000221/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">/ses-01/dwi/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">_ses-01_dwi.bval"</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>bvec <span class="op">=</span> <span class="ss">f"../data/ds000221/derivatives/uncorrected_topup_eddy/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">/ses-01/dwi/dwi.eddy_rotated_bvecs"</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>t1_data <span class="op">=</span> img.load_img(t1)</span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>dwi_data <span class="op">=</span> img.load_img(dwi)</span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>gt_bvals, gt_bvecs <span class="op">=</span> read_bvals_bvecs(bval, bvec)</span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>gtab <span class="op">=</span> gradient_table(gt_bvals, gt_bvecs)</span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a>dwi_data <span class="op">=</span> dwi_data.get_fdata()</span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a>dwi_data, dwi_mask <span class="op">=</span> median_otsu(dwi_data, vol_idx<span class="op">=</span>[<span class="dv">0</span>], numpass<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="co"># Fit dti model</span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a>dti_model <span class="op">=</span> dti.TensorModel(gtab)</span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a>dti_fit <span class="op">=</span> dti_model.fit(dwi_data, mask<span class="op">=</span>dwi_mask) <span class="co"># This step may take a while</span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="co"># Plot axial diffusivity map</span></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a>ad_img <span class="op">=</span> img.new_img_like(ref_niimg<span class="op">=</span>t1_data, data<span class="op">=</span>dti_fit.ad)</span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a>plot.plot_anat(ad_img, cut_coords<span class="op">=</span>(<span class="dv">0</span>, <span class="op">-</span><span class="dv">29</span>, <span class="dv">20</span>), vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="co"># Plot radial diffusivity map</span></span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a>rd_img <span class="op">=</span> img.new_img_like(ref_niimg<span class="op">=</span>t1_data, data<span class="op">=</span>dti_fit.rd)</span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a>plot.plot_anat(rd_img, cut_coords<span class="op">=</span>(<span class="dv">0</span>, <span class="op">-</span><span class="dv">29</span>, <span class="dv">20</span>), vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="fl">0.01</span>)</span></code></pre>
 </div>
 <p><img src="fig/diffusion_tensor_imaging/axial_diffusivity_map.png" alt="Axial diffusivity map" class="figure"><br>
 Axial diffusivity map.</p>
@@ -747,9 +745,9 @@ Radial diffusivity map.</p>
   "creativeWorkStatus": "active",
   "url": "https://carpentries-incubator.github.io/SDC-BIDS-dMRI/diffusion_tensor_imaging.html",
   "identifier": "https://carpentries-incubator.github.io/SDC-BIDS-dMRI/diffusion_tensor_imaging.html",
-  "dateCreated": "2024-02-18",
+  "dateCreated": "2024-02-29",
   "dateModified": "2024-02-18",
-  "datePublished": "2024-02-27"
+  "datePublished": "2024-02-29"
 }
 
   </script><script>

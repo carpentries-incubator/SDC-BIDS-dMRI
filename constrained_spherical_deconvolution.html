@@ -370,37 +370,37 @@ pre-processing.</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nibabel <span class="im">as</span> nib</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bids.layout <span class="im">import</span> BIDSLayout</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.core.gradients <span class="im">import</span> gradient_table</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.data <span class="im">import</span> default_sphere</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.io.gradients <span class="im">import</span> read_bvals_bvecs</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.io.image <span class="im">import</span> load_nifti</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>dwi_layout <span class="op">=</span> BIDSLayout(<span class="st">'../../data/ds000221/derivatives/uncorrected_topup_eddy/'</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>t1_layout <span class="op">=</span> BIDSLayout(<span class="st">'../../data/ds000221/derivatives/uncorrected_topup_eddy_regT1/'</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>gradient_layout <span class="op">=</span> BIDSLayout(<span class="st">'../../data/ds000221/sub-010006/ses-01/dwi/'</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>subj <span class="op">=</span> <span class="st">'010006'</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the diffusion files</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>dwi_fname <span class="op">=</span> dwi_layout.get(subject<span class="op">=</span>subj, suffix<span class="op">=</span><span class="st">'dwi'</span>, extension<span class="op">=</span><span class="st">'.nii.gz'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>bvec_fname <span class="op">=</span> dwi_layout.get(subject<span class="op">=</span>subj, extension<span class="op">=</span><span class="st">'.eddy_rotated_bvecs'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>bval_fname <span class="op">=</span> gradient_layout.get(subject<span class="op">=</span>subj, suffix<span class="op">=</span><span class="st">'dwi'</span>, extension<span class="op">=</span><span class="st">'.bval'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the anatomical file</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>t1w_fname <span class="op">=</span> t1_layout.get(subject<span class="op">=</span>subj, extension<span class="op">=</span><span class="st">'.nii.gz'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>data, affine <span class="op">=</span> load_nifti(dwi_fname)</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>bvals, bvecs <span class="op">=</span> read_bvals_bvecs(bval_fname, bvec_fname)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>gtab <span class="op">=</span> gradient_table(bvals, bvecs)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="im">import</span> nibabel <span class="im">as</span> nib</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="im">from</span> bids.layout <span class="im">import</span> BIDSLayout</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="im">from</span> dipy.core.gradients <span class="im">import</span> gradient_table</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="im">from</span> dipy.data <span class="im">import</span> default_sphere</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="im">from</span> dipy.io.gradients <span class="im">import</span> read_bvals_bvecs</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="im">from</span> dipy.io.image <span class="im">import</span> load_nifti</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>dwi_layout <span class="op">=</span> BIDSLayout(<span class="st">'../../data/ds000221/derivatives/uncorrected_topup_eddy/'</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>t1_layout <span class="op">=</span> BIDSLayout(<span class="st">'../../data/ds000221/derivatives/uncorrected_topup_eddy_regT1/'</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>gradient_layout <span class="op">=</span> BIDSLayout(<span class="st">'../../data/ds000221/sub-010006/ses-01/dwi/'</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>subj <span class="op">=</span> <span class="st">'010006'</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co"># Get the diffusion files</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>dwi_fname <span class="op">=</span> dwi_layout.get(subject<span class="op">=</span>subj, suffix<span class="op">=</span><span class="st">'dwi'</span>, extension<span class="op">=</span><span class="st">'.nii.gz'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>bvec_fname <span class="op">=</span> dwi_layout.get(subject<span class="op">=</span>subj, extension<span class="op">=</span><span class="st">'.eddy_rotated_bvecs'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>bval_fname <span class="op">=</span> gradient_layout.get(subject<span class="op">=</span>subj, suffix<span class="op">=</span><span class="st">'dwi'</span>, extension<span class="op">=</span><span class="st">'.bval'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co"># Get the anatomical file</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>t1w_fname <span class="op">=</span> t1_layout.get(subject<span class="op">=</span>subj, extension<span class="op">=</span><span class="st">'.nii.gz'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a>data, affine <span class="op">=</span> load_nifti(dwi_fname)</span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>bvals, bvecs <span class="op">=</span> read_bvals_bvecs(bval_fname, bvec_fname)</span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a>gtab <span class="op">=</span> gradient_table(bvals, bvecs)</span></code></pre>
 </div>
 <p>You can verify the b-values of the dataset by looking at the
 attribute <code>gtab.bvals</code>. Now that a datasets with multiple
@@ -418,14 +418,13 @@ find single fibers from the corpus callosum. <code>DIPY</code>’s
 ROI of radius equal to <code>roi_radii</code> in the center of the
 volume, and return the response function estimated in that region for
 the voxels with FA higher than a given threshold.</p>
-<div id="the-fiber-response-function-and-the-diffusion-model" class="callout callout">
+<div id="callout1" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="the-fiber-response-function-and-the-diffusion-model" class="callout-inner">
-<h3 class="callout-title">The fiber response function and the diffusion
-model<a class="anchor" aria-label="anchor" href="#the-fiber-response-function-and-the-diffusion-model"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="the-fiber-response-function-and-the-diffusion-model">The fiber response function and the diffusion
+model<a class="anchor" aria-label="anchor" href="#the-fiber-response-function-and-the-diffusion-model"></a></h3>
 <div class="callout-content">
 <p>The <code>auto_response_ssst</code> method is relevant within a
 Single-Shell Single-Tissue (SSST) context/model; e.g. Multi-Shell
@@ -437,18 +436,18 @@ to be computed differently.</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.reconst.csdeconv <span class="im">import</span> auto_response_ssst</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>response, ratio <span class="op">=</span> auto_response_ssst(gtab, data, roi_radii<span class="op">=</span><span class="dv">10</span>, fa_thr<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the directory to save the results</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>out_dir <span class="op">=</span> <span class="st">'../../data/ds000221/derivatives/dwi/reconstruction/sub-</span><span class="sc">%s</span><span class="st">/ses-01/dwi/'</span> <span class="op">%</span> subj</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(out_dir):</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    os.makedirs(out_dir)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the FRF</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>np.savetxt(os.path.join(out_dir, <span class="st">'frf.txt'</span>), np.hstack([response[<span class="dv">0</span>], response[<span class="dv">1</span>]]))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="im">from</span> dipy.reconst.csdeconv <span class="im">import</span> auto_response_ssst</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>response, ratio <span class="op">=</span> auto_response_ssst(gtab, data, roi_radii<span class="op">=</span><span class="dv">10</span>, fa_thr<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co"># Create the directory to save the results</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>out_dir <span class="op">=</span> <span class="st">'../../data/ds000221/derivatives/dwi/reconstruction/sub-</span><span class="sc">%s</span><span class="st">/ses-01/dwi/'</span> <span class="op">%</span> subj</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(out_dir):</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    os.makedirs(out_dir)</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co"># Save the FRF</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>np.savetxt(os.path.join(out_dir, <span class="st">'frf.txt'</span>), np.hstack([response[<span class="dv">0</span>], response[<span class="dv">1</span>]]))</span></code></pre>
 </div>
 <p>The <code>response</code> tuple contains two elements. The first is
 an array with the eigenvalues of the response function and the second is
@@ -460,7 +459,7 @@ printed and their values be studied.</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="bu">print</span>(response)</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -477,7 +476,7 @@ coherently oriented fiber population.</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ratio)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="bu">print</span>(ratio)</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -491,37 +490,37 @@ diffusivity indicates:</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.sims.voxel <span class="im">import</span> single_tensor_odf</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fury <span class="im">import</span> window, actor</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>scene <span class="op">=</span> window.Scene()</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>evals <span class="op">=</span> response[<span class="dv">0</span>]</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>evecs <span class="op">=</span> np.array([[<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>]]).T</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>response_odf <span class="op">=</span> single_tensor_odf(default_sphere.vertices, evals, evecs)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># transform our data from 1D to 4D</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>response_odf <span class="op">=</span> response_odf[<span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span>, :]</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>response_actor <span class="op">=</span> actor.odf_slicer(response_odf, sphere<span class="op">=</span>default_sphere,</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                                  colormap<span class="op">=</span><span class="st">'plasma'</span>)</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>scene.add(response_actor)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>response_scene_arr <span class="op">=</span> window.snapshot(</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    scene, fname<span class="op">=</span>os.path.join(out_dir, <span class="st">'frf.png'</span>), size<span class="op">=</span>(<span class="dv">200</span>, <span class="dv">200</span>),</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    offscreen<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots()</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>axes.imshow(response_scene_arr, cmap<span class="op">=</span><span class="st">"plasma"</span>, origin<span class="op">=</span><span class="st">"lower"</span>)</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>axes.axis(<span class="st">"off"</span>)</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="im">from</span> dipy.sims.voxel <span class="im">import</span> single_tensor_odf</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="im">from</span> fury <span class="im">import</span> window, actor</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>scene <span class="op">=</span> window.Scene()</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>evals <span class="op">=</span> response[<span class="dv">0</span>]</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>evecs <span class="op">=</span> np.array([[<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>]]).T</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>response_odf <span class="op">=</span> single_tensor_odf(default_sphere.vertices, evals, evecs)</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co"># transform our data from 1D to 4D</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>response_odf <span class="op">=</span> response_odf[<span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span>, :]</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>response_actor <span class="op">=</span> actor.odf_slicer(response_odf, sphere<span class="op">=</span>default_sphere,</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>                                  colormap<span class="op">=</span><span class="st">'plasma'</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>scene.add(response_actor)</span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>response_scene_arr <span class="op">=</span> window.snapshot(</span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>    scene, fname<span class="op">=</span>os.path.join(out_dir, <span class="st">'frf.png'</span>), size<span class="op">=</span>(<span class="dv">200</span>, <span class="dv">200</span>),</span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>    offscreen<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots()</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>axes.imshow(response_scene_arr, cmap<span class="op">=</span><span class="st">"plasma"</span>, origin<span class="op">=</span><span class="st">"lower"</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>axes.axis(<span class="st">"off"</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
 <p><img src="fig/constrained_spherical_deconvolution/frf.png" alt="Fiber Response Function (FRF)" class="figure"><br>
 Estimated response function</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>scene.rm(response_actor)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>scene.rm(response_actor)</span></code></pre>
 </div>
 <p>Note that, although fast, the FA threshold might not always be the
 best way to find the response function, since it depends on the
@@ -554,24 +553,24 @@ fact that the diffusion process is symmetric around the origin.</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.reconst.csdeconv <span class="im">import</span> ConstrainedSphericalDeconvModel</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sh_order <span class="op">=</span> <span class="dv">8</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>csd_model <span class="op">=</span> ConstrainedSphericalDeconvModel(gtab, response, sh_order<span class="op">=</span>sh_order, convergence<span class="op">=</span><span class="dv">50</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="im">from</span> dipy.reconst.csdeconv <span class="im">import</span> ConstrainedSphericalDeconvModel</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>sh_order <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>csd_model <span class="op">=</span> ConstrainedSphericalDeconvModel(gtab, response, sh_order<span class="op">=</span>sh_order, convergence<span class="op">=</span><span class="dv">50</span>)</span></code></pre>
 </div>
 <p>For illustration purposes we will fit only a small portion of the
 data representing the splenium of the corpus callosum.</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data_small <span class="op">=</span> data[<span class="dv">40</span>:<span class="dv">80</span>, <span class="dv">40</span>:<span class="dv">80</span>, <span class="dv">45</span>:<span class="dv">55</span>]</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>csd_fit <span class="op">=</span> csd_model.fit(data_small)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>sh_coeffs <span class="op">=</span> csd_fit.shm_coeff</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the SH coefficients</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>nib.save(nib.Nifti1Image(sh_coeffs.astype(np.float32), affine),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>         os.path.join(out_dir, <span class="st">'sh_coeffs.nii.gz'</span>))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>data_small <span class="op">=</span> data[<span class="dv">40</span>:<span class="dv">80</span>, <span class="dv">40</span>:<span class="dv">80</span>, <span class="dv">45</span>:<span class="dv">55</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>csd_fit <span class="op">=</span> csd_model.fit(data_small)</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>sh_coeffs <span class="op">=</span> csd_fit.shm_coeff</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co"># Save the SH coefficients</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>nib.save(nib.Nifti1Image(sh_coeffs.astype(np.float32), affine),</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>         os.path.join(out_dir, <span class="st">'sh_coeffs.nii.gz'</span>))</span></code></pre>
 </div>
 <p>Getting the fODFs from the model fit is straightforward in
 <code>DIPY</code>. As a side note, it is worthwhile mentioning that the
@@ -583,7 +582,7 @@ Distribution (FOD).</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>csd_odf <span class="op">=</span> csd_fit.odf(default_sphere)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>csd_odf <span class="op">=</span> csd_fit.odf(default_sphere)</span></code></pre>
 </div>
 <p>We will now use the <code>generate_anatomical_slice_figure</code>
 utility function that allows us to generate three anatomical views
@@ -594,23 +593,23 @@ has been used.</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> utils.visualization_utils <span class="im">import</span> generate_anatomical_slice_figure</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>colormap <span class="op">=</span> <span class="st">"plasma"</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the representation of the data</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>fodf_actor <span class="op">=</span> actor.odf_slicer(csd_odf, sphere<span class="op">=</span>default_sphere, scale<span class="op">=</span><span class="fl">0.9</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                              norm<span class="op">=</span><span class="va">False</span>, colormap<span class="op">=</span>colormap)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the slices to be shown</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>slices <span class="op">=</span> <span class="bu">tuple</span>(elem <span class="op">//</span> <span class="dv">2</span> <span class="cf">for</span> elem <span class="kw">in</span> data_small.shape[:<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the figure</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> generate_anatomical_slice_figure(slices, fodf_actor, cmap<span class="op">=</span>colormap)</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"csd_odfs.png"</span>), dpi<span class="op">=</span><span class="dv">300</span>,</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>            bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="im">from</span> utils.visualization_utils <span class="im">import</span> generate_anatomical_slice_figure</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>colormap <span class="op">=</span> <span class="st">"plasma"</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co"># Build the representation of the data</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>fodf_actor <span class="op">=</span> actor.odf_slicer(csd_odf, sphere<span class="op">=</span>default_sphere, scale<span class="op">=</span><span class="fl">0.9</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>                              norm<span class="op">=</span><span class="va">False</span>, colormap<span class="op">=</span>colormap)</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co"># Compute the slices to be shown</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>slices <span class="op">=</span> <span class="bu">tuple</span>(elem <span class="op">//</span> <span class="dv">2</span> <span class="cf">for</span> elem <span class="kw">in</span> data_small.shape[:<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co"># Generate the figure</span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a>fig <span class="op">=</span> generate_anatomical_slice_figure(slices, fodf_actor, cmap<span class="op">=</span>colormap)</span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"csd_odfs.png"</span>), dpi<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a>            bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
 <p><img src="fig/constrained_spherical_deconvolution/csd_odfs.png" alt="CSD ODFs" class="figure"><br>
 CSD ODFs.</p>
@@ -620,37 +619,37 @@ fODFs. For this purpose, <code>DIPY</code> offers the
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.direction <span class="im">import</span> peaks_from_model</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.io.peaks <span class="im">import</span> reshape_peaks_for_visualization</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>csd_peaks <span class="op">=</span> peaks_from_model(model<span class="op">=</span>csd_model,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                             data<span class="op">=</span>data_small,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                             sphere<span class="op">=</span>default_sphere,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                             relative_peak_threshold<span class="op">=</span><span class="fl">.5</span>,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                             min_separation_angle<span class="op">=</span><span class="dv">25</span>,</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                             parallel<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the peaks</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>nib.save(nib.Nifti1Image(reshape_peaks_for_visualization(csd_peaks),</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>                         affine), os.path.join(out_dir, <span class="st">'peaks.nii.gz'</span>))</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>peak_indices <span class="op">=</span> csd_peaks.peak_indices</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>nib.save(nib.Nifti1Image(peak_indices, affine), os.path.join(out_dir,</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'peaks_indices.nii.gz'</span>))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="im">from</span> dipy.direction <span class="im">import</span> peaks_from_model</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="im">from</span> dipy.io.peaks <span class="im">import</span> reshape_peaks_for_visualization</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>csd_peaks <span class="op">=</span> peaks_from_model(model<span class="op">=</span>csd_model,</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>                             data<span class="op">=</span>data_small,</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>                             sphere<span class="op">=</span>default_sphere,</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>                             relative_peak_threshold<span class="op">=</span><span class="fl">.5</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>                             min_separation_angle<span class="op">=</span><span class="dv">25</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>                             parallel<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co"># Save the peaks</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>nib.save(nib.Nifti1Image(reshape_peaks_for_visualization(csd_peaks),</span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>                         affine), os.path.join(out_dir, <span class="st">'peaks.nii.gz'</span>))</span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>peak_indices <span class="op">=</span> csd_peaks.peak_indices</span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>nib.save(nib.Nifti1Image(peak_indices, affine), os.path.join(out_dir,</span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a>    <span class="st">'peaks_indices.nii.gz'</span>))</span></code></pre>
 </div>
 <p>We can visualize them as usual using <code>FURY</code>:</p>
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the representation of the data</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>peaks_actor <span class="op">=</span> actor.peak_slicer(csd_peaks.peak_dirs, csd_peaks.peak_values)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the figure</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> generate_anatomical_slice_figure(slices, peaks_actor, cmap<span class="op">=</span>colormap)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"csd_peaks.png"</span>), dpi<span class="op">=</span><span class="dv">300</span>,</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># Build the representation of the data</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>peaks_actor <span class="op">=</span> actor.peak_slicer(csd_peaks.peak_dirs, csd_peaks.peak_values)</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co"># Generate the figure</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>fig <span class="op">=</span> generate_anatomical_slice_figure(slices, peaks_actor, cmap<span class="op">=</span>colormap)</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"csd_peaks.png"</span>), dpi<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>    bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
 <p><img src="fig/constrained_spherical_deconvolution/csd_peaks.png" alt="CSD peaks" class="figure"><br>
 CSD Peaks.</p>
@@ -659,15 +658,15 @@ space.</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fodf_actor.GetProperty().SetOpacity(<span class="fl">0.4</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the figure</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> generate_anatomical_slice_figure(slices, peaks_actor, fodf_actor,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                                       cmap<span class="op">=</span>colormap)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"csd_peaks_fodfs.png"</span>), dpi<span class="op">=</span><span class="dv">300</span>,</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>            bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>fodf_actor.GetProperty().SetOpacity(<span class="fl">0.4</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co"># Generate the figure</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>fig <span class="op">=</span> generate_anatomical_slice_figure(slices, peaks_actor, fodf_actor,</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>                                       cmap<span class="op">=</span>colormap)</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"csd_peaks_fodfs.png"</span>), dpi<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>            bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
 <p><img src="fig/constrained_spherical_deconvolution/csd_peaks_fodfs.png" alt="CSD peaks and fODFs" class="figure"><br>
 CSD Peaks and ODFs.</p>
@@ -698,13 +697,13 @@ below to help you get started.</p>
 </ul><div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.sims.voxel <span class="im">import</span> multi_tensor_odf</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Eigenvalues for multiple orientations</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>mevals <span class="op">=</span> np.array(([<span class="fl">0.0015</span>, <span class="fl">0.00015</span>, <span class="fl">0.00015</span>], [<span class="fl">0.0015</span>, <span class="fl">0.00015</span>, <span class="fl">0.00015</span>]))</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Set fractional value of each tensor</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>fractions <span class="op">=</span> [<span class="dv">50</span>, <span class="dv">50</span>]</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="im">from</span> dipy.sims.voxel <span class="im">import</span> multi_tensor_odf</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="co"># Eigenvalues for multiple orientations</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>mevals <span class="op">=</span> np.array(([<span class="fl">0.0015</span>, <span class="fl">0.00015</span>, <span class="fl">0.00015</span>], [<span class="fl">0.0015</span>, <span class="fl">0.00015</span>, <span class="fl">0.00015</span>]))</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="co"># Set fractional value of each tensor</span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>fractions <span class="op">=</span> [<span class="dv">50</span>, <span class="dv">50</span>]</span></code></pre>
 </div>
 </div>
 </div>
@@ -714,35 +713,35 @@ below to help you get started.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1">Show me the solution</h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>We will first simulate the ODFs for the different crossing
 angles:</p>
 <div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.data <span class="im">import</span> get_sphere</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.sims.voxel <span class="im">import</span> multi_tensor_odf</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Set eigenvalues for tensors</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>mevals <span class="op">=</span> np.array(([<span class="fl">0.0015</span>, <span class="fl">0.00015</span>, <span class="fl">0.00015</span>], [<span class="fl">0.0015</span>, <span class="fl">0.00015</span>, <span class="fl">0.00015</span>]))</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Set fraction for each tensor </span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>fractions <span class="op">=</span> [<span class="dv">50</span>, <span class="dv">50</span>]</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a list of the crossing angles to be simulated</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>angles <span class="op">=</span> [<span class="dv">90</span>, <span class="dv">60</span>, <span class="dv">45</span>, <span class="dv">30</span>, <span class="dv">20</span>]</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>odf <span class="op">=</span> []</span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate ODFs of different angles</span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> angle <span class="kw">in</span> angles:</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    _angles <span class="op">=</span> [(<span class="dv">0</span>, <span class="dv">0</span>), (angle, <span class="dv">0</span>)]</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    _odf <span class="op">=</span> multi_tensor_odf(get_sphere(</span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"repulsion724"</span>).vertices, mevals, _angles, fractions)</span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    odf.append(_odf)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="im">from</span> dipy.data <span class="im">import</span> get_sphere</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="im">from</span> dipy.sims.voxel <span class="im">import</span> multi_tensor_odf</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="co"># Set eigenvalues for tensors</span></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>mevals <span class="op">=</span> np.array(([<span class="fl">0.0015</span>, <span class="fl">0.00015</span>, <span class="fl">0.00015</span>], [<span class="fl">0.0015</span>, <span class="fl">0.00015</span>, <span class="fl">0.00015</span>]))</span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="co"># Set fraction for each tensor </span></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a>fractions <span class="op">=</span> [<span class="dv">50</span>, <span class="dv">50</span>]</span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a><span class="co"># Create a list of the crossing angles to be simulated</span></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a>angles <span class="op">=</span> [<span class="dv">90</span>, <span class="dv">60</span>, <span class="dv">45</span>, <span class="dv">30</span>, <span class="dv">20</span>]</span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a>odf <span class="op">=</span> []</span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a></span>
+<span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a><span class="co"># Simulate ODFs of different angles</span></span>
+<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a><span class="cf">for</span> angle <span class="kw">in</span> angles:</span>
+<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a>    _angles <span class="op">=</span> [(<span class="dv">0</span>, <span class="dv">0</span>), (angle, <span class="dv">0</span>)]</span>
+<span id="cb17-20"><a href="#cb17-20" tabindex="-1"></a>    _odf <span class="op">=</span> multi_tensor_odf(get_sphere(</span>
+<span id="cb17-21"><a href="#cb17-21" tabindex="-1"></a>        <span class="st">"repulsion724"</span>).vertices, mevals, _angles, fractions)</span>
+<span id="cb17-22"><a href="#cb17-22" tabindex="-1"></a>    odf.append(_odf)</span></code></pre>
 </div>
 <p>We are now able to visualize and save to disk a screenshot of each
 ODF crossing. As it can be seen, as the crossing angle becomes smaller,
@@ -756,34 +755,34 @@ diffusion data.</p>
 <div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fury <span class="im">import</span> window, actor</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the output directory to store the image</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>out_dir <span class="op">=</span> <span class="st">'../../data/ds000221/derivatives/dwi/reconstruction/exercise/dwi/'</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(out_dir):</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    os.makedirs(out_dir)</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="bu">len</span>(angles), figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">2</span>))</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the simulated ODFs of different angles</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ix, (_odf, angle) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(odf, angles)):</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    scene <span class="op">=</span> window.Scene()</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    odf_actor <span class="op">=</span> actor.odf_slicer(_odf[<span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span>, :], sphere<span class="op">=</span>get_sphere(<span class="st">"repulsion724"</span>),</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>                                 colormap<span class="op">=</span><span class="st">'plasma'</span>)</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    odf_actor.RotateX(<span class="dv">90</span>)</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    scene.add(odf_actor)</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    odf_scene_arr <span class="op">=</span> window.snapshot(</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>        scene, fname<span class="op">=</span>os.path.join(out_dir, <span class="st">'odf_</span><span class="sc">%d</span><span class="st">_angle.png'</span> <span class="op">%</span> angle), size<span class="op">=</span>(<span class="dv">200</span>, <span class="dv">200</span>),</span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>        offscreen<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    axes[ix].imshow(odf_scene_arr, cmap<span class="op">=</span><span class="st">"plasma"</span>, origin<span class="op">=</span><span class="st">"lower"</span>)</span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    axes[ix].set_title(<span class="st">"</span><span class="sc">%d</span><span class="st"> deg"</span> <span class="op">%</span> angle)</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    axes[ix].axis(<span class="st">"off"</span>)</span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="im">from</span> fury <span class="im">import</span> window, actor</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="co"># Create the output directory to store the image</span></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>out_dir <span class="op">=</span> <span class="st">'../../data/ds000221/derivatives/dwi/reconstruction/exercise/dwi/'</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(out_dir):</span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a>    os.makedirs(out_dir)</span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="bu">len</span>(angles), figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">2</span>))</span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a><span class="co"># Visualize the simulated ODFs of different angles</span></span>
+<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a><span class="cf">for</span> ix, (_odf, angle) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(odf, angles)):</span>
+<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a>    scene <span class="op">=</span> window.Scene()</span>
+<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a>    odf_actor <span class="op">=</span> actor.odf_slicer(_odf[<span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span>, :], sphere<span class="op">=</span>get_sphere(<span class="st">"repulsion724"</span>),</span>
+<span id="cb18-17"><a href="#cb18-17" tabindex="-1"></a>                                 colormap<span class="op">=</span><span class="st">'plasma'</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" tabindex="-1"></a>    odf_actor.RotateX(<span class="dv">90</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" tabindex="-1"></a>    scene.add(odf_actor)</span>
+<span id="cb18-20"><a href="#cb18-20" tabindex="-1"></a>    odf_scene_arr <span class="op">=</span> window.snapshot(</span>
+<span id="cb18-21"><a href="#cb18-21" tabindex="-1"></a>        scene, fname<span class="op">=</span>os.path.join(out_dir, <span class="st">'odf_</span><span class="sc">%d</span><span class="st">_angle.png'</span> <span class="op">%</span> angle), size<span class="op">=</span>(<span class="dv">200</span>, <span class="dv">200</span>),</span>
+<span id="cb18-22"><a href="#cb18-22" tabindex="-1"></a>        offscreen<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-23"><a href="#cb18-23" tabindex="-1"></a></span>
+<span id="cb18-24"><a href="#cb18-24" tabindex="-1"></a>    axes[ix].imshow(odf_scene_arr, cmap<span class="op">=</span><span class="st">"plasma"</span>, origin<span class="op">=</span><span class="st">"lower"</span>)</span>
+<span id="cb18-25"><a href="#cb18-25" tabindex="-1"></a>    axes[ix].set_title(<span class="st">"</span><span class="sc">%d</span><span class="st"> deg"</span> <span class="op">%</span> angle)</span>
+<span id="cb18-26"><a href="#cb18-26" tabindex="-1"></a>    axes[ix].axis(<span class="st">"off"</span>)</span>
+<span id="cb18-27"><a href="#cb18-27" tabindex="-1"></a></span>
+<span id="cb18-28"><a href="#cb18-28" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
 <p><img src="fig/constrained_spherical_deconvolution/odf_multiple_angles.png" alt="ODFs of differing crossing angles" class="figure"><br>
 ODFs of different crossing angles.</p>
@@ -864,9 +863,9 @@ crossings</li>
   "creativeWorkStatus": "active",
   "url": "https://carpentries-incubator.github.io/SDC-BIDS-dMRI/constrained_spherical_deconvolution.html",
   "identifier": "https://carpentries-incubator.github.io/SDC-BIDS-dMRI/constrained_spherical_deconvolution.html",
-  "dateCreated": "2024-02-18",
+  "dateCreated": "2024-02-29",
   "dateModified": "2024-02-18",
-  "datePublished": "2024-02-27"
+  "datePublished": "2024-02-29"
 }
 
   </script><script>

@@ -426,13 +426,12 @@ repository</a>.</p>
 </div>
 </div>
 </div>
-<div id="virtual-environments" class="callout callout">
+<div id="callout1" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="virtual-environments" class="callout-inner">
-<h3 class="callout-title">Virtual environments<a class="anchor" aria-label="anchor" href="#virtual-environments"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="virtual-environments">Virtual environments<a class="anchor" aria-label="anchor" href="#virtual-environments"></a></h3>
 <div class="callout-content">
 <p>A <a href="https://docs.python.org/3/library/venv.html" class="external-link">virtual
 environment</a> is a tool that helps to keep dependencies required by
@@ -468,7 +467,7 @@ to run:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="at">-r</span> requirements.txt</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">$</span> pip install <span class="at">-r</span> requirements.txt</span></code></pre>
 </div>
 <p>from the root of the repository folder.</p>
 <p>Additionally, a helpful module to view anatomical slices have been
@@ -477,21 +476,21 @@ the following command:</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> export PYTHONPATH=<span class="va">$PYTHONPATH</span>:<span class="kw">`</span><span class="fu">realpath</span> .<span class="kw">`</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> export PYTHONPATH=<span class="va">$PYTHONPATH</span>:<span class="kw">`</span><span class="fu">realpath</span> .<span class="kw">`</span></span></code></pre>
 </div>
 <p>Users may choose to run the notebooks using <a href="https://jupyter.org/" class="external-link">Jupyter</a> or <a href="https://ipython.org/index.html" class="external-link">iPython</a>. The
 <code>Jupyter</code> dependency can be installed by running:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install jupyter</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">$</span> pip install jupyter</span></code></pre>
 </div>
 <p><code>iPython</code> can be installed through <code>pip</code>
 running:</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install ipython</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">$</span> pip install ipython</span></code></pre>
 </div>
 <p>Some <code>Python</code> distributions, such as the one provided by
 <a href="https://www.anaconda.com/" class="external-link">Anaconda</a>, might ship these
@@ -509,31 +508,31 @@ running, for example:</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip show dipy</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">$</span> pip show dipy</span></code></pre>
 </div>
 <p>Similarly, it can be checked that a given package can be imported in
 Python by running, for example:</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> import <span class="ex">dipy</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">$</span> python</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> import <span class="ex">dipy</span></span></code></pre>
 </div>
 <p>Alternatively, the package version can also be checked by running,
 for example:</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> import <span class="ex">dipy</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> print<span class="kw">(</span><span class="ex">dipy.__version__</span><span class="kw">)</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="ex">$</span> python</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> import <span class="ex">dipy</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> print<span class="kw">(</span><span class="ex">dipy.__version__</span><span class="kw">)</span></span></code></pre>
 </div>
 <p>You can also see the packages and versions of all
 <code>pip</code>-installed dependencies by typing:</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip freeze</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="ex">$</span> pip freeze</span></code></pre>
 </div>
 </div>
 </div>
@@ -544,13 +543,13 @@ directory, the server is started running:</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ipython notebook</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="ex">$</span> ipython notebook</span></code></pre>
 </div>
 <p>if using <code>IPython</code>, and running:</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter-lab</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="ex">jupyter-lab</span></span></code></pre>
 </div>
 <p>if using <code>JupyterLab</code>.</p>
 <p>In either case, the commands will print some information about the
@@ -565,7 +564,7 @@ with Python</a> Carpentries lesson.</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> osf <span class="at">-p</span> cmq8a clone ./data</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="ex">$</span> osf <span class="at">-p</span> cmq8a clone ./data</span></code></pre>
 </div>
 <p>Notebooks expect them to be placed in the <code>data</code> folder
 that exists in the root of the repository.</p>
@@ -575,9 +574,9 @@ single subject is available and can be downloaded by running:</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ./data</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> osf <span class="at">-p</span> cmq8a fetch ds000221_subject/ds000221_sub-010006.zip </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> unzip ds000221_sub-010006.zip</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="ex">$</span> cd ./data</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="ex">$</span> osf <span class="at">-p</span> cmq8a fetch ds000221_subject/ds000221_sub-010006.zip </span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="ex">$</span> unzip ds000221_sub-010006.zip</span></code></pre>
 </div>
 <!-- Workshop-specific links -->
 </div>
@@ -629,9 +628,9 @@ single subject is available and can be downloaded by running:</p>
   "creativeWorkStatus": "active",
   "url": "https://carpentries-incubator.github.io/SDC-BIDS-dMRI/index.html",
   "identifier": "https://carpentries-incubator.github.io/SDC-BIDS-dMRI/index.html",
-  "dateCreated": "2024-02-18",
-  "dateModified": "2024-02-27",
-  "datePublished": "2024-02-27"
+  "dateCreated": "2024-02-29",
+  "dateModified": "2024-02-29",
+  "datePublished": "2024-02-29"
 }
 
   </script><script>

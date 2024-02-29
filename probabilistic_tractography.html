@@ -362,30 +362,30 @@ orientation information using the CSD method:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nibabel <span class="im">as</span> nib</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bids.layout <span class="im">import</span> BIDSLayout</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.core.gradients <span class="im">import</span> gradient_table</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.io.gradients <span class="im">import</span> read_bvals_bvecs</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>dwi_layout <span class="op">=</span> BIDSLayout(<span class="st">'../../data/ds000221/derivatives/uncorrected_topup_eddy/'</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>gradient_layout <span class="op">=</span> BIDSLayout(<span class="st">'../../data/ds000221/'</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>subj <span class="op">=</span> <span class="st">'010006'</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>dwi_fname <span class="op">=</span> dwi_layout.get(subject<span class="op">=</span>subj, suffix<span class="op">=</span><span class="st">'dwi'</span>, extension<span class="op">=</span><span class="st">'.nii.gz'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>bvec_fname <span class="op">=</span> dwi_layout.get(subject<span class="op">=</span>subj, extension<span class="op">=</span><span class="st">'.eddy_rotated_bvecs'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>bval_fname <span class="op">=</span> gradient_layout.get(subject<span class="op">=</span>subj, suffix<span class="op">=</span><span class="st">'dwi'</span>, extension<span class="op">=</span><span class="st">'.bval'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>dwi_img <span class="op">=</span> nib.load(dwi)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>affine <span class="op">=</span> dwi_img.affine</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>gt_bvals, gt_bvecs <span class="op">=</span> read_bvals_bvecs(bval, bvec)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>gtab <span class="op">=</span> gradient_table(gt_bvals, gt_bvecs)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="im">import</span> nibabel <span class="im">as</span> nib</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="im">from</span> bids.layout <span class="im">import</span> BIDSLayout</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="im">from</span> dipy.core.gradients <span class="im">import</span> gradient_table</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="im">from</span> dipy.io.gradients <span class="im">import</span> read_bvals_bvecs</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>dwi_layout <span class="op">=</span> BIDSLayout(<span class="st">'../../data/ds000221/derivatives/uncorrected_topup_eddy/'</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>gradient_layout <span class="op">=</span> BIDSLayout(<span class="st">'../../data/ds000221/'</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>subj <span class="op">=</span> <span class="st">'010006'</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>dwi_fname <span class="op">=</span> dwi_layout.get(subject<span class="op">=</span>subj, suffix<span class="op">=</span><span class="st">'dwi'</span>, extension<span class="op">=</span><span class="st">'.nii.gz'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>bvec_fname <span class="op">=</span> dwi_layout.get(subject<span class="op">=</span>subj, extension<span class="op">=</span><span class="st">'.eddy_rotated_bvecs'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>bval_fname <span class="op">=</span> gradient_layout.get(subject<span class="op">=</span>subj, suffix<span class="op">=</span><span class="st">'dwi'</span>, extension<span class="op">=</span><span class="st">'.bval'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>dwi_img <span class="op">=</span> nib.load(dwi)</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>affine <span class="op">=</span> dwi_img.affine</span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>gt_bvals, gt_bvecs <span class="op">=</span> read_bvals_bvecs(bval, bvec)</span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>gtab <span class="op">=</span> gradient_table(gt_bvals, gt_bvecs)</span></code></pre>
 </div>
 <p>We will now create the seeding mask and the seeds using an estimate
 of the white matter tissue based on the FA values obtained from the
@@ -393,37 +393,37 @@ diffusion tensor:</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.reconst <span class="im">import</span> dti</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.segment.mask <span class="im">import</span> median_otsu</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.tracking <span class="im">import</span> utils</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dwi_data <span class="op">=</span> dwi_img.get_fdata()</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>dwi_data, dwi_mask <span class="op">=</span> median_otsu(dwi_data, vol_idx<span class="op">=</span>[<span class="dv">0</span>], numpass<span class="op">=</span><span class="dv">1</span>)  <span class="co"># Specify the volume index to the b0 volumes</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>dti_model <span class="op">=</span> dti.TensorModel(gtab)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>dti_fit <span class="op">=</span> dti_model.fit(dwi_data, mask<span class="op">=</span>dwi_mask)  <span class="co"># This step may take a while</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the seeding mask</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>fa_img <span class="op">=</span> dti_fit.fa</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>seed_mask <span class="op">=</span> fa_img.copy()</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>seed_mask[seed_mask <span class="op">&gt;=</span> <span class="fl">0.2</span>] <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>seed_mask[seed_mask <span class="op">&lt;</span> <span class="fl">0.2</span>] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the seeds</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>seeds <span class="op">=</span> utils.seeds_from_mask(seed_mask, affine<span class="op">=</span>affine, density<span class="op">=</span><span class="dv">1</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="im">from</span> dipy.reconst <span class="im">import</span> dti</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="im">from</span> dipy.segment.mask <span class="im">import</span> median_otsu</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="im">from</span> dipy.tracking <span class="im">import</span> utils</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>dwi_data <span class="op">=</span> dwi_img.get_fdata()</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>dwi_data, dwi_mask <span class="op">=</span> median_otsu(dwi_data, vol_idx<span class="op">=</span>[<span class="dv">0</span>], numpass<span class="op">=</span><span class="dv">1</span>)  <span class="co"># Specify the volume index to the b0 volumes</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>dti_model <span class="op">=</span> dti.TensorModel(gtab)</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>dti_fit <span class="op">=</span> dti_model.fit(dwi_data, mask<span class="op">=</span>dwi_mask)  <span class="co"># This step may take a while</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co"># Create the seeding mask</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>fa_img <span class="op">=</span> dti_fit.fa</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>seed_mask <span class="op">=</span> fa_img.copy()</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>seed_mask[seed_mask <span class="op">&gt;=</span> <span class="fl">0.2</span>] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>seed_mask[seed_mask <span class="op">&lt;</span> <span class="fl">0.2</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co"># Create the seeds</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>seeds <span class="op">=</span> utils.seeds_from_mask(seed_mask, affine<span class="op">=</span>affine, density<span class="op">=</span><span class="dv">1</span>)</span></code></pre>
 </div>
 <p>We will now estimate the FRF and set the CSD model to feed the local
 orientation information to the streamline propagation object:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.reconst.csdeconv <span class="im">import</span> (ConstrainedSphericalDeconvModel,</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                                   auto_response_ssst)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>response, ratio <span class="op">=</span> auto_response_ssst(gtab, dwi_data, roi_radii<span class="op">=</span><span class="dv">10</span>, fa_thr<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>sh_order <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>csd_model <span class="op">=</span> ConstrainedSphericalDeconvModel(gtab, response, sh_order<span class="op">=</span>sh_order)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>csd_fit <span class="op">=</span> csd_model.fit(dwi_data, mask<span class="op">=</span>seed_mask)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="im">from</span> dipy.reconst.csdeconv <span class="im">import</span> (ConstrainedSphericalDeconvModel,</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>                                   auto_response_ssst)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>response, ratio <span class="op">=</span> auto_response_ssst(gtab, dwi_data, roi_radii<span class="op">=</span><span class="dv">10</span>, fa_thr<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>sh_order <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>csd_model <span class="op">=</span> ConstrainedSphericalDeconvModel(gtab, response, sh_order<span class="op">=</span>sh_order)</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>csd_fit <span class="op">=</span> csd_model.fit(dwi_data, mask<span class="op">=</span>seed_mask)</span></code></pre>
 </div>
 <p>Tracking methods are provided with a criterion to stop propagating
 streamlines beyond non-white matter tissues. One way to do this is to
@@ -434,34 +434,34 @@ hence, it provides an estimation of the underlying tissue type.</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> ndimage  <span class="co"># To rotate image for visualization purposes</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.reconst.shm <span class="im">import</span> CsaOdfModel</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.tracking.stopping_criterion <span class="im">import</span> ThresholdStoppingCriterion</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>csa_model <span class="op">=</span> CsaOdfModel(gtab, sh_order<span class="op">=</span>sh_order)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>gfa <span class="op">=</span> csa_model.fit(dwi_data, mask<span class="op">=</span>seed_mask).gfa</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>stopping_criterion <span class="op">=</span> ThresholdStoppingCriterion(gfa, <span class="fl">.2</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the directory to save the results</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>out_dir <span class="op">=</span> <span class="st">'../../data/ds000221/derivatives/dwi/tractography/sub-</span><span class="sc">%s</span><span class="st">/ses-01/dwi/'</span> <span class="op">%</span> subj</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(out_dir):</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    os.makedirs(out_dir)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the GFA</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>gfa_img <span class="op">=</span> nib.Nifti1Image(gfa.astype(np.float32), affine)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>nib.save(gfa_img, os.path.join(out_dir, <span class="st">'gfa.nii.gz'</span>))</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the GFA</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].imshow(ndimage.rotate(gfa[:, gfa.shape[<span class="dv">1</span>]<span class="op">//</span><span class="dv">2</span>, :], <span class="dv">90</span>, reshape<span class="op">=</span><span class="va">False</span>))</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].imshow(ndimage.rotate(gfa[gfa.shape[<span class="dv">0</span>]<span class="op">//</span><span class="dv">2</span>, :, :], <span class="dv">90</span>, reshape<span class="op">=</span><span class="va">False</span>))</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">2</span>].imshow(ndimage.rotate(gfa[:, :, gfa.shape[<span class="op">-</span><span class="dv">1</span>]<span class="op">//</span><span class="dv">2</span>], <span class="dv">90</span>, reshape<span class="op">=</span><span class="va">False</span>))</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"gfa.png"</span>), dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> ndimage  <span class="co"># To rotate image for visualization purposes</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="im">from</span> dipy.reconst.shm <span class="im">import</span> CsaOdfModel</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="im">from</span> dipy.tracking.stopping_criterion <span class="im">import</span> ThresholdStoppingCriterion</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>csa_model <span class="op">=</span> CsaOdfModel(gtab, sh_order<span class="op">=</span>sh_order)</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>gfa <span class="op">=</span> csa_model.fit(dwi_data, mask<span class="op">=</span>seed_mask).gfa</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>stopping_criterion <span class="op">=</span> ThresholdStoppingCriterion(gfa, <span class="fl">.2</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co"># Create the directory to save the results</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>out_dir <span class="op">=</span> <span class="st">'../../data/ds000221/derivatives/dwi/tractography/sub-</span><span class="sc">%s</span><span class="st">/ses-01/dwi/'</span> <span class="op">%</span> subj</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(out_dir):</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>    os.makedirs(out_dir)</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co"># Save the GFA</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>gfa_img <span class="op">=</span> nib.Nifti1Image(gfa.astype(np.float32), affine)</span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>nib.save(gfa_img, os.path.join(out_dir, <span class="st">'gfa.nii.gz'</span>))</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co"># Plot the GFA</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>ax[<span class="dv">0</span>].imshow(ndimage.rotate(gfa[:, gfa.shape[<span class="dv">1</span>]<span class="op">//</span><span class="dv">2</span>, :], <span class="dv">90</span>, reshape<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>ax[<span class="dv">1</span>].imshow(ndimage.rotate(gfa[gfa.shape[<span class="dv">0</span>]<span class="op">//</span><span class="dv">2</span>, :, :], <span class="dv">90</span>, reshape<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>ax[<span class="dv">2</span>].imshow(ndimage.rotate(gfa[:, :, gfa.shape[<span class="op">-</span><span class="dv">1</span>]<span class="op">//</span><span class="dv">2</span>], <span class="dv">90</span>, reshape<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"gfa.png"</span>), dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
 <p>The GFA threshold stopping criterion value must be adjusted to the
 data in order to avoid creating a mask that will exclude white matter
@@ -495,24 +495,24 @@ workflow.</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.direction <span class="im">import</span> ProbabilisticDirectionGetter</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.data <span class="im">import</span> small_sphere</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.io.stateful_tractogram <span class="im">import</span> Space, StatefulTractogram</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.io.streamline <span class="im">import</span> save_tractogram</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.tracking.local_tracking <span class="im">import</span> LocalTracking</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.tracking.streamline <span class="im">import</span> Streamlines</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>fod <span class="op">=</span> csd_fit.odf(small_sphere)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>pmf <span class="op">=</span> fod.clip(<span class="bu">min</span><span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>prob_dg <span class="op">=</span> ProbabilisticDirectionGetter.from_pmf(pmf, max_angle<span class="op">=</span><span class="fl">30.</span>,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                                                sphere<span class="op">=</span>small_sphere)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>streamline_generator <span class="op">=</span> LocalTracking(prob_dg, stopping_criterion, seeds,</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                                     affine, step_size<span class="op">=</span><span class="fl">.5</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>streamlines <span class="op">=</span> Streamlines(streamline_generator)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>sft <span class="op">=</span> StatefulTractogram(streamlines, dwi_img, Space.RASMM)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the tractogram</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>save_tractogram(sft, <span class="st">"tractogram_probabilistic_dg_pmf.trk"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="im">from</span> dipy.direction <span class="im">import</span> ProbabilisticDirectionGetter</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="im">from</span> dipy.data <span class="im">import</span> small_sphere</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="im">from</span> dipy.io.stateful_tractogram <span class="im">import</span> Space, StatefulTractogram</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="im">from</span> dipy.io.streamline <span class="im">import</span> save_tractogram</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="im">from</span> dipy.tracking.local_tracking <span class="im">import</span> LocalTracking</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="im">from</span> dipy.tracking.streamline <span class="im">import</span> Streamlines</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>fod <span class="op">=</span> csd_fit.odf(small_sphere)</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>pmf <span class="op">=</span> fod.clip(<span class="bu">min</span><span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>prob_dg <span class="op">=</span> ProbabilisticDirectionGetter.from_pmf(pmf, max_angle<span class="op">=</span><span class="fl">30.</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>                                                sphere<span class="op">=</span>small_sphere)</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>streamline_generator <span class="op">=</span> LocalTracking(prob_dg, stopping_criterion, seeds,</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>                                     affine, step_size<span class="op">=</span><span class="fl">.5</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>streamlines <span class="op">=</span> Streamlines(streamline_generator)</span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>sft <span class="op">=</span> StatefulTractogram(streamlines, dwi_img, Space.RASMM)</span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co"># Save the tractogram</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>save_tractogram(sft, <span class="st">"tractogram_probabilistic_dg_pmf.trk"</span>)</span></code></pre>
 </div>
 <p>We will easily generate the anatomical views on the generated
 tractogram using the <code>generate_anatomical_volume_figure</code>
@@ -520,21 +520,21 @@ helper function:</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fury <span class="im">import</span> actor, colormap</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> utils.visualization_utils <span class="im">import</span> generate_anatomical_volume_figure</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the tractogram</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the representation of the data</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>streamlines_actor <span class="op">=</span> actor.line(streamlines, colormap.line_colors(streamlines))</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the figure</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> generate_anatomical_volume_figure(streamlines_actor)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"tractogram_probabilistic_dg_pmf.png"</span>),</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="im">from</span> fury <span class="im">import</span> actor, colormap</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="im">from</span> utils.visualization_utils <span class="im">import</span> generate_anatomical_volume_figure</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co"># Plot the tractogram</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co"># Build the representation of the data</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>streamlines_actor <span class="op">=</span> actor.line(streamlines, colormap.line_colors(streamlines))</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co"># Generate the figure</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>fig <span class="op">=</span> generate_anatomical_volume_figure(streamlines_actor)</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"tractogram_probabilistic_dg_pmf.png"</span>),</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>            dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
 <p><img src="fig/probabilistic_tractography/tractogram_probabilistic_dg_pmf.png" alt="PMF direction getter-derived probabilistic tractogram" class="figure"><br>
 Streamlines representing white matter using probabilistic direction
@@ -554,35 +554,35 @@ without having to worry about memory limitations.</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.data <span class="im">import</span> default_sphere</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>prob_dg <span class="op">=</span> ProbabilisticDirectionGetter.from_shcoeff(csd_fit.shm_coeff,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                                                    max_angle<span class="op">=</span><span class="fl">30.</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                                                    sphere<span class="op">=</span>default_sphere)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>streamline_generator <span class="op">=</span> LocalTracking(prob_dg, stopping_criterion, seeds,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                                     affine, step_size<span class="op">=</span><span class="fl">.5</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>streamlines <span class="op">=</span> Streamlines(streamline_generator)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>sft <span class="op">=</span> StatefulTractogram(streamlines, dwi_img, Space.RASMM)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the tractogram</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>save_tractogram(sft, <span class="st">"tractogram_probabilistic_dg_sh.trk"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="im">from</span> dipy.data <span class="im">import</span> default_sphere</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>prob_dg <span class="op">=</span> ProbabilisticDirectionGetter.from_shcoeff(csd_fit.shm_coeff,</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>                                                    max_angle<span class="op">=</span><span class="fl">30.</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>                                                    sphere<span class="op">=</span>default_sphere)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>streamline_generator <span class="op">=</span> LocalTracking(prob_dg, stopping_criterion, seeds,</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>                                     affine, step_size<span class="op">=</span><span class="fl">.5</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>streamlines <span class="op">=</span> Streamlines(streamline_generator)</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>sft <span class="op">=</span> StatefulTractogram(streamlines, dwi_img, Space.RASMM)</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co"># Save the tractogram</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>save_tractogram(sft, <span class="st">"tractogram_probabilistic_dg_sh.trk"</span>)</span></code></pre>
 </div>
 <p>We will visualize the tractogram using the three usual anatomical
 views:</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the tractogram</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the representation of the data</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>streamlines_actor <span class="op">=</span> actor.line(streamlines, colormap.line_colors(streamlines))</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the figure</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> generate_anatomical_volume_figure(streamlines_actor)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"tractogram_probabilistic_dg_sh.png"</span>),</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>            dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># Plot the tractogram</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co"># Build the representation of the data</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>streamlines_actor <span class="op">=</span> actor.line(streamlines, colormap.line_colors(streamlines))</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co"># Generate the figure</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>fig <span class="op">=</span> generate_anatomical_volume_figure(streamlines_actor)</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"tractogram_probabilistic_dg_sh.png"</span>),</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>            dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
 <p><img src="fig/probabilistic_tractography/tractogram_probabilistic_dg_sh.png" alt="SH direction getter-derived probabilistic tractogram" class="figure"><br>
 Streamlines representing white matter using probabilistic direction
@@ -594,10 +594,10 @@ the <code>peaks_from_model</code> function.</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.direction <span class="im">import</span> peaks_from_model</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>peaks <span class="op">=</span> peaks_from_model(csd_model, dwi_data, default_sphere, <span class="fl">.5</span>, <span class="dv">25</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                         mask<span class="op">=</span>seed_mask, return_sh<span class="op">=</span><span class="va">True</span>, parallel<span class="op">=</span><span class="va">True</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="im">from</span> dipy.direction <span class="im">import</span> peaks_from_model</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>peaks <span class="op">=</span> peaks_from_model(csd_model, dwi_data, default_sphere, <span class="fl">.5</span>, <span class="dv">25</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>                         mask<span class="op">=</span>seed_mask, return_sh<span class="op">=</span><span class="va">True</span>, parallel<span class="op">=</span><span class="va">True</span>)</span></code></pre>
 </div>
 <p>It is always good practice to (save and) visualize the peaks as a
 check towards ensuring that the orientation information conforms to what
@@ -605,29 +605,29 @@ is expected as input to the tracking process.</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the peaks</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>nib.save(nib.Nifti1Image(reshape_peaks_for_visualization(peaks),</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                         affine), os.path.join(out_dir, <span class="st">'peaks.nii.gz'</span>))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># Save the peaks</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>nib.save(nib.Nifti1Image(reshape_peaks_for_visualization(peaks),</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>                         affine), os.path.join(out_dir, <span class="st">'peaks.nii.gz'</span>))</span></code></pre>
 </div>
 <p>As usual, we will use <code>FURY</code> to visualize the peaks:</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> utils.visualization_utils <span class="im">import</span> generate_anatomical_slice_figure</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the peaks</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the representation of the data</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>peaks_actor <span class="op">=</span> actor.peak_slicer(peaks.peak_dirs, peaks.peak_values)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the slices to be shown</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>slices <span class="op">=</span> <span class="bu">tuple</span>(elem <span class="op">//</span> <span class="dv">2</span> <span class="cf">for</span> elem <span class="kw">in</span> dwi_data.shape[:<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the figure</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> generate_anatomical_slice_figure(slices, peaks_actor)</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"peaks.png"</span>), dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="im">from</span> utils.visualization_utils <span class="im">import</span> generate_anatomical_slice_figure</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co"># Visualize the peaks</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co"># Build the representation of the data</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>peaks_actor <span class="op">=</span> actor.peak_slicer(peaks.peak_dirs, peaks.peak_values)</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co"># Compute the slices to be shown</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>slices <span class="op">=</span> <span class="bu">tuple</span>(elem <span class="op">//</span> <span class="dv">2</span> <span class="cf">for</span> elem <span class="kw">in</span> dwi_data.shape[:<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co"># Generate the figure</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>fig <span class="op">=</span> generate_anatomical_slice_figure(slices, peaks_actor)</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"peaks.png"</span>), dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
 <p><img src="fig/probabilistic_tractography/peaks.png" alt="CSD model peaks for tracking" class="figure"><br>
 Peaks obtained from the CSD model for tracking purposes</p>
@@ -636,46 +636,45 @@ information provided by the peaks:</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fod_coeff <span class="op">=</span> peaks.shm_coeff</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>prob_dg <span class="op">=</span> ProbabilisticDirectionGetter.from_shcoeff(fod_coeff, max_angle<span class="op">=</span><span class="fl">30.</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                                                    sphere<span class="op">=</span>default_sphere)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>streamline_generator <span class="op">=</span> LocalTracking(prob_dg, stopping_criterion, seeds,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                                     affine, step_size<span class="op">=</span><span class="fl">.5</span>)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>streamlines <span class="op">=</span> Streamlines(streamline_generator)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>sft <span class="op">=</span> StatefulTractogram(streamlines, dwi_img, Space.RASMM)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the tractogram</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>save_tractogram(sft, <span class="st">"tractogram_probabilistic_dg_sh_pmf.trk"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>fod_coeff <span class="op">=</span> peaks.shm_coeff</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>prob_dg <span class="op">=</span> ProbabilisticDirectionGetter.from_shcoeff(fod_coeff, max_angle<span class="op">=</span><span class="fl">30.</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>                                                    sphere<span class="op">=</span>default_sphere)</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>streamline_generator <span class="op">=</span> LocalTracking(prob_dg, stopping_criterion, seeds,</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>                                     affine, step_size<span class="op">=</span><span class="fl">.5</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>streamlines <span class="op">=</span> Streamlines(streamline_generator)</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>sft <span class="op">=</span> StatefulTractogram(streamlines, dwi_img, Space.RASMM)</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co"># Save the tractogram</span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>save_tractogram(sft, <span class="st">"tractogram_probabilistic_dg_sh_pmf.trk"</span>)</span></code></pre>
 </div>
 <p>We will again visualize the tractogram using the three usual
 anatomical views:</p>
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the tractogram</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the representation of the data</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>streamlines_actor <span class="op">=</span> actor.line(streamlines, colormap.line_colors(streamlines))</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the figure</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> generate_anatomical_volume_figure(streamlines_actor)</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"tractogram_probabilistic_dg_sh_pmf.png"</span>),</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># Plot the tractogram</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co"># Build the representation of the data</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>streamlines_actor <span class="op">=</span> actor.line(streamlines, colormap.line_colors(streamlines))</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co"># Generate the figure</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>fig <span class="op">=</span> generate_anatomical_volume_figure(streamlines_actor)</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>fig.savefig(os.path.join(out_dir, <span class="st">"tractogram_probabilistic_dg_sh_pmf.png"</span>),</span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>            dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>plt.show()</span></code></pre>
 </div>
 <p><img src="fig/probabilistic_tractography/tractogram_probabilistic_dg_sh_pmf.png" alt="PMF SH direction getter-derived probabilistic tractogram" class="figure"><br>
 Streamlines representing white matter using probabilistic direction
 getter from SH (peaks_from_model)</p>
-<div id="tip-making-sure-your-tractogram-is-well-aligned-with-the-data" class="callout callout">
+<div id="callout1" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="tip-making-sure-your-tractogram-is-well-aligned-with-the-data" class="callout-inner">
-<h3 class="callout-title">Tip: Making sure your tractogram is well
-aligned with the data<a class="anchor" aria-label="anchor" href="#tip-making-sure-your-tractogram-is-well-aligned-with-the-data"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title" id="tip-making-sure-your-tractogram-is-well-aligned-with-the-data">Tip: Making sure your tractogram is well
+aligned with the data<a class="anchor" aria-label="anchor" href="#tip-making-sure-your-tractogram-is-well-aligned-with-the-data"></a></h3>
 <div class="callout-content">
 <p>If for whatever reason the anatomical and diffusion images were not
 correctly aligned, you may find that your tractogram is not well aligned
@@ -691,7 +690,7 @@ visualize the affine matrix of a <code>NIfTI</code> file as:</p>
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mrinfo</span> dwi.nii.gz</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="ex">mrinfo</span> dwi.nii.gz</span></code></pre>
 </div>
 <p>which would output something like:</p>
 <div class="codewrapper">
@@ -716,7 +715,7 @@ Image:               "/data/dwi.nii.gz"
 <div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">track_info</span> tractogram.trk</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="ex">track_info</span> tractogram.trk</span></code></pre>
 </div>
 <p>which would output something like:</p>
 <div class="codewrapper">
@@ -748,7 +747,7 @@ the file. To see the file header information you may use the
 <div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tckinfo</span> tractogram.tck</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="ex">tckinfo</span> tractogram.tck</span></code></pre>
 </div>
 <p>which would output something like:</p>
 <div class="codewrapper">
@@ -837,9 +836,9 @@ fibers</li>
   "creativeWorkStatus": "active",
   "url": "https://carpentries-incubator.github.io/SDC-BIDS-dMRI/probabilistic_tractography.html",
   "identifier": "https://carpentries-incubator.github.io/SDC-BIDS-dMRI/probabilistic_tractography.html",
-  "dateCreated": "2024-02-18",
+  "dateCreated": "2024-02-29",
   "dateModified": "2024-02-18",
-  "datePublished": "2024-02-27"
+  "datePublished": "2024-02-29"
 }
 
   </script><script>

@@ -372,27 +372,27 @@ anatomical acquisition for brainmasking purposes.</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bids.layout <span class="im">import</span> BIDSLayout</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>layout <span class="op">=</span> BIDSLayout(<span class="st">"../../data/ds000221"</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>subj<span class="op">=</span><span class="st">'010006'</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Diffusion data</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>dwi <span class="op">=</span> layout.get(subject<span class="op">=</span>subj, suffix<span class="op">=</span><span class="st">'dwi'</span>, extension<span class="op">=</span><span class="st">'.nii.gz'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Anatomical data</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>t1w <span class="op">=</span> layout.get(subject<span class="op">=</span>subj, suffix<span class="op">=</span><span class="st">'T1w'</span>, extension<span class="op">=</span><span class="st">'.nii.gz'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="im">from</span> bids.layout <span class="im">import</span> BIDSLayout</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>layout <span class="op">=</span> BIDSLayout(<span class="st">"../../data/ds000221"</span>, validate<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>subj<span class="op">=</span><span class="st">'010006'</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co"># Diffusion data</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>dwi <span class="op">=</span> layout.get(subject<span class="op">=</span>subj, suffix<span class="op">=</span><span class="st">'dwi'</span>, extension<span class="op">=</span><span class="st">'.nii.gz'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co"># Anatomical data</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>t1w <span class="op">=</span> layout.get(subject<span class="op">=</span>subj, suffix<span class="op">=</span><span class="st">'T1w'</span>, extension<span class="op">=</span><span class="st">'.nii.gz'</span>, return_type<span class="op">=</span><span class="st">'file'</span>)[<span class="dv">0</span>]</span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nibabel <span class="im">as</span> nib</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>dwi <span class="op">=</span> nib.load(dwi)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dwi_affine <span class="op">=</span> dwi.affine</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>dwi_data <span class="op">=</span> dwi.get_fdata()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="im">import</span> nibabel <span class="im">as</span> nib</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>dwi <span class="op">=</span> nib.load(dwi)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>dwi_affine <span class="op">=</span> dwi.affine</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>dwi_data <span class="op">=</span> dwi.get_fdata()</span></code></pre>
 </div>
 <p><code>DIPY</code>’s <code>segment.mask</code> module will be used to
 create a brainmask from this. This module contains a function
@@ -404,21 +404,21 @@ brainmask, we will start to correct for distortions in our images.</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.segment.mask <span class="im">import</span> median_otsu</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># vol_idx is a 1D-array containing the index of the first b0</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>dwi_brain, dwi_mask <span class="op">=</span> median_otsu(dwi_data, vol_idx<span class="op">=</span>[<span class="dv">0</span>])</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create necessary folders to save mask</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>out_dir <span class="op">=</span> <span class="ss">f'../../data/ds000221/derivatives/uncorrected/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">/ses-01/dwi/'</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Check to see if directory exists, if not create one</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(out_dir):</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    os.makedirs(out_dir)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> nib.Nifti1Image(dwi_mask.astype(np.float32), dwi_affine)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>nib.save(img, os.path.join(out_dir, <span class="ss">f"sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">_ses-01_brainmask.nii.gz"</span>))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="im">from</span> dipy.segment.mask <span class="im">import</span> median_otsu</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># vol_idx is a 1D-array containing the index of the first b0</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>dwi_brain, dwi_mask <span class="op">=</span> median_otsu(dwi_data, vol_idx<span class="op">=</span>[<span class="dv">0</span>])</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co"># Create necessary folders to save mask</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>out_dir <span class="op">=</span> <span class="ss">f'../../data/ds000221/derivatives/uncorrected/sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">/ses-01/dwi/'</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co"># Check to see if directory exists, if not create one</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(out_dir):</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>    os.makedirs(out_dir)</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>img <span class="op">=</span> nib.Nifti1Image(dwi_mask.astype(np.float32), dwi_affine)</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>nib.save(img, os.path.join(out_dir, <span class="ss">f"sub-</span><span class="sc">{</span>subj<span class="sc">}</span><span class="ss">_ses-01_brainmask.nii.gz"</span>))</span></code></pre>
 </div>
 <figure><img src="fig/preprocessing/dwi_brainmask.png" alt="b0 brainmask" class="figure mx-auto d-block"></figure></div>
 <div class="section level3">
@@ -454,9 +454,9 @@ data is also acquired with opposite phase encoding directions).</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ../../data/ds000221/derivatives/uncorrected_topup/sub-010006/ses-01/dwi/work</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">fslmerge</span> <span class="at">-t</span> ../../data/ds000221/derivatives/uncorrected_topup/sub-010006/ses-01/dwi/work/sub-010006_ses-01_acq-SEfmapDWI_epi.nii.gz ../../data/ds000221/sub-010006/ses-01/fmap/sub-010006_ses-01_acq-SEfmapDWI_dir-AP_epi.nii.gz ../../data/ds000221/sub-010006/ses-01/fmap/sub-010006_ses-01_acq-SEfmapDWI_dir-PA_epi.nii.gz</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ../../data/ds000221/derivatives/uncorrected_topup/sub-010006/ses-01/dwi/work</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="ex">fslmerge</span> <span class="at">-t</span> ../../data/ds000221/derivatives/uncorrected_topup/sub-010006/ses-01/dwi/work/sub-010006_ses-01_acq-SEfmapDWI_epi.nii.gz ../../data/ds000221/sub-010006/ses-01/fmap/sub-010006_ses-01_acq-SEfmapDWI_dir-AP_epi.nii.gz ../../data/ds000221/sub-010006/ses-01/fmap/sub-010006_ses-01_acq-SEfmapDWI_dir-PA_epi.nii.gz</span></code></pre>
 </div>
 <p>Another file we will need to create is a text file containing the
 information about how the volumes were acquired. Each line in this file
@@ -472,12 +472,12 @@ case, the file, which we created, is contained within the
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span> 1 0 0.04914</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span> 1 0 0.04914</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span> 1 0 0.04914</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span> <span class="at">-1</span> 0 0.04914</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span> <span class="at">-1</span> 0 0.04914</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span> <span class="at">-1</span> 0 0.04914</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">0</span> 1 0 0.04914</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="ex">0</span> 1 0 0.04914</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="ex">0</span> 1 0 0.04914</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="ex">0</span> <span class="at">-1</span> 0 0.04914</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="ex">0</span> <span class="at">-1</span> 0 0.04914</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="ex">0</span> <span class="at">-1</span> 0 0.04914</span></code></pre>
 </div>
 <p>With these two inputs, the next step is to make the call to
 <code>topup</code> to estimate the susceptibility-induced field. Within
@@ -499,7 +499,7 @@ parameters.</li>
 </ul><div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">topup</span> <span class="at">--imain</span><span class="op">=</span>../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/sub-010006_ses-01_acq-SEfmapDWI_epi.nii.gz <span class="at">--datain</span><span class="op">=</span>../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/pedir.txt <span class="at">--config</span><span class="op">=</span>b02b0.cnf <span class="at">--out</span><span class="op">=</span>../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/topup</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">topup</span> <span class="at">--imain</span><span class="op">=</span>../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/sub-010006_ses-01_acq-SEfmapDWI_epi.nii.gz <span class="at">--datain</span><span class="op">=</span>../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/pedir.txt <span class="at">--config</span><span class="op">=</span>b02b0.cnf <span class="at">--out</span><span class="op">=</span>../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/topup</span></code></pre>
 </div>
 <p>Next, we can apply the correction to the entire diffusion weighted
 volume by using <code>applytopup</code> Similar to <code>topup</code>, a
@@ -524,7 +524,7 @@ least-squares resampling (lsr).</li>
 </ul><div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">applytopup</span> <span class="at">--imain</span><span class="op">=</span>../../data/ds000221/sub-010006/ses-01/dwi/sub-010006_ses-01_dwi.nii.gz <span class="at">--datain</span><span class="op">=</span>../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/pedir.txt <span class="at">--inindex</span><span class="op">=</span>1 <span class="at">--topup</span><span class="op">=</span>../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/topup <span class="at">--out</span><span class="op">=</span>../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/dwi <span class="at">--method</span><span class="op">=</span>jac</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="ex">applytopup</span> <span class="at">--imain</span><span class="op">=</span>../../data/ds000221/sub-010006/ses-01/dwi/sub-010006_ses-01_dwi.nii.gz <span class="at">--datain</span><span class="op">=</span>../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/pedir.txt <span class="at">--inindex</span><span class="op">=</span>1 <span class="at">--topup</span><span class="op">=</span>../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/work/topup <span class="at">--out</span><span class="op">=</span>../../data/ds000221/derivatives/topup/sub-010006/ses-01/dwi/dwi <span class="at">--method</span><span class="op">=</span>jac</span></code></pre>
 </div>
 <figure><img src="fig/preprocessing/dwi_topup.png" alt="Topup image" class="figure mx-auto d-block"></figure></div>
 <div class="section level3">
@@ -579,16 +579,16 @@ outliers.</li>
 </ul><div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi/work</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an index file mapping the 67 volumes in 4D dwi volume to the pedir.txt file</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="va">indx</span><span class="op">=</span><span class="st">""</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="kw">`</span><span class="fu">seq</span> 1 67<span class="kw">`;</span> <span class="cf">do</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="va">indx</span><span class="op">=</span><span class="st">"</span><span class="va">$indx</span><span class="st"> 1"</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$indx</span> <span class="op">&gt;</span> ../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi/work/index.txt</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ex">eddy</span> <span class="at">--imain</span><span class="op">=</span>../../data/ds000221/sub-010006/ses-01/dwi/sub-010006_ses-01_dwi.nii.gz <span class="at">--mask</span><span class="op">=</span>../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/dwi/sub-010006_ses-01_brainmask.nii.gz <span class="at">--acqp</span><span class="op">=</span>../../data/ds000221/derivatives/uncorrected_topup/sub-010006/ses-01/dwi/work/pedir.txt <span class="at">--index</span><span class="op">=</span>../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi/work/index.txt <span class="at">--bvecs</span><span class="op">=</span>../../data/ds000221/sub-010006/ses-01/dwi/sub-010006_ses-01_dwi.bvec <span class="at">--bvals</span><span class="op">=</span>../../data/ds000221/sub-010006/ses-01/dwi/sub-010006_ses-01_dwi.bval <span class="at">--topup</span><span class="op">=</span>../../data/ds000221/derivatives/uncorrected_topup/sub-010006/ses-01/dwi/work/topup <span class="at">--out</span><span class="op">=</span>../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi/dwi <span class="at">--repol</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi/work</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co"># Create an index file mapping the 67 volumes in 4D dwi volume to the pedir.txt file</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="va">indx</span><span class="op">=</span><span class="st">""</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="kw">`</span><span class="fu">seq</span> 1 67<span class="kw">`;</span> <span class="cf">do</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>  <span class="va">indx</span><span class="op">=</span><span class="st">"</span><span class="va">$indx</span><span class="st"> 1"</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$indx</span> <span class="op">&gt;</span> ../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi/work/index.txt</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="ex">eddy</span> <span class="at">--imain</span><span class="op">=</span>../../data/ds000221/sub-010006/ses-01/dwi/sub-010006_ses-01_dwi.nii.gz <span class="at">--mask</span><span class="op">=</span>../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/dwi/sub-010006_ses-01_brainmask.nii.gz <span class="at">--acqp</span><span class="op">=</span>../../data/ds000221/derivatives/uncorrected_topup/sub-010006/ses-01/dwi/work/pedir.txt <span class="at">--index</span><span class="op">=</span>../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi/work/index.txt <span class="at">--bvecs</span><span class="op">=</span>../../data/ds000221/sub-010006/ses-01/dwi/sub-010006_ses-01_dwi.bvec <span class="at">--bvals</span><span class="op">=</span>../../data/ds000221/sub-010006/ses-01/dwi/sub-010006_ses-01_dwi.bval <span class="at">--topup</span><span class="op">=</span>../../data/ds000221/derivatives/uncorrected_topup/sub-010006/ses-01/dwi/work/topup <span class="at">--out</span><span class="op">=</span>../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi/dwi <span class="at">--repol</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -611,12 +611,12 @@ we can use for further processing.</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">bet</span> ../../data/ds000221/sub-010006/ses-01/anat/sub-010006_ses-01_inv-2_mp2rage.nii.gz ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006_ses-01_space-T1w_broadbrain <span class="at">-f</span> 0.6</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">bet</span> ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006_ses-01_space-T1w_broadbrain ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006_ses-01_space-T1w_brain <span class="at">-f</span> 0.4 <span class="at">-m</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006_ses-01_space-T1w_brain_mask.nii.gz ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006_ses-01_space-T1w_brainmask.nii.gz</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="ex">bet</span> ../../data/ds000221/sub-010006/ses-01/anat/sub-010006_ses-01_inv-2_mp2rage.nii.gz ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006_ses-01_space-T1w_broadbrain <span class="at">-f</span> 0.6</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="ex">bet</span> ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006_ses-01_space-T1w_broadbrain ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006_ses-01_space-T1w_brain <span class="at">-f</span> 0.4 <span class="at">-m</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="fu">mv</span> ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006_ses-01_space-T1w_brain_mask.nii.gz ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006_ses-01_space-T1w_brainmask.nii.gz</span></code></pre>
 </div>
 <figure><img src="fig/preprocessing/T1w_brainmask.png" alt="T1w brainmask" class="figure mx-auto d-block"></figure><p>Note, we use <code>bet</code> here, as well as the second inversion
 of the anatomical image, as it provides us with a better brainmask. The
@@ -637,33 +637,33 @@ B0 to use for the registration.</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dipy.segment.mask <span class="im">import</span> median_otsu</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Path of FSL eddy-corrected dwi</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>dwi <span class="op">=</span> <span class="st">"../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi/dwi.nii.gz"</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load eddy-corrected diffusion data</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>dwi <span class="op">=</span> nib.load(dwi)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>dwi_affine <span class="op">=</span> dwi.affine</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>dwi_data <span class="op">=</span> dwi.get_fdata()</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>dwi_brain, dwi_mask <span class="op">=</span> median_otsu(dwi_data, vol_idx<span class="op">=</span>[<span class="dv">0</span>])</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>dwi_b0 <span class="op">=</span> dwi_brain[:,:,:,<span class="dv">0</span>]</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Output directory</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>out_dir<span class="op">=</span><span class="st">"../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi"</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Save diffusion mask</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> nib.Nifti1Image(dwi_mask.astype(np.float32), dwi_affine)</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>nib.save(img, os.path.join(out_dir, <span class="st">"sub-010006_ses-01_dwi_proc-eddy_brainmask.nii.gz"</span>))</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Save 4D diffusion volume</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> nib.Nifti1Image(dwi_brain, dwi_affine)</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>nib.save(img, os.path.join(out_dir, <span class="st">"sub-010006_ses-01_dwi_proc-eddy_brain.nii.gz"</span>))</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Save b0 volume</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> nib.Nifti1Image(dwi_b0, dwi_affine)</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>nib.save(img, os.path.join(out_dir, <span class="st">"sub-010006_ses-01_dwi_proc-eddy_b0.nii.gz"</span>))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="im">from</span> dipy.segment.mask <span class="im">import</span> median_otsu</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co"># Path of FSL eddy-corrected dwi</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>dwi <span class="op">=</span> <span class="st">"../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi/dwi.nii.gz"</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co"># Load eddy-corrected diffusion data</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>dwi <span class="op">=</span> nib.load(dwi)</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>dwi_affine <span class="op">=</span> dwi.affine</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>dwi_data <span class="op">=</span> dwi.get_fdata()</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>dwi_brain, dwi_mask <span class="op">=</span> median_otsu(dwi_data, vol_idx<span class="op">=</span>[<span class="dv">0</span>])</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>dwi_b0 <span class="op">=</span> dwi_brain[:,:,:,<span class="dv">0</span>]</span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co"># Output directory</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>out_dir<span class="op">=</span><span class="st">"../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi"</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co"># Save diffusion mask</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>img <span class="op">=</span> nib.Nifti1Image(dwi_mask.astype(np.float32), dwi_affine)</span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>nib.save(img, os.path.join(out_dir, <span class="st">"sub-010006_ses-01_dwi_proc-eddy_brainmask.nii.gz"</span>))</span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="co"># Save 4D diffusion volume</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a>img <span class="op">=</span> nib.Nifti1Image(dwi_brain, dwi_affine)</span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>nib.save(img, os.path.join(out_dir, <span class="st">"sub-010006_ses-01_dwi_proc-eddy_brain.nii.gz"</span>))</span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a><span class="co"># Save b0 volume</span></span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a>img <span class="op">=</span> nib.Nifti1Image(dwi_b0, dwi_affine)</span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a>nib.save(img, os.path.join(out_dir, <span class="st">"sub-010006_ses-01_dwi_proc-eddy_b0.nii.gz"</span>))</span></code></pre>
 </div>
 <p>To perform the registration between the diffusion volumes and T1w, we
 will make use of <code>ANTs</code>, specifically the
@@ -691,10 +691,10 @@ files).</li>
 </ul><div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ../../data/ds000221/derivatives/uncorrected_topup_eddy_regT1/sub-010006/ses-01/transforms</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform registration between b0 and T1w</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">antsRegistrationSyNQuick.sh</span> <span class="at">-d</span> 3 <span class="at">-t</span> a <span class="at">-f</span> ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006_ses-01_space-T1w_brain.nii.gz <span class="at">-m</span> ../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi/sub-010006_ses-01_dwi_proc-eddy_b0.nii.gz <span class="at">-o</span> ../../data/ds000221/derivatives/uncorrected_topup_eddy_regT1/sub-010006/ses-01/transform/dwi_to_t1_</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ../../data/ds000221/derivatives/uncorrected_topup_eddy_regT1/sub-010006/ses-01/transforms</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co"># Perform registration between b0 and T1w</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="ex">antsRegistrationSyNQuick.sh</span> <span class="at">-d</span> 3 <span class="at">-t</span> a <span class="at">-f</span> ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006_ses-01_space-T1w_brain.nii.gz <span class="at">-m</span> ../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi/sub-010006_ses-01_dwi_proc-eddy_b0.nii.gz <span class="at">-o</span> ../../data/ds000221/derivatives/uncorrected_topup_eddy_regT1/sub-010006/ses-01/transform/dwi_to_t1_</span></code></pre>
 </div>
 <p>The transformation file should be created which we will use to apply
 the inverse transform with <code>antsApplyTransform</code> to the T1w
@@ -717,8 +717,8 @@ how it is inputted (e.g. last transform gets applied first).</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply transform to 4D DWI volume</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">antsApplyTransforms</span> <span class="at">-d</span> 3 <span class="at">-i</span> ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006_ses-01_space-T1w_brain.nii.gz <span class="at">-r</span> ../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi/sub-010006_ses-01_dwi_proc-eddy_b0.nii.gz <span class="at">-t</span> [../../data/ds000221/derivatives/uncorrected_topup_eddy_regT1/sub-010006/ses-01/transform/dwi_to_t1_0GenericAffine.mat,1] <span class="at">-o</span> ../../data/ds000221/derivatives/uncorrected_topup_eddy_regT1/sub-010006/ses-01/anat/sub-010006_ses-01_space-dwi_T1w_brain.nii.gz</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># Apply transform to 4D DWI volume</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="ex">antsApplyTransforms</span> <span class="at">-d</span> 3 <span class="at">-i</span> ../../data/ds000221/derivatives/uncorrected/sub-010006/ses-01/anat/sub-010006_ses-01_space-T1w_brain.nii.gz <span class="at">-r</span> ../../data/ds000221/derivatives/uncorrected_topup_eddy/sub-010006/ses-01/dwi/sub-010006_ses-01_dwi_proc-eddy_b0.nii.gz <span class="at">-t</span> <span class="pp">[</span><span class="ss">../../data/ds000221/derivatives/uncorrected_topup_eddy_regT1/sub</span><span class="pp">-</span><span class="ss">010006/ses</span><span class="pp">-</span><span class="ss">01/transform/dwi_to_t1_0GenericAffine.mat,1</span><span class="pp">]</span> <span class="at">-o</span> ../../data/ds000221/derivatives/uncorrected_topup_eddy_regT1/sub-010006/ses-01/anat/sub-010006_ses-01_space-dwi_T1w_brain.nii.gz</span></code></pre>
 </div>
 <figure><img src="fig/preprocessing/transformed_volumes.png" alt="Transformed volumes" class="figure mx-auto d-block"></figure><p>Following the transformation of the T1w volume, we can see that
 anatomical and diffusion weighted volumes are now aligned. It should be
@@ -834,9 +834,9 @@ acquired</li>
   "creativeWorkStatus": "active",
   "url": "https://carpentries-incubator.github.io/SDC-BIDS-dMRI/preprocessing.html",
   "identifier": "https://carpentries-incubator.github.io/SDC-BIDS-dMRI/preprocessing.html",
-  "dateCreated": "2024-02-18",
+  "dateCreated": "2024-02-29",
   "dateModified": "2024-02-18",
-  "datePublished": "2024-02-27"
+  "datePublished": "2024-02-29"
 }
 
   </script><script>
