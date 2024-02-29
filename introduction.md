@@ -42,7 +42,7 @@ matter damage in many different kinds of diseases, provide insights into the
 white matter connectivity, and much more!
 
 ![](fig/introduction/diffusion_directions.png){alt='Diffusion along different directions'}   
-\\Diffusion along X, Y, and Z directions. The signal in the left/right oriented
+Diffusion along X, Y, and Z directions. The signal in the left/right oriented
 corpus callosum is lowest when measured along X, while the signal in the
 inferior/superior oriented corticospinal tract is lowest when measured along Z.
 
