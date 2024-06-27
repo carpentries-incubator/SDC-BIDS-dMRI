@@ -2,5 +2,6 @@ dipy==1.7.0
 fury==0.7.1
 matplotlib==3.5.3
 nilearn==0.7.0
+numpy<2
 osfclient==0.0.5
 pybids==0.14.0
