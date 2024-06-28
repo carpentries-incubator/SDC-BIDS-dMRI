@@ -14,7 +14,7 @@ dependencies:
   - matplotlib=3.5.3
   - nibabel
   - nilearn=0.7.0
-  - numpy
+  - numpy<2
   - osfclient=0.0.5
   - pandas
   - seaborn
