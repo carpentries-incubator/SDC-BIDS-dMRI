@@ -13,6 +13,9 @@
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/aio.html</loc>
   </url>
   <url>
+    <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/citation.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/constrained_spherical_deconvolution.html</loc>
   </url>
   <url>
@@ -41,6 +44,9 @@
   </url>
   <url>
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/instructor/aio.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/instructor/citation.html</loc>
   </url>
   <url>
     <loc>https://carpentries-incubator.github.io/SDC-BIDS-dMRI/instructor/constrained_spherical_deconvolution.html</loc>
